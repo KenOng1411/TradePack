@@ -1,0 +1,112 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/Button.astro";
+import Card from "../components/Card.astro";
+import Icon from "../components/Icon.astro";
+import RiskDisclaimer from "../components/RiskDisclaimer.astro";
+import AppScreenshot from "../components/AppScreenshot.astro";
+import { PAGE_KEYS, resolveLocaleUrl } from "../i18n/routes";
+import { FOMO } from "../lib/site";
+import depositModalScreenshot from "../assets/screenshots/deposit-modal.jpg";
+import mobileLoginScreenshot from "../assets/screenshots/mobile-login.jpg";
+
+const locale = "en" as const;
+const pageKey = PAGE_KEYS.howToStart;
+
+const steps = [
+  {
+    icon: "wallet" as const,
+    title: "1. Download the app",
+    body: `Fomo is available on ${FOMO.platforms.join(", ")}. Download from the official app store or fomo.family directly — avoid third-party APK sources.`,
+  },
+  {
+    icon: "shield-check" as const,
+    title: "2. Create your account",
+    body: "Follow the in-app signup flow. Since Fomo is non-custodial, your wallet and keys are generated and secured on your device (via Shamir's Secret Sharing) rather than stored by Fomo — write down/back up whatever recovery method the app gives you before funding anything.",
+    screenshot: {
+      src: mobileLoginScreenshot,
+      alt: "Fomo's sign-in screen on mobile, reading 'where traders become legends' with Sign in with Apple and Sign in with Google buttons",
+      caption: "Fomo's real sign-in screen — no email or password, just Sign in with Apple or Google.",
+      narrow: true,
+    },
+  },
+  {
+    icon: "spark" as const,
+    title: "3. Apply a referral code",
+    body: `Enter a valid referral code during signup to get ${FOMO.feeDiscountPercent}% off your trading fees going forward.`,
+  },
+  {
+    icon: "chart" as const,
+    title: "4. Fund your account",
+    body: "Deposit via the method the app supports for your region/chain. Only send funds on the network the app specifies — sending on the wrong chain is a common and irreversible mistake with non-custodial wallets.",
+    screenshot: {
+      src: depositModalScreenshot,
+      alt: "Fomo's 'Deposit with' modal showing Crypto (USDC) available and Credit or debit marked 'Coming soon'",
+      caption: "Fomo's deposit screen, captured September 2026: crypto (USDC) works today; card funding is still marked \"Coming soon\" — despite Apple Pay funding being advertised on Fomo's marketing site.",
+    },
+  },
+  {
+    icon: "check-circle" as const,
+    title: "5. Make your first trade",
+    body: `Spot trading (memecoins, altcoins, stablecoins) is available to everyone; perpetuals (via ${FOMO.perpsProvider}) are available outside the US. Start small until you're comfortable with the interface and fee structure.`,
+  },
+  {
+    icon: "shield-check" as const,
+    title: "6. Enable security features",
+    body: "Turn on whatever account security options the app offers (biometrics, backup verification, etc.) before you deposit anything meaningful. Since Fomo can't recover funds for you — that's the tradeoff of non-custodial design — your own security hygiene is the only safety net.",
+  },
+];
+---
+
+<BaseLayout
+  locale={locale}
+  pageKey={pageKey}
+  title="How to Start Trading on Fomo: Step-by-Step Guide"
+  description="A complete walkthrough for setting up Fomo, applying a referral code, and making your first trade."
+>
+  <section class="mx-auto max-w-3xl px-4 py-14 sm:px-6">
+    <h1 class="text-3xl font-extrabold sm:text-4xl">How to start trading on Fomo</h1>
+    <p class="mt-4 text-[var(--color-muted)]">
+      Six steps from install to your first discounted trade. No account, no password — just a wallet and a code.
+    </p>
+
+    <ol class="mt-10 flex flex-col gap-5">
+      {
+        steps.map((step) => (
+          <li>
+            <Card>
+              <div class="flex flex-col gap-4 sm:flex-row sm:items-start">
+                <span class="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-[var(--color-accent-soft)] text-[var(--color-accent)]">
+                  <Icon name={step.icon} class="size-7" />
+                </span>
+                <div>
+                  <h2 class="text-base font-semibold sm:text-lg">{step.title}</h2>
+                  <p class="mt-2 text-sm leading-relaxed text-[var(--color-muted)] sm:text-base">{step.body}</p>
+                </div>
+              </div>
+              {step.screenshot && (
+                <div class:list={["mt-5", step.screenshot.narrow && "max-w-[220px]"]}>
+                  <AppScreenshot src={step.screenshot.src} alt={step.screenshot.alt} caption={step.screenshot.caption} />
+                </div>
+              )}
+            </Card>
+          </li>
+        ))
+      }
+    </ol>
+
+    <Card class="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <p class="font-semibold">Have your code ready?</p>
+        <p class="mt-1 text-sm text-[var(--color-muted)]">Use {FOMO.referralCode} for {FOMO.feeDiscountPercent}% off trading fees.</p>
+      </div>
+      <Button href={resolveLocaleUrl(locale, PAGE_KEYS.referralCode)} showArrow class="w-full sm:w-auto">
+        Get the referral code
+      </Button>
+    </Card>
+
+    <div class="mt-10">
+      <RiskDisclaimer locale={locale} variant="page" />
+    </div>
+  </section>
+</BaseLayout>

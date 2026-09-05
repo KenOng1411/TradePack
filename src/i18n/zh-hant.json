@@ -1,0 +1,37 @@
+{
+  "nav": {
+    "home": "首頁",
+    "review": "評測",
+    "referralCode": "推薦碼",
+    "fees": "手續費",
+    "howToStart": "新手上路",
+    "faq": "常見問題",
+    "blog": "部落格"
+  },
+  "header": {
+    "ctaButton": "領取 10% 手續費折扣"
+  },
+  "footer": {
+    "tagline": "針對非託管加密貨幣交易應用程式的獨立研究。",
+    "resourcesHeading": "資源",
+    "legalHeading": "法律聲明",
+    "disclaimerLink": "免責聲明",
+    "rights": "版權所有。"
+  },
+  "common": {
+    "readMore": "閱讀更多",
+    "getReferralCode": "取得推薦碼",
+    "learnMore": "了解更多",
+    "backToHome": "返回首頁",
+    "notAffiliated": "本站與 Fomo 無關聯 — 為獨立評測網站。",
+    "publishedOn": "發佈於",
+    "updatedOn": "更新於"
+  },
+  "riskDisclaimer": {
+    "heading": "風險提示",
+    "text": "本網站為獨立、非官方的評測資源。我們與 Fomo 沒有任何關聯，未獲其背書，也不代表其行事。若您透過我們的推薦連結註冊並進行交易，我們將獲得佣金。加密貨幣交易存在重大虧損風險，並非適合所有人。本網站內容皆不構成財務建議，請務必自行研究判斷。"
+  },
+  "languageSwitcher": {
+    "label": "語言"
+  }
+}

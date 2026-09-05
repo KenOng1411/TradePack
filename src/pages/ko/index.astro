@@ -1,0 +1,130 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Button from "../../components/Button.astro";
+import Card from "../../components/Card.astro";
+import TrustBar from "../../components/TrustBar.astro";
+import Icon from "../../components/Icon.astro";
+import AppScreenshot from "../../components/AppScreenshot.astro";
+import leaderboardScreenshot from "../../assets/screenshots/mobile-leaderboard-clans.jpg";
+import { PAGE_KEYS, resolveLocaleUrl } from "../../i18n/routes";
+import { FOMO, SITE_NAME } from "../../lib/site";
+import { getCollection } from "astro:content";
+
+const locale = "ko" as const;
+const pageKey = PAGE_KEYS.home;
+
+const posts = (await getCollection("blog", (e) => e.data.locale === locale))
+  .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
+  .slice(0, 3);
+
+const howItWorks = [
+  { title: "Fomo 앱 다운로드", body: `${FOMO.platforms.join(", ")} 이용 가능.` },
+  { title: "가입 시 추천 코드 입력", body: "사용을 원하는 경우." },
+  { title: "평소처럼 거래", body: `${FOMO.feeDiscountPercent}% 수수료 할인이 모든 거래에 자동 적용됩니다.` },
+];
+---
+
+<BaseLayout
+  locale={locale}
+  pageKey={pageKey}
+  title={`${SITE_NAME} — Fomo 독립 리뷰 및 추천 코드 가이드`}
+  description="소셜 크립토 트레이딩 앱 Fomo에 대한 독립적인 리뷰 — 사용을 결정하실 경우 거래 수수료 10% 할인 추천 코드도 함께 안내합니다."
+>
+  <section class="mx-auto max-w-6xl px-4 pb-16 pt-14 sm:px-6 sm:pt-20">
+    <span class="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1 text-xs font-medium text-[var(--color-muted)]">
+      <Icon name="shield-check" class="size-3.5 text-[var(--color-accent)]" />
+      TradePack은 독립적인 리뷰 사이트이며 Fomo 소속이 아닙니다
+    </span>
+    <h1 class="text-balance mt-5 max-w-2xl text-4xl font-extrabold leading-tight sm:text-5xl">
+      거래하기 전에 <span class="text-[var(--color-accent)]">Fomo</span>를 먼저 알아보세요
+    </h1>
+    <p class="mt-5 max-w-xl text-base leading-relaxed text-[var(--color-muted)] sm:text-lg">
+      소셜 크립토 트레이딩 앱 Fomo에 대한 독립적인 리뷰 — 사용을 결정하실 경우 거래 수수료{" "}
+      {FOMO.feeDiscountPercent}% 할인 추천 코드도 함께 안내합니다.
+    </p>
+    <div class="mt-8 flex flex-wrap items-center gap-3">
+      <Button href={resolveLocaleUrl(locale, PAGE_KEYS.referralCode)} size="lg" showArrow>
+        추천 코드 보기
+      </Button>
+    </div>
+    <p class="mt-4 text-xs text-[var(--color-muted)]">TradePack은 독립적인 리뷰 사이트이며 Fomo 소속이 아닙니다.</p>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+    <TrustBar
+      items={[
+        { icon: "wallet", text: "Index Ventures 주도 시리즈 B $75M 투자 유치 (2026년)" },
+        { icon: "spark", text: "Union Square Ventures, Benchmark 참여" },
+        { icon: "shield-check", text: "논커스터디얼 — 자산을 Fomo가 아닌 본인이 직접 보관" },
+        { icon: "chart", text: "2026년 3월 SEC/CFTC(미국)의 법적 지위 명확화 발표" },
+      ]}
+    />
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+    <h2 class="text-2xl font-bold sm:text-3xl">작동 방식</h2>
+    <div class="mt-6 grid gap-5 sm:grid-cols-3">
+      {
+        howItWorks.map((step, i) => (
+          <Card class="text-center">
+            <span class="mx-auto flex size-9 items-center justify-center rounded-full bg-[var(--color-accent)] text-sm font-bold text-[var(--color-bg)]">
+              {i + 1}
+            </span>
+            <h3 class="mt-4 text-base font-semibold">{step.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-[var(--color-muted)]">{step.body}</p>
+          </Card>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-4xl px-4 pb-16 sm:px-6">
+    <Card>
+      <h2 class="text-xl font-bold sm:text-2xl">이 페이지를 만든 이유</h2>
+      <p class="mt-3 text-sm leading-relaxed text-[var(--color-muted)] sm:text-base">
+        Fomo는 논커스터디얼 트레이딩 앱입니다 — 자산이 회사가 아닌 본인이 직접 관리하는 지갑에 보관된다는 뜻입니다.
+        여러 체인({FOMO.chains.join(", ")})에서 작동하며, 스팟 거래(밈코인, 알트코인, 스테이블코인)와{" "}
+        {FOMO.perpsProvider}를 통한 무기한 선물 거래(미국 사용자 제외)를 지원합니다. TradePack은 이 서비스가 실제로
+        어떻게 작동하는지, 실제 비용은 얼마인지, 그리고 아직 부족한 부분은 무엇인지 정확히 설명하기 위해
+        만들어졌습니다 — 단순히 홍보하기 위한 목적이 아닙니다.
+      </p>
+      <p class="mt-4 text-xs italic text-[var(--color-muted)]">
+        참고: 이 페이지의 내용은 정보 제공/리뷰 목적이며, 투자 권유나 금융 자문이 아닙니다.
+      </p>
+    </Card>
+  </section>
+
+  <section class="mx-auto max-w-xs px-4 pb-16 sm:px-6">
+    <AppScreenshot
+      src={leaderboardScreenshot}
+      alt="거래 차트와 함께 상위 트레이더 및 클랜 순위를 보여주는 Fomo의 리더보드와 클랜 탭"
+      caption="Fomo의 리더보드와 클랜 탭 — 앱 중심에 있는 소셜/경쟁 요소."
+    />
+  </section>
+
+  {
+    posts.length > 0 && (
+      <section class="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
+        <div class="flex items-center justify-between">
+          <h2 class="text-2xl font-bold sm:text-3xl">블로그</h2>
+          <a href={resolveLocaleUrl(locale, PAGE_KEYS.blogIndex)} class="text-sm font-semibold text-[var(--color-accent)] hover:underline">
+            전체 보기
+          </a>
+        </div>
+        <div class="mt-6 grid gap-5 sm:grid-cols-3">
+          {posts.map((post) => (
+            <a href={`/ko/blog/${post.id.replace(/^ko\//, "")}`} class="block">
+              <Card class="h-full transition-colors hover:border-[var(--color-accent)]/40">
+                <p class="text-xs text-[var(--color-muted)]">
+                  {post.data.publishDate.toLocaleDateString("ko-KR", { year: "numeric", month: "long", day: "numeric" })}
+                </p>
+                <h3 class="mt-2 text-lg font-semibold leading-snug">{post.data.title}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-[var(--color-muted)] line-clamp-3">{post.data.description}</p>
+              </Card>
+            </a>
+          ))}
+        </div>
+      </section>
+    )
+  }
+</BaseLayout>

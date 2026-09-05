@@ -1,0 +1,113 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Button from "../../components/Button.astro";
+import Card from "../../components/Card.astro";
+import Icon from "../../components/Icon.astro";
+import RiskDisclaimer from "../../components/RiskDisclaimer.astro";
+import AppScreenshot from "../../components/AppScreenshot.astro";
+import { PAGE_KEYS, resolveLocaleUrl } from "../../i18n/routes";
+import { FOMO } from "../../lib/site";
+import depositModalScreenshot from "../../assets/screenshots/deposit-modal.jpg";
+import mobileLoginScreenshot from "../../assets/screenshots/mobile-login.jpg";
+
+const locale = "ko" as const;
+const pageKey = PAGE_KEYS.howToStart;
+
+const steps = [
+  {
+    icon: "wallet" as const,
+    title: "1단계 — 앱 다운로드",
+    body: `Fomo는 ${FOMO.platforms.join(", ")} 버전으로 제공됩니다. 공식 앱스토어 또는 fomo.family에서 직접 다운로드하세요 — 서드파티 APK는 피하는 것이 좋습니다.`,
+  },
+  {
+    icon: "shield-check" as const,
+    title: "2단계 — 계정 생성 및 복구 수단 백업",
+    body: "가입 절차를 따라가면 기기에서 지갑이 생성됩니다. Fomo는 논커스터디얼이므로 지갑과 키가 Fomo가 아닌 본인 기기에서 생성·보호됩니다(Shamir's Secret Sharing 방식) — 앱이 제공하는 백업/복구 수단을 자금을 입금하기 전에 반드시 실행하세요.",
+    screenshot: {
+      src: mobileLoginScreenshot,
+      alt: "'where traders become legends' 문구와 Sign in with Apple, Sign in with Google 버튼이 있는 Fomo 모바일 로그인 화면",
+      caption: "Fomo의 실제 로그인 화면 — 이메일이나 비밀번호 없이 Apple 또는 Google로 로그인합니다.",
+      narrow: true,
+    },
+  },
+  {
+    icon: "spark" as const,
+    title: "3단계 — 추천 코드 입력",
+    body: `가입 시 유효한 추천 코드를 입력하면 이후 모든 거래에 ${FOMO.feeDiscountPercent}% 수수료 할인이 적용됩니다.`,
+  },
+  {
+    icon: "chart" as const,
+    title: "4단계 — 자금 입금",
+    body: "지역과 체인에 맞는 방식으로 입금하세요. Fomo는 Solana, Base, BNB Chain, Monad에서 작동합니다 — 반드시 올바른 네트워크로 전송했는지 확인하세요. 잘못된 체인으로 전송하는 것은 되돌릴 수 없는 대표적인 실수입니다.",
+    screenshot: {
+      src: depositModalScreenshot,
+      alt: "Crypto(USDC)는 이용 가능하고 Credit or debit은 'Coming soon'으로 표시된 Fomo의 'Deposit with' 모달",
+      caption: "2026년 9월 촬영된 Fomo 입금 화면: 크립토(USDC) 입금은 현재 가능하며, 카드 입금은 아직 \"출시 예정\"으로 표시됩니다 — Fomo 마케팅 사이트는 Apple Pay 입금을 홍보하고 있지만 실제 앱에는 아직 반영되지 않았습니다.",
+    },
+  },
+  {
+    icon: "check-circle" as const,
+    title: "5단계 — 첫 거래하기",
+    body: `스팟 거래(밈코인, 알트코인, 스테이블코인)는 모든 사용자가 이용 가능합니다. 무기한 선물(${FOMO.perpsProvider} 연동)은 미국 외 지역에서 이용 가능합니다. 처음이라면 잘 이해하고 있는 자산으로 소액부터 시작하는 것을 권장합니다.`,
+  },
+  {
+    icon: "shield-check" as const,
+    title: "6단계 — 보안 기능 활성화",
+    body: "잃으면 아쉬울 금액을 입금하기 전에 앱이 제공하는 모든 보안 옵션(생체 인증, 백업 확인 등)을 활성화하세요. Fomo는 문제가 생겨도 대신 개입할 수 없으므로, 본인의 보안 설정이 커스터디얼 거래소보다 훨씬 중요한 역할을 합니다.",
+  },
+];
+---
+
+<BaseLayout
+  locale={locale}
+  pageKey={pageKey}
+  title="Fomo 거래 시작하기: 단계별 가이드"
+  description="Fomo 설치부터 추천 코드 입력, 첫 거래까지 전체 과정을 안내합니다."
+>
+  <section class="mx-auto max-w-3xl px-4 py-14 sm:px-6">
+    <h1 class="text-3xl font-extrabold sm:text-4xl">Fomo 거래 시작하기</h1>
+    <p class="mt-4 text-[var(--color-muted)]">
+      설치부터 할인이 적용된 첫 거래까지 6단계입니다. 계정도, 비밀번호도 필요 없습니다 — 지갑과 추천 코드만 있으면
+      됩니다.
+    </p>
+
+    <ol class="mt-10 flex flex-col gap-5">
+      {
+        steps.map((step) => (
+          <li>
+            <Card>
+              <div class="flex flex-col gap-4 sm:flex-row sm:items-start">
+                <span class="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-[var(--color-accent-soft)] text-[var(--color-accent)]">
+                  <Icon name={step.icon} class="size-7" />
+                </span>
+                <div>
+                  <h2 class="text-base font-semibold sm:text-lg">{step.title}</h2>
+                  <p class="mt-2 text-sm leading-relaxed text-[var(--color-muted)] sm:text-base">{step.body}</p>
+                </div>
+              </div>
+              {step.screenshot && (
+                <div class:list={["mt-5", step.screenshot.narrow && "max-w-[220px]"]}>
+                  <AppScreenshot src={step.screenshot.src} alt={step.screenshot.alt} caption={step.screenshot.caption} />
+                </div>
+              )}
+            </Card>
+          </li>
+        ))
+      }
+    </ol>
+
+    <Card class="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <p class="font-semibold">추천 코드가 준비되셨나요?</p>
+        <p class="mt-1 text-sm text-[var(--color-muted)]">코드 {FOMO.referralCode}로 {FOMO.feeDiscountPercent}% 수수료 할인을 받으세요.</p>
+      </div>
+      <Button href={resolveLocaleUrl(locale, PAGE_KEYS.referralCode)} showArrow class="w-full sm:w-auto">
+        추천 코드 보기
+      </Button>
+    </Card>
+
+    <div class="mt-10">
+      <RiskDisclaimer locale={locale} variant="page" />
+    </div>
+  </section>
+</BaseLayout>

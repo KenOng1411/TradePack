@@ -1,0 +1,97 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/Button.astro";
+import Card from "../components/Card.astro";
+import FeeCalculator from "../components/FeeCalculator.astro";
+import RiskDisclaimer from "../components/RiskDisclaimer.astro";
+import { PAGE_KEYS, resolveLocaleUrl } from "../i18n/routes";
+import { FOMO } from "../lib/site";
+
+const locale = "en" as const;
+const pageKey = PAGE_KEYS.fees;
+
+const discountedFee = (FOMO.spotFeePercent * (1 - FOMO.feeDiscountPercent / 100)).toFixed(3);
+---
+
+<BaseLayout
+  locale={locale}
+  pageKey={pageKey}
+  title="Fomo Trading Fees Explained (2026): Spot, Perpetuals & Referral Discount"
+  description="A clear breakdown of Fomo's trading fees — spot, perpetuals, and how much a referral code actually saves you."
+>
+  <section class="mx-auto max-w-4xl px-4 py-14 sm:px-6">
+    <h1 class="text-3xl font-extrabold sm:text-4xl">Fomo Trading Fees Explained (2026)</h1>
+    <p class="mt-4 max-w-2xl text-[var(--color-muted)]">
+      Fomo's fee structure isn't posted in one obvious place, so here's the plain breakdown, current as of 2026.
+    </p>
+
+    <div class="prose-content mt-10 max-w-none">
+      <h2>Spot trading fees</h2>
+      <p>
+        Roughly {FOMO.spotFeePercent}% per trade. Applying a valid referral code takes {FOMO.feeDiscountPercent}%
+        off that fee — so a {FOMO.spotFeePercent}% fee becomes {discountedFee}%. On small trades, absolute fees can
+        feel disproportionate simply because there's often a practical minimum cost per trade regardless of size —
+        worth keeping in mind if you trade frequently in small amounts.
+      </p>
+
+      <h2>Perpetuals fees (not available to US users)</h2>
+      <p>
+        Perpetuals run through an integration with {FOMO.perpsProvider}. Fomo adds roughly {FOMO.perpsFeePerSidePercent}%
+        per side on top of {FOMO.perpsProvider}'s own underlying fees — in practice, this roughly doubles the direct
+        cost of a perp trade compared to trading spot. Perpetuals are not currently available to US-based users.
+      </p>
+    </div>
+
+    <div class="mt-12">
+      <h2 class="text-xl font-bold sm:text-2xl">Fee calculator</h2>
+      <p class="mt-2 text-sm text-[var(--color-muted)]">Enter a trade size to compare the standard and discounted fee.</p>
+      <div class="mt-6">
+        <FeeCalculator
+          orderValueLabel="Trade size (USD)"
+          withoutCodeLabel={`Standard fee (${FOMO.spotFeePercent}%)`}
+          withCodeLabel={`Your fee with code (${FOMO.feeDiscountPercent}% off)`}
+          savingsLabel="You save"
+          helpText="Spot trading fee shown. Perpetuals fees differ — see the breakdown above."
+        />
+      </div>
+    </div>
+
+    <div class="prose-content mt-12 max-w-none">
+      <h2>Other costs to know about</h2>
+      <p>
+        As a non-custodial app, on-chain network fees (gas) apply separately from Fomo's own trading fee and vary by
+        chain ({FOMO.chains.join(", ")}) and network conditions — these aren't set by Fomo and aren't discounted by a
+        referral code.
+      </p>
+    </div>
+
+    <Card class="mt-12 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <p class="font-semibold">Get the discount applied automatically</p>
+        <p class="mt-1 text-sm text-[var(--color-muted)]">Use code {FOMO.referralCode} at signup.</p>
+      </div>
+      <Button href={resolveLocaleUrl(locale, PAGE_KEYS.referralCode)} showArrow class="w-full sm:w-auto">
+        Get the referral code
+      </Button>
+    </Card>
+
+    <div class="mt-10">
+      <RiskDisclaimer locale={locale} variant="page" />
+    </div>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  .prose-content h2 {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+  .prose-content p {
+    margin-bottom: 1.1rem;
+    line-height: 1.75;
+    color: var(--color-muted);
+  }
+</style>

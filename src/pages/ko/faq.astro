@@ -1,0 +1,79 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import FAQAccordion from "../../components/FAQAccordion.astro";
+import RiskDisclaimer from "../../components/RiskDisclaimer.astro";
+import { PAGE_KEYS } from "../../i18n/routes";
+import { FOMO, SITE_NAME } from "../../lib/site";
+
+const locale = "ko" as const;
+const pageKey = PAGE_KEYS.faq;
+
+const faqItems = [
+  {
+    question: "Fomo는 안전한가요?",
+    answer:
+      "논커스터디얼 방식(자산을 Fomo가 아닌 본인이 관리)이며 법적 명확성(2026년 3월 SEC/CFTC 가이드라인)도 갖추고 있습니다. 다만 모든 리스크를 없애주지는 않습니다 — 자세한 내용은 전체 리뷰를 확인하세요.",
+  },
+  {
+    question: "Fomo는 인가된 거래소인가요?",
+    answer:
+      "Fomo는 논커스터디얼 지갑 인터페이스로 운영되며, SEC/CFTC가 브로커-딜러 등록이 필요 없다고 명확히 한 범주에 속합니다. 중앙화 거래소처럼 전통적인 의미의 인가 거래소는 아닙니다.",
+  },
+  {
+    question: "어떤 체인을 지원하나요?",
+    answer: `${FOMO.chains[0]}(주요), ${FOMO.chains.slice(1).join(", ")}.`,
+  },
+  {
+    question: "미국 사용자도 무기한 선물을 거래할 수 있나요?",
+    answer: `아니요 — ${FOMO.perpsProvider} 연동 무기한 선물은 현재 미국 사용자에게 제공되지 않습니다. 스팟 거래는 전역에서 가능합니다.`,
+  },
+  {
+    question: "수수료는 얼마인가요?",
+    answer: `스팟 거래는 할인 전 약 ${FOMO.spotFeePercent}%, 무기한 선물은 기초 거래소 수수료에 사이드당 약 ${FOMO.perpsFeePerSidePercent}%가 추가됩니다. 추천 코드로 ${FOMO.feeDiscountPercent}% 추가 할인됩니다.`,
+  },
+  {
+    question: "추천 코드는 어떻게 작동하나요?",
+    answer: `가입 시 입력하면 이후 모든 거래에 ${FOMO.feeDiscountPercent}% 수수료 할인이 자동 적용됩니다.`,
+  },
+  {
+    question: `${SITE_NAME}은 Fomo와 제휴 관계인가요?`,
+    answer: `아닙니다. ${SITE_NAME}은 독립적인 리뷰 사이트입니다. 추천 링크로 가입 후 거래 시 수수료를 받을 수 있습니다 — 자세한 내용은 면책 조항을 확인하세요.`,
+  },
+  {
+    question: "지갑 접근 권한을 잃으면 어떻게 되나요?",
+    answer:
+      "Fomo는 논커스터디얼이므로 본인 대신 자산을 복구하거나 접근 권한을 재설정할 수 없습니다 — 자금을 입금하기 전 복구 수단을 신중히 백업하세요.",
+  },
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqItems.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: { "@type": "Answer", text: item.answer },
+  })),
+};
+---
+
+<BaseLayout
+  locale={locale}
+  pageKey={pageKey}
+  title="Fomo 자주 묻는 질문"
+  description="Fomo의 안전성, 수수료, 지원 체인, 추천 코드 등에 대한 자주 묻는 질문들입니다."
+  jsonLd={jsonLd}
+>
+  <section class="mx-auto max-w-3xl px-4 py-14 sm:px-6">
+    <h1 class="text-3xl font-extrabold sm:text-4xl">자주 묻는 질문</h1>
+    <p class="mt-4 text-[var(--color-muted)]">Fomo와 이 사이트에 대해 가장 자주 묻는 질문들입니다.</p>
+
+    <div class="mt-10">
+      <FAQAccordion items={faqItems} />
+    </div>
+
+    <div class="mt-10">
+      <RiskDisclaimer locale={locale} variant="page" />
+    </div>
+  </section>
+</BaseLayout>

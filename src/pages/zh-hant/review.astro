@@ -1,0 +1,236 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Button from "../../components/Button.astro";
+import Card from "../../components/Card.astro";
+import StatBadge from "../../components/StatBadge.astro";
+import RiskDisclaimer from "../../components/RiskDisclaimer.astro";
+import AppScreenshot from "../../components/AppScreenshot.astro";
+import { PAGE_KEYS, resolveLocaleUrl } from "../../i18n/routes";
+import { FOMO, SITE_NAME } from "../../lib/site";
+import tradingChartScreenshot from "../../assets/screenshots/trading-chart-feed.jpg";
+import mobilePortfolioScreenshot from "../../assets/screenshots/mobile-portfolio-home.jpg";
+import mobileFeedGlobalScreenshot from "../../assets/screenshots/mobile-feed-global.jpg";
+import mobileFeedFriendsScreenshot from "../../assets/screenshots/mobile-feed-friends.jpg";
+
+const locale = "zh-hant" as const;
+const pageKey = PAGE_KEYS.review;
+
+const toc = [
+  { id: "fomo-shi-shenme", label: "Fomo 是什麼?" },
+  { id: "ke-jiaoyi-ziyan", label: "可交易哪些資產?" },
+  { id: "shouxufei", label: "手續費" },
+  { id: "fomo-anquan-ma", label: "Fomo 安全嗎?" },
+  { id: "youdian", label: "優點" },
+  { id: "xu-zhuyi", label: "需注意事項" },
+  { id: "zongjie", label: "總結" },
+];
+
+const pros = [
+  "從打開應用程式到實際下單的速度非常快 —— 幾乎沒有其他應用程式常見的註冊摩擦。",
+  "非託管架構有真實法律基礎支持,而非單純行銷話術。",
+  "單一介面支援多條鏈(Solana、Base、BNB Chain、Monad)。",
+];
+
+const cons = [
+  "沒有存款保障機制 —— 自主保管意味著若遺失錢包存取權,沒有復原機制。",
+  "部分使用者反映,流動性較低的代幣買入容易,賣出較困難。",
+  "動態消息與排行榜的設計旨在促使使用者快速行動 —— 若您容易衝動交易,需特別留意;迷因幣部位可能歸零。",
+  "手續費結構並非一目了然 —— 詳細數字請參閱手續費頁面。",
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Review",
+  itemReviewed: {
+    "@type": "SoftwareApplication",
+    name: FOMO.displayName,
+    applicationCategory: "FinanceApplication",
+    url: FOMO.website,
+  },
+  author: { "@type": "Organization", name: SITE_NAME },
+  publisher: { "@type": "Organization", name: SITE_NAME },
+  reviewBody: "針對 Fomo 的獨立評測。本頁非 Fomo 官方頁面 —— TradePack 並未代表、獲授權或受 Fomo 贊助。",
+  datePublished: "2027-01-12",
+  inLanguage: "zh-Hant",
+};
+---
+
+<BaseLayout
+  locale={locale}
+  pageKey={pageKey}
+  title="Fomo 應用程式評測 2026:手續費、安全性與真實使用體驗"
+  description="針對支援 Solana、Base、BNB Chain、Monad 的非託管社群交易應用程式 Fomo 的獨立評測。手續費、安全性、募資狀況與真實優缺點。"
+  type="article"
+  jsonLd={jsonLd}
+>
+  <section class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+    <span class="text-xs font-semibold uppercase tracking-wide text-[var(--color-accent)]">獨立評測</span>
+    <h1 class="text-balance mt-2 text-3xl font-extrabold sm:text-4xl">{SITE_NAME} 的 Fomo 評測</h1>
+    <p class="mt-4 max-w-2xl text-[var(--color-muted)]">
+      {SITE_NAME} 並未代表、獲授權或受 Fomo 贊助。本評測基於我們自身的研究,並可能透過推薦連結獲得佣金。
+    </p>
+
+    <div class="mt-10 grid gap-10 lg:grid-cols-[240px_1fr]">
+      <aside class="hidden lg:block">
+        <nav class="sticky top-24 flex flex-col gap-1 border-l border-[var(--color-border)] pl-4" aria-label="目錄">
+          {
+            toc.map((item) => (
+              <a href={`#${item.id}`} class="py-1.5 text-sm text-[var(--color-muted)] hover:text-[var(--color-accent)]">
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+      </aside>
+
+      <div class="prose-content max-w-none">
+        <p>
+          Fomo 是一款「社群優先」的加密貨幣交易應用程式,可交易迷因幣、山寨幣、穩定幣,以及(美國以外地區)永續合約
+          —— 全部透過使用者自行掌控的非託管錢包進行。背後資金相當雄厚:由 {FOMO.leadInvestor} 領投、估值{" "}
+          {FOMO.valuation} 的 {FOMO.fundingRound} 融資,{FOMO.otherInvestors.join("、")} 也參與其中,累計公開募資總額約{" "}
+          {FOMO.totalFundingDisclosed}。本篇評測將說明其實際運作方式、真實成本,以及尚待改進之處。
+        </p>
+
+        <div class="not-prose my-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <StatBadge value={`${FOMO.spotFeePercent}%`} label="現貨手續費" />
+          <StatBadge value={`${FOMO.feeDiscountPercent}%`} label="推薦碼折扣" accent="violet" />
+          <StatBadge value={FOMO.chains.length.toString()} label="支援鏈" />
+          <StatBadge value={FOMO.valuation} label="估值" accent="violet" />
+        </div>
+
+        <div class="not-prose my-8 flex flex-wrap items-start gap-5">
+          <AppScreenshot
+            src={tradingChartScreenshot}
+            alt="Fomo 主要交易畫面,顯示即時價格圖表、買/賣面板,以及買/賣成交量統計"
+            caption="Fomo 主要交易畫面:即時價格圖表、買/賣面板,以及動態消息驅動的統計數據。"
+            class="min-w-0 flex-1 basis-80"
+          />
+          <AppScreenshot
+            src={mobilePortfolioScreenshot}
+            alt="Fomo 手機首頁畫面,顯示 $0 資產餘額、Deposit 按鈕、Weekly Top Trades,以及 BTC、ETH、XRP 等代幣清單"
+            caption="真實的手機首頁畫面 —— 大多數使用者根本沒看過桌面版介面。"
+            class="w-[220px] shrink-0"
+          />
+        </div>
+
+        <section id="fomo-shi-shenme" class="scroll-mt-24">
+          <h2>Fomo 是什麼?</h2>
+          <p>
+            Fomo 將自己定位為社群交易應用程式,而非傳統交易所介面 —— 動態消息、排行榜與快速「瀏覽即交易」的流程是核心
+            體驗。技術上屬於非託管:{FOMO.custodyMechanism} 資產保存在只有您能存取的錢包中,而非公司代管帳戶。
+          </p>
+        </section>
+
+        <section id="ke-jiaoyi-ziyan" class="scroll-mt-24">
+          <h2>可交易哪些資產?</h2>
+          <p>
+            現貨市場 —— 迷因幣、山寨幣、穩定幣 —— 涵蓋 Solana(主要鏈)、Base、BNB Chain 與 Monad。永續合約透過與{" "}
+            {FOMO.perpsProvider} 的整合提供,但<strong>美國使用者目前無法使用</strong> —— Fomo
+            尚未取得在美國提供槓桿衍生性商品所需的國內註冊,不過其核心非託管現貨交易在美國全境合法運作。
+          </p>
+        </section>
+
+        <section id="shouxufei" class="scroll-mt-24">
+          <h2>手續費</h2>
+          <p>
+            現貨交易折扣前約為每筆 {FOMO.spotFeePercent}%。永續合約則在 {FOMO.perpsProvider} 本身手續費之外,每邊再
+            加收約 {FOMO.perpsFeePerSidePercent}%。詳細試算請參閱
+            <a href={resolveLocaleUrl(locale, PAGE_KEYS.fees)}>完整手續費說明</a>。
+          </p>
+        </section>
+
+        <section id="fomo-anquan-ma" class="scroll-mt-24">
+          <h2>Fomo 安全嗎?</h2>
+          <p>
+            這裡其實是兩個不同的問題。技術面:作為非託管應用程式,Fomo
+            無法片面移動或凍結您的資產——這消除了一類風險(交易所倒閉牽連使用者存款),但也帶來另一種風險——若您遺失
+            錢包存取權,或投資的迷因幣價值歸零,並沒有公司層級的安全網。法律面:2026 年 3 月,SEC 與 CFTC(美國)共同
+            發布指引,明確指出像 Fomo 這類非託管錢包介面不需註冊為經紀商,並新設「Covered User Interface
+            Provider」豁免類別,為此類模式提供了實質法律基礎。
+          </p>
+        </section>
+
+        <section id="youdian" class="scroll-mt-24">
+          <h2>優點</h2>
+          <ul>
+            {pros.map((item) => <li>{item}</li>)}
+          </ul>
+        </section>
+
+        <section id="xu-zhuyi" class="scroll-mt-24">
+          <h2>需注意事項</h2>
+          <ul>
+            {cons.map((item) => <li>{item}</li>)}
+          </ul>
+          <div class="not-prose mt-2 grid max-w-md grid-cols-2 gap-4">
+            <AppScreenshot
+              src={mobileFeedGlobalScreenshot}
+              alt="Fomo 的 Global 動態消息,顯示其他使用者幾秒前發出的買/賣訂單"
+              caption="Global 動態消息 —— 其他使用者的交易即時更新,僅幾秒之前。"
+            />
+            <AppScreenshot
+              src={mobileFeedFriendsScreenshot}
+              alt="Fomo 的 Friends 動態消息,顯示所追蹤交易者的群組買/賣活動"
+              caption="Friends 動態消息 —— 彙整您追蹤的交易者活動。"
+            />
+          </div>
+        </section>
+
+        <section id="zongjie" class="scroll-mt-24">
+          <h2>總結</h2>
+          <p>
+            Fomo 是一款擁有真實資金與真實非託管架構的合法應用程式,在此類別中法律基礎相對清晰 ——
+            不屬於需要質疑「是不是詐騙」的類型。剩餘風險主要來自迷因幣與永續合約交易本身的特性,而非 Fomo
+            特有。若想進一步了解,可參閱
+            <a href={resolveLocaleUrl(locale, PAGE_KEYS.referralCode)}>推薦碼頁面</a>查看手續費折扣詳情。
+          </p>
+        </section>
+
+        <div class="not-prose mt-10">
+          <Card class="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p class="font-semibold">準備好使用推薦碼折扣了嗎?</p>
+              <p class="mt-1 text-sm text-[var(--color-muted)]">使用代碼 {FOMO.referralCode} 享 {FOMO.feeDiscountPercent}% 折扣。</p>
+            </div>
+            <Button href={resolveLocaleUrl(locale, PAGE_KEYS.referralCode)} showArrow class="w-full sm:w-auto">
+              查看推薦碼
+            </Button>
+          </Card>
+        </div>
+
+        <div class="not-prose mt-8">
+          <RiskDisclaimer locale={locale} variant="page" />
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  .prose-content h2 {
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+  .prose-content p {
+    margin-bottom: 1.1rem;
+    line-height: 1.75;
+    color: var(--color-muted);
+  }
+  .prose-content ul {
+    margin: 0 0 1.1rem 1.25rem;
+    list-style: disc;
+    color: var(--color-muted);
+    line-height: 1.75;
+  }
+  .prose-content li {
+    margin-bottom: 0.5rem;
+  }
+  .prose-content a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+</style>

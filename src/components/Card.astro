@@ -1,0 +1,20 @@
+---
+interface Props {
+  class?: string;
+  padding?: "md" | "lg";
+  as?: "div" | "article" | "section";
+}
+
+const { class: className = "", padding = "lg", as: Tag = "div" } = Astro.props;
+
+const paddings: Record<string, string> = {
+  md: "p-5",
+  lg: "p-6 sm:p-8",
+};
+---
+
+<Tag
+  class={`rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] ${paddings[padding]} ${className}`}
+>
+  <slot />
+</Tag>

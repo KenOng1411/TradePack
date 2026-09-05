@@ -1,0 +1,73 @@
+---
+import { Image } from "astro:assets";
+import RiskDisclaimer from "./RiskDisclaimer.astro";
+import { useTranslations } from "../i18n/ui";
+import { PAGE_KEYS, navTargetUrl, resolveLocaleUrl } from "../i18n/routes";
+import { SITE_NAME } from "../lib/site";
+import logoIcon from "../assets/brand/logo-icon.png";
+import type { Locale } from "../i18n/routes";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const year = new Date().getFullYear();
+
+const resourceLinks = [
+  { key: PAGE_KEYS.review, label: t.nav.review },
+  { key: PAGE_KEYS.fees, label: t.nav.fees },
+  { key: PAGE_KEYS.howToStart, label: t.nav.howToStart },
+  { key: PAGE_KEYS.blogIndex, label: t.nav.blog },
+  { key: PAGE_KEYS.faq, label: t.nav.faq },
+];
+---
+
+<footer class="mt-20 border-t border-[var(--color-border)] bg-[var(--color-bg)]">
+  <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+    <div class="grid gap-10 sm:grid-cols-3">
+      <div>
+        <a href={resolveLocaleUrl(locale, PAGE_KEYS.home)} class="flex items-center gap-2 text-lg font-bold text-[var(--color-text)]">
+          <Image src={logoIcon} alt="" width={32} height={32} class="size-8" />
+          {SITE_NAME}
+        </a>
+        <p class="mt-3 max-w-xs text-sm text-[var(--color-muted)]">{t.footer.tagline}</p>
+      </div>
+
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-wide text-[var(--color-muted)]">{t.footer.resourcesHeading}</p>
+        <ul class="mt-3 flex flex-col gap-2">
+          {
+            resourceLinks.map((item) => (
+              <li>
+                <a href={navTargetUrl(locale, item.key)} class="text-sm text-[var(--color-text)] hover:text-[var(--color-accent)]">
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-wide text-[var(--color-muted)]">{t.footer.legalHeading}</p>
+        <ul class="mt-3 flex flex-col gap-2">
+          <li>
+            <a href={navTargetUrl(locale, PAGE_KEYS.disclaimer)} class="text-sm text-[var(--color-text)] hover:text-[var(--color-accent)]">
+              {t.footer.disclaimerLink}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-10">
+      <RiskDisclaimer locale={locale} variant="footer" />
+    </div>
+
+    <p class="mt-8 text-xs text-[var(--color-muted)]">
+      © {year} {SITE_NAME}. {t.footer.rights}
+    </p>
+  </div>
+</footer>

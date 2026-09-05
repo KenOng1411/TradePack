@@ -1,0 +1,76 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import FAQAccordion from "../../components/FAQAccordion.astro";
+import RiskDisclaimer from "../../components/RiskDisclaimer.astro";
+import { PAGE_KEYS } from "../../i18n/routes";
+import { FOMO, SITE_NAME } from "../../lib/site";
+
+const locale = "zh-hant" as const;
+const pageKey = PAGE_KEYS.faq;
+
+const faqItems = [
+  {
+    question: "Fomo 安全嗎?",
+    answer: "屬於非託管架構(資產由您自行掌控,而非 Fomo),且具備一定法律明確性(2026 年 3 月 SEC/CFTC 指引)。這消除了部分風險,但並非全部 —— 詳見完整評測。",
+  },
+  {
+    question: "Fomo 是持有牌照的交易所嗎?",
+    answer: "Fomo 以非託管錢包介面形式運作,屬於 SEC/CFTC 已明確表示無需註冊為經紀商的類別。它並非傳統意義上、如中心化交易所般持牌經營的交易所。",
+  },
+  {
+    question: "Fomo 支援哪些鏈?",
+    answer: `${FOMO.chains[0]}(主要)、${FOMO.chains.slice(1).join("、")}。`,
+  },
+  {
+    question: "美國使用者可以交易永續合約嗎?",
+    answer: `不行 —— 透過 ${FOMO.perpsProvider} 提供的永續合約目前不對美國使用者開放。現貨交易則於全美境內提供。`,
+  },
+  {
+    question: "Fomo 手續費多少?",
+    answer: `現貨交易折扣前約 ${FOMO.spotFeePercent}%;永續合約則在底層交易所手續費外每邊再加約 ${FOMO.perpsFeePerSidePercent}%。推薦碼可再折扣 ${FOMO.feeDiscountPercent}%。`,
+  },
+  {
+    question: "推薦碼如何運作?",
+    answer: `註冊時輸入,即可於日後所有交易自動套用 ${FOMO.feeDiscountPercent}% 手續費折扣。`,
+  },
+  {
+    question: `${SITE_NAME} 與 Fomo 有合作關係嗎?`,
+    answer: `沒有。${SITE_NAME} 為獨立評測網站。若您透過本站推薦連結註冊並交易,我們可能獲得佣金 —— 詳見免責聲明。`,
+  },
+  {
+    question: "若遺失錢包存取權怎麼辦?",
+    answer: "由於 Fomo 屬非託管架構,無法代為復原資產或重設存取權限 —— 存入資金前請務必謹慎備份復原方式。",
+  },
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqItems.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: { "@type": "Answer", text: item.answer },
+  })),
+};
+---
+
+<BaseLayout
+  locale={locale}
+  pageKey={pageKey}
+  title="Fomo 常見問題"
+  description="關於 Fomo 安全性、手續費、支援鏈、推薦碼等常見問題解答。"
+  jsonLd={jsonLd}
+>
+  <section class="mx-auto max-w-3xl px-4 py-14 sm:px-6">
+    <h1 class="text-3xl font-extrabold sm:text-4xl">常見問題</h1>
+    <p class="mt-4 text-[var(--color-muted)]">關於 Fomo 與本站最常見的問題。</p>
+
+    <div class="mt-10">
+      <FAQAccordion items={faqItems} />
+    </div>
+
+    <div class="mt-10">
+      <RiskDisclaimer locale={locale} variant="page" />
+    </div>
+  </section>
+</BaseLayout>

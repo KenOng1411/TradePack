@@ -1,0 +1,113 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Button from "../../components/Button.astro";
+import Card from "../../components/Card.astro";
+import Icon from "../../components/Icon.astro";
+import RiskDisclaimer from "../../components/RiskDisclaimer.astro";
+import AppScreenshot from "../../components/AppScreenshot.astro";
+import { PAGE_KEYS, resolveLocaleUrl } from "../../i18n/routes";
+import { FOMO } from "../../lib/site";
+import depositModalScreenshot from "../../assets/screenshots/deposit-modal.jpg";
+import mobileLoginScreenshot from "../../assets/screenshots/mobile-login.jpg";
+
+const locale = "de" as const;
+const pageKey = PAGE_KEYS.howToStart;
+
+const steps = [
+  {
+    icon: "wallet" as const,
+    title: "Schritt 1 — App herunterladen",
+    body: `Fomo ist für ${FOMO.platforms.join(", ")} verfügbar. Laden Sie die App ausschließlich aus den offiziellen App Stores oder direkt über fomo.family herunter — meiden Sie APK-Dateien aus Drittquellen.`,
+  },
+  {
+    icon: "shield-check" as const,
+    title: "Schritt 2 — Konto erstellen und Wiederherstellung sichern",
+    body: "Bei der Registrierung wird eine Wallet auf Ihrem Gerät erzeugt. Da Fomo non-custodial ist, werden Ihre Wallet und Schlüssel direkt auf Ihrem Gerät erzeugt und geschützt (mittels Shamir's Secret Sharing) — nicht von Fomo gespeichert. Richten Sie unbedingt die Backup-/Wiederherstellungsfunktion ein, bevor Sie Geld einzahlen.",
+    screenshot: {
+      src: mobileLoginScreenshot,
+      alt: "Fomos mobiler Anmeldebildschirm mit dem Text 'where traders become legends' und Buttons für Sign in with Apple und Sign in with Google",
+      caption: "Fomos echter Anmeldebildschirm — keine E-Mail oder Passwort nötig, nur Anmeldung mit Apple oder Google.",
+      narrow: true,
+    },
+  },
+  {
+    icon: "spark" as const,
+    title: "Schritt 3 — Empfehlungscode eingeben",
+    body: `Geben Sie bei der Registrierung einen gültigen Empfehlungscode ein, um dauerhaft ${FOMO.feeDiscountPercent}% Rabatt auf Ihre Handelsgebühren zu erhalten.`,
+  },
+  {
+    icon: "chart" as const,
+    title: "Schritt 4 — Guthaben einzahlen",
+    body: "Zahlen Sie Guthaben entsprechend den in Ihrer Region und auf der genutzten Chain verfügbaren Methoden ein. Fomo unterstützt Solana, Base, BNB Chain und Monad — prüfen Sie vor der Einzahlung unbedingt, dass Sie die richtige Chain gewählt haben.",
+    screenshot: {
+      src: depositModalScreenshot,
+      alt: "Fomos 'Deposit with'-Modal zeigt Crypto (USDC) verfügbar und Credit or debit als 'Coming soon' markiert",
+      caption: "Fomos Einzahlungsbildschirm, aufgenommen im September 2026: Krypto (USDC) funktioniert bereits; Karteneinzahlung ist noch als \"Coming soon\" markiert — obwohl Fomos Marketing-Website mit Apple-Pay-Einzahlung wirbt.",
+    },
+  },
+  {
+    icon: "check-circle" as const,
+    title: "Schritt 5 — Ersten Trade tätigen",
+    body: `Spothandel (Meme-Coins, Altcoins, Stablecoins) steht allen Nutzern offen; Perpetual Futures (über ${FOMO.perpsProvider}) außerhalb der USA. Als Einsteiger empfiehlt sich ein kleiner Trade mit einem bekannten Asset.`,
+  },
+  {
+    icon: "shield-check" as const,
+    title: "Schritt 6 — Sicherheitsfunktionen aktivieren",
+    body: "Aktivieren Sie alle von der App angebotenen Sicherheitsoptionen (Biometrie, Backup-Verifizierung usw.), bevor Sie nennenswerte Beträge einzahlen. Da Fomo bei Geräte- oder Schlüsselproblemen nicht eingreifen kann, liegt die Verantwortung für Sicherheit stärker bei Ihnen als bei einer zentralisierten Börse.",
+  },
+];
+---
+
+<BaseLayout
+  locale={locale}
+  pageKey={pageKey}
+  title="Erste Schritte mit Fomo: Schritt-für-Schritt-Anleitung"
+  description="Vollständige Anleitung von der Fomo-Installation über die Eingabe des Empfehlungscodes bis zum ersten Trade."
+>
+  <section class="mx-auto max-w-3xl px-4 py-14 sm:px-6">
+    <h1 class="text-3xl font-extrabold sm:text-4xl">Erste Schritte mit Fomo</h1>
+    <p class="mt-4 text-[var(--color-muted)]">
+      Sechs Schritte von der Installation bis zum ersten rabattierten Trade. Kein Konto, kein Passwort — nur eine
+      Wallet und ein Code.
+    </p>
+
+    <ol class="mt-10 flex flex-col gap-5">
+      {
+        steps.map((step) => (
+          <li>
+            <Card>
+              <div class="flex flex-col gap-4 sm:flex-row sm:items-start">
+                <span class="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-[var(--color-accent-soft)] text-[var(--color-accent)]">
+                  <Icon name={step.icon} class="size-7" />
+                </span>
+                <div>
+                  <h2 class="text-base font-semibold sm:text-lg">{step.title}</h2>
+                  <p class="mt-2 text-sm leading-relaxed text-[var(--color-muted)] sm:text-base">{step.body}</p>
+                </div>
+              </div>
+              {step.screenshot && (
+                <div class:list={["mt-5", step.screenshot.narrow && "max-w-[220px]"]}>
+                  <AppScreenshot src={step.screenshot.src} alt={step.screenshot.alt} caption={step.screenshot.caption} />
+                </div>
+              )}
+            </Card>
+          </li>
+        ))
+      }
+    </ol>
+
+    <Card class="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <p class="font-semibold">Empfehlungscode bereit?</p>
+        <p class="mt-1 text-sm text-[var(--color-muted)]">Code {FOMO.referralCode} für {FOMO.feeDiscountPercent}% Rabatt auf Handelsgebühren.</p>
+      </div>
+      <Button href={resolveLocaleUrl(locale, PAGE_KEYS.referralCode)} showArrow class="w-full sm:w-auto">
+        Empfehlungscode ansehen
+      </Button>
+    </Card>
+
+    <div class="mt-10">
+      <RiskDisclaimer locale={locale} variant="page" />
+    </div>
+  </section>
+</BaseLayout>

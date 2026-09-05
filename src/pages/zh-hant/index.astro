@@ -1,0 +1,129 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Button from "../../components/Button.astro";
+import Card from "../../components/Card.astro";
+import TrustBar from "../../components/TrustBar.astro";
+import Icon from "../../components/Icon.astro";
+import AppScreenshot from "../../components/AppScreenshot.astro";
+import leaderboardScreenshot from "../../assets/screenshots/mobile-leaderboard-clans.jpg";
+import { PAGE_KEYS, resolveLocaleUrl } from "../../i18n/routes";
+import { FOMO, SITE_NAME } from "../../lib/site";
+import { getCollection } from "astro:content";
+
+const locale = "zh-hant" as const;
+const pageKey = PAGE_KEYS.home;
+
+const posts = (await getCollection("blog", (e) => e.data.locale === locale))
+  .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
+  .slice(0, 3);
+
+const howItWorks = [
+  { title: "下載 Fomo 應用程式", body: `支援 ${FOMO.platforms.join("、")}。` },
+  { title: "註冊時輸入推薦碼", body: "如欲使用。" },
+  { title: "正常交易", body: `${FOMO.feeDiscountPercent}% 手續費折扣將自動套用於每筆交易。` },
+];
+---
+
+<BaseLayout
+  locale={locale}
+  pageKey={pageKey}
+  title={`${SITE_NAME} — Fomo 獨立評測與推薦碼指南`}
+  description="針對社群化加密貨幣交易應用程式 Fomo 的獨立評測 —— 若您決定嘗試,也附上可享 10% 手續費折扣的推薦碼資訊。"
+>
+  <section class="mx-auto max-w-6xl px-4 pb-16 pt-14 sm:px-6 sm:pt-20">
+    <span class="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1 text-xs font-medium text-[var(--color-muted)]">
+      <Icon name="shield-check" class="size-3.5 text-[var(--color-accent)]" />
+      TradePack 為獨立評測網站,並非 Fomo 官方網站
+    </span>
+    <h1 class="text-balance mt-5 max-w-2xl text-4xl font-extrabold leading-tight sm:text-5xl">
+      交易前,先了解 <span class="text-[var(--color-accent)]">Fomo</span>
+    </h1>
+    <p class="mt-5 max-w-xl text-base leading-relaxed text-[var(--color-muted)] sm:text-lg">
+      針對社群化加密貨幣交易應用程式 Fomo 的獨立評測 —— 若您決定嘗試,也附上可享 {FOMO.feeDiscountPercent}%
+      手續費折扣的推薦碼資訊。
+    </p>
+    <div class="mt-8 flex flex-wrap items-center gap-3">
+      <Button href={resolveLocaleUrl(locale, PAGE_KEYS.referralCode)} size="lg" showArrow>
+        查看推薦碼
+      </Button>
+    </div>
+    <p class="mt-4 text-xs text-[var(--color-muted)]">TradePack 為獨立評測網站,並非 Fomo 官方網站。</p>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+    <TrustBar
+      items={[
+        { icon: "wallet", text: "2026 年由 Index Ventures 領投的 7,500 萬美元 B 輪融資" },
+        { icon: "spark", text: "Union Square Ventures、Benchmark 參與投資" },
+        { icon: "shield-check", text: "非託管 —— 資產由您自行掌控,而非 Fomo 代管" },
+        { icon: "chart", text: "2026 年 3 月美國 SEC/CFTC 已就法律地位發布明確指引" },
+      ]}
+    />
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+    <h2 class="text-2xl font-bold sm:text-3xl">運作方式</h2>
+    <div class="mt-6 grid gap-5 sm:grid-cols-3">
+      {
+        howItWorks.map((step, i) => (
+          <Card class="text-center">
+            <span class="mx-auto flex size-9 items-center justify-center rounded-full bg-[var(--color-accent)] text-sm font-bold text-[var(--color-bg)]">
+              {i + 1}
+            </span>
+            <h3 class="mt-4 text-base font-semibold">{step.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-[var(--color-muted)]">{step.body}</p>
+          </Card>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-4xl px-4 pb-16 sm:px-6">
+    <Card>
+      <h2 class="text-xl font-bold sm:text-2xl">為什麼會有這個網站</h2>
+      <p class="mt-3 text-sm leading-relaxed text-[var(--color-muted)] sm:text-base">
+        Fomo 是一款非託管交易應用程式 —— 意味著您的資產保存在只有您能控制的錢包中,而非公司代管的帳戶。它支援多條鏈
+        ({FOMO.chains.join("、")}),可交易迷因幣、山寨幣、穩定幣等現貨資產,並可透過 {FOMO.perpsProvider}{" "}
+        進行永續合約交易(美國使用者除外)。TradePack 成立的目的,是清楚說明它實際如何運作、真實成本是多少,以及尚不
+        完美之處 —— 而不只是單純推廣。
+      </p>
+      <p class="mt-4 text-xs italic text-[var(--color-muted)]">
+        提醒:本頁內容屬資訊/評測性質,並非投資邀約或財務建議。
+      </p>
+    </Card>
+  </section>
+
+  <section class="mx-auto max-w-xs px-4 pb-16 sm:px-6">
+    <AppScreenshot
+      src={leaderboardScreenshot}
+      alt="Fomo 的排行榜與 Clans 分頁,顯示頂尖交易者與 Clan 排名以及交易圖表"
+      caption="Fomo 的排行榜與 Clans 分頁 —— 應用程式核心的社群/競爭元素。"
+    />
+  </section>
+
+  {
+    posts.length > 0 && (
+      <section class="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
+        <div class="flex items-center justify-between">
+          <h2 class="text-2xl font-bold sm:text-3xl">部落格</h2>
+          <a href={resolveLocaleUrl(locale, PAGE_KEYS.blogIndex)} class="text-sm font-semibold text-[var(--color-accent)] hover:underline">
+            查看全部
+          </a>
+        </div>
+        <div class="mt-6 grid gap-5 sm:grid-cols-3">
+          {posts.map((post) => (
+            <a href={`/zh-hant/blog/${post.id.replace(/^zh-hant\//, "")}`} class="block">
+              <Card class="h-full transition-colors hover:border-[var(--color-accent)]/40">
+                <p class="text-xs text-[var(--color-muted)]">
+                  {post.data.publishDate.toLocaleDateString("zh-TW", { year: "numeric", month: "long", day: "numeric" })}
+                </p>
+                <h3 class="mt-2 text-lg font-semibold leading-snug">{post.data.title}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-[var(--color-muted)] line-clamp-3">{post.data.description}</p>
+              </Card>
+            </a>
+          ))}
+        </div>
+      </section>
+    )
+  }
+</BaseLayout>

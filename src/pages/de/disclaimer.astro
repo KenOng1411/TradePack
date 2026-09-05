@@ -1,0 +1,91 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import RiskDisclaimer from "../../components/RiskDisclaimer.astro";
+import { PAGE_KEYS } from "../../i18n/routes";
+import { FOMO, SITE_NAME } from "../../lib/site";
+
+const locale = "de" as const;
+const pageKey = PAGE_KEYS.disclaimer;
+---
+
+<BaseLayout
+  locale={locale}
+  pageKey={pageKey}
+  title="Haftungsausschluss"
+  description={`Rechtliche Informationen und Risikohinweis von ${SITE_NAME} — einer unabhängigen Testseite zu Fomo und anderen Krypto-Börsen.`}
+>
+  <section class="mx-auto max-w-3xl px-4 py-14 sm:px-6">
+    <h1 class="text-3xl font-extrabold sm:text-4xl">Haftungsausschluss</h1>
+
+    <div class="mt-8">
+      <RiskDisclaimer locale={locale} variant="page" />
+    </div>
+
+    <div class="prose-content mt-10 max-w-none">
+      <p>
+        {SITE_NAME} ist eine unabhängige Informationsseite über die Trading-App {FOMO.displayName}. Wir vertreten,
+        autorisieren oder handeln in keiner offiziellen Funktion für {FOMO.displayName} ({FOMO.website.replace("https://", "")}).
+      </p>
+
+      <h2>Offenlegung des Affiliate-Marketings</h2>
+      <p>
+        {SITE_NAME} nimmt am Empfehlungsprogramm von {FOMO.displayName} teil. Wenn Sie sich über einen Empfehlungslink
+        oder -code dieser Seite registrieren und handeln, erhalten wir möglicherweise eine Provision basierend auf
+        Ihren Handelsgebühren. Dadurch entstehen Ihnen keine zusätzlichen Kosten, und der Rabatt, den Sie erhalten
+        ({FOMO.feeDiscountPercent}% auf Handelsgebühren), ist Teil des regulären {FOMO.displayName}-Empfehlungsprogramms
+        — kein exklusives Angebot von {SITE_NAME}.
+      </p>
+
+      <h2>Regulatorischer Hinweis (EU/MiCA)</h2>
+      <p>
+        {FOMO.displayName} steht nicht auf der Liste der gemäß der EU-Verordnung über Märkte für Kryptowerte (MiCA)
+        lizenzierten Anbieter von Kryptowerte-Dienstleistungen (CASP) (Stand: unsere letzte Prüfung im September
+        2026). Die aktive Bewerbung nicht lizenzierter Krypto-Dienstleistungen gegenüber Verbrauchern in der EU kann
+        je nach Mitgliedstaat rechtlichen Beschränkungen unterliegen; Frankreich beispielsweise sieht eigene,
+        strengere Regeln für die Werbung nicht zugelassener Anbieter vor. Die Inhalte dieser Website dienen
+        ausschließlich der unabhängigen Information und stellen keine Aufforderung zur Nutzung eines nicht
+        lizenzierten Dienstleisters dar. Prüfen Sie vor jeder Nutzung eigenständig die aktuelle Rechtslage in Ihrem
+        Land.
+      </p>
+
+      <h2>Keine Finanzberatung</h2>
+      <p>
+        Die Tests, Anleitungen, Gebühreninformationen und Vergleiche auf dieser Website stellen keine Finanz-,
+        Anlage-, Steuer- oder Rechtsberatung dar. Kryptomärkte, insbesondere Meme-Coins und gehebelte Perpetual
+        Futures, sind extrem volatil und bergen ein erhebliches Verlustrisiko bis hin zum Totalverlust. Führen Sie
+        vor dem Handel eigene, gründliche Recherchen durch und ziehen Sie bei Bedarf qualifizierte Beratung hinzu.
+      </p>
+
+      <h2>Genauigkeit</h2>
+      <p>
+        Wir bemühen uns, Informationen zu Gebühren, Funktionen und regulatorischen Rahmenbedingungen aktuell zu
+        halten, doch Krypto-Produkte entwickeln sich schnell. Bestätigen Sie die aktuellen Bedingungen stets direkt
+        in der {FOMO.displayName}-App oder auf {FOMO.website.replace("https://", "")}, bevor Sie sich auf Inhalte
+        dieser Seite verlassen.
+      </p>
+
+      <h2>Zulässigkeit</h2>
+      <p>
+        Ob der Handel mit Kryptowährungen möglich ist, welche Produktfunktionen (z. B. Perpetual Futures) verfügbar
+        sind und welche rechtlichen Anforderungen gelten, unterscheidet sich je nach Land und kann sich mit der Zeit
+        ändern. Es liegt in Ihrer eigenen Verantwortung zu prüfen, ob die Nutzung von {FOMO.displayName} oder anderen
+        auf dieser Seite genannten Produkten in Ihrem Land zulässig ist.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  .prose-content h2 {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+  .prose-content p {
+    margin-bottom: 1.1rem;
+    line-height: 1.75;
+    color: var(--color-muted);
+  }
+</style>

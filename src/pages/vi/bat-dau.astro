@@ -1,0 +1,113 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Button from "../../components/Button.astro";
+import Card from "../../components/Card.astro";
+import Icon from "../../components/Icon.astro";
+import RiskDisclaimer from "../../components/RiskDisclaimer.astro";
+import AppScreenshot from "../../components/AppScreenshot.astro";
+import { PAGE_KEYS, resolveLocaleUrl } from "../../i18n/routes";
+import { FOMO } from "../../lib/site";
+import depositModalScreenshot from "../../assets/screenshots/deposit-modal.jpg";
+import mobileLoginScreenshot from "../../assets/screenshots/mobile-login.jpg";
+
+const locale = "vi" as const;
+const pageKey = PAGE_KEYS.howToStart;
+
+const steps = [
+  {
+    icon: "wallet" as const,
+    title: "1. Tải app",
+    body: `Fomo có trên ${FOMO.platforms.join(", ")}. Tải từ store chính thức hoặc trực tiếp từ fomo.family — tránh các nguồn APK bên thứ ba.`,
+  },
+  {
+    icon: "shield-check" as const,
+    title: "2. Tạo tài khoản",
+    body: "Làm theo luồng đăng ký trong app. Vì Fomo là non-custodial, ví và khóa của bạn được tạo và bảo mật ngay trên thiết bị (qua Shamir's Secret Sharing) thay vì lưu trữ bởi Fomo — hãy sao lưu phương thức khôi phục app cung cấp trước khi nạp bất kỳ khoản tiền nào.",
+    screenshot: {
+      src: mobileLoginScreenshot,
+      alt: "Màn hình đăng nhập của Fomo trên di động, ghi 'where traders become legends' với nút Sign in with Apple và Sign in with Google",
+      caption: "Màn hình đăng nhập thật của Fomo — không cần email hay mật khẩu, chỉ cần đăng nhập bằng Apple hoặc Google.",
+      narrow: true,
+    },
+  },
+  {
+    icon: "spark" as const,
+    title: "3. Nhập mã giới thiệu",
+    body: `Nhập mã hợp lệ khi đăng ký để được giảm ${FOMO.feeDiscountPercent}% phí giao dịch cho các lệnh sau này.`,
+  },
+  {
+    icon: "chart" as const,
+    title: "4. Nạp tiền",
+    body: "Nạp theo phương thức app hỗ trợ cho khu vực/chain của bạn. Chỉ gửi tài sản đúng mạng app yêu cầu — gửi sai chain là lỗi phổ biến và không thể hoàn tác với ví non-custodial.",
+    screenshot: {
+      src: depositModalScreenshot,
+      alt: "Modal 'Deposit with' của Fomo hiển thị Crypto (USDC) khả dụng và Credit or debit ghi 'Coming soon'",
+      caption: "Màn hình nạp tiền của Fomo, chụp tháng 9/2026: nạp bằng crypto (USDC) đã hoạt động; nạp bằng thẻ vẫn ghi \"Sắp ra mắt\" — dù trang marketing của Fomo có quảng cáo nạp bằng Apple Pay.",
+    },
+  },
+  {
+    icon: "check-circle" as const,
+    title: "5. Thực hiện lệnh đầu tiên",
+    body: `Giao dịch spot (memecoin, altcoin, stablecoin) khả dụng cho mọi người dùng; perpetuals (qua ${FOMO.perpsProvider}) khả dụng ngoài nước Mỹ. Nên bắt đầu với khoản nhỏ cho tới khi quen với giao diện và cấu trúc phí.`,
+  },
+  {
+    icon: "shield-check" as const,
+    title: "6. Bật các tính năng bảo mật",
+    body: "Bật mọi tùy chọn bảo mật app cung cấp (sinh trắc học, xác minh sao lưu...) trước khi nạp khoản tiền đáng kể. Vì Fomo không thể khôi phục tài sản thay bạn — đó là đánh đổi của mô hình non-custodial — thói quen bảo mật cá nhân là lớp an toàn duy nhất.",
+  },
+];
+---
+
+<BaseLayout
+  locale={locale}
+  pageKey={pageKey}
+  title="Hướng dẫn bắt đầu giao dịch trên Fomo từng bước"
+  description="Hướng dẫn đầy đủ từ cài đặt Fomo, áp mã giới thiệu, đến thực hiện lệnh giao dịch đầu tiên."
+>
+  <section class="mx-auto max-w-3xl px-4 py-14 sm:px-6">
+    <h1 class="text-3xl font-extrabold sm:text-4xl">Hướng dẫn bắt đầu giao dịch trên Fomo</h1>
+    <p class="mt-4 text-[var(--color-muted)]">
+      Sáu bước từ cài đặt tới lệnh giao dịch đầu tiên được giảm phí. Không cần tài khoản, không mật khẩu — chỉ cần
+      ví và mã giới thiệu.
+    </p>
+
+    <ol class="mt-10 flex flex-col gap-5">
+      {
+        steps.map((step) => (
+          <li>
+            <Card>
+              <div class="flex flex-col gap-4 sm:flex-row sm:items-start">
+                <span class="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-[var(--color-accent-soft)] text-[var(--color-accent)]">
+                  <Icon name={step.icon} class="size-7" />
+                </span>
+                <div>
+                  <h2 class="text-base font-semibold sm:text-lg">{step.title}</h2>
+                  <p class="mt-2 text-sm leading-relaxed text-[var(--color-muted)] sm:text-base">{step.body}</p>
+                </div>
+              </div>
+              {step.screenshot && (
+                <div class:list={["mt-5", step.screenshot.narrow && "max-w-[220px]"]}>
+                  <AppScreenshot src={step.screenshot.src} alt={step.screenshot.alt} caption={step.screenshot.caption} />
+                </div>
+              )}
+            </Card>
+          </li>
+        ))
+      }
+    </ol>
+
+    <Card class="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <p class="font-semibold">Đã sẵn sàng mã giới thiệu?</p>
+        <p class="mt-1 text-sm text-[var(--color-muted)]">Dùng mã {FOMO.referralCode} để giảm {FOMO.feeDiscountPercent}% phí giao dịch.</p>
+      </div>
+      <Button href={resolveLocaleUrl(locale, PAGE_KEYS.referralCode)} showArrow class="w-full sm:w-auto">
+        Xem mã giới thiệu
+      </Button>
+    </Card>
+
+    <div class="mt-10">
+      <RiskDisclaimer locale={locale} variant="page" />
+    </div>
+  </section>
+</BaseLayout>

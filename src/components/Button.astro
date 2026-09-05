@@ -1,0 +1,54 @@
+---
+import Icon from "./Icon.astro";
+
+interface Props {
+  href?: string;
+  variant?: "primary" | "secondary" | "ghost";
+  size?: "md" | "lg";
+  class?: string;
+  showArrow?: boolean;
+  external?: boolean;
+  type?: "button" | "submit";
+}
+
+const {
+  href,
+  variant = "primary",
+  size = "md",
+  class: className = "",
+  showArrow = false,
+  external = false,
+  type = "button",
+} = Astro.props;
+
+const base =
+  "inline-flex items-center justify-center gap-2 rounded-2xl font-semibold transition-all duration-200 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] disabled:opacity-50 disabled:cursor-not-allowed";
+
+const variants: Record<string, string> = {
+  primary:
+    "bg-[var(--color-accent)] text-[var(--color-bg)] hover:bg-[var(--color-accent-hover)] shadow-[0_0_0_1px_rgba(0,226,138,0.15)] hover:shadow-[0_0_24px_rgba(0,226,138,0.25)]",
+  secondary:
+    "bg-[var(--color-surface)] text-[var(--color-text)] border border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] hover:border-[var(--color-violet)]",
+  ghost: "bg-transparent text-[var(--color-text)] hover:bg-[var(--color-surface)]",
+};
+
+const sizes: Record<string, string> = {
+  md: "px-5 py-2.5 text-sm",
+  lg: "px-7 py-3.5 text-base",
+};
+
+const classes = `${base} ${variants[variant]} ${sizes[size]} ${className}`;
+const Tag = href ? "a" : "button";
+---
+
+<Tag
+  href={href}
+  type={href ? undefined : type}
+  class={classes}
+  target={external ? "_blank" : undefined}
+  rel={external ? "noopener noreferrer" : undefined}
+>
+  <slot />
+  {showArrow && <Icon name="arrow-right" class="size-4" />}
+  {external && !showArrow && <Icon name="external-link" class="size-4" />}
+</Tag>

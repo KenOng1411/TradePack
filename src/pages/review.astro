@@ -1,0 +1,246 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/Button.astro";
+import Card from "../components/Card.astro";
+import StatBadge from "../components/StatBadge.astro";
+import RiskDisclaimer from "../components/RiskDisclaimer.astro";
+import AppScreenshot from "../components/AppScreenshot.astro";
+import { PAGE_KEYS, resolveLocaleUrl } from "../i18n/routes";
+import { FOMO, SITE_NAME } from "../lib/site";
+import tradingChartScreenshot from "../assets/screenshots/trading-chart-feed.jpg";
+import mobilePortfolioScreenshot from "../assets/screenshots/mobile-portfolio-home.jpg";
+import mobileFeedGlobalScreenshot from "../assets/screenshots/mobile-feed-global.jpg";
+import mobileFeedFriendsScreenshot from "../assets/screenshots/mobile-feed-friends.jpg";
+
+const locale = "en" as const;
+const pageKey = PAGE_KEYS.review;
+
+const toc = [
+  { id: "what-is-fomo", label: "What is Fomo?" },
+  { id: "what-can-you-trade", label: "What can you trade?" },
+  { id: "fees", label: "Fees" },
+  { id: "is-fomo-safe", label: "Is Fomo safe?" },
+  { id: "what-we-liked", label: "What we liked" },
+  { id: "what-to-watch-out-for", label: "What to watch out for" },
+  { id: "bottom-line", label: "Bottom line" },
+];
+
+const pros = [
+  "Genuinely fast to go from “open app” to “in a trade” — the onboarding friction other apps have is mostly gone.",
+  "Non-custodial architecture backed by real regulatory clarity, not just a marketing claim.",
+  "Multi-chain support (Solana, Base, BNB Chain, Monad) in one interface.",
+];
+
+const cons = [
+  "No deposit protection — self-custody means no recovery mechanism if you lose wallet access.",
+  "Some users report trades that execute easily on the buy side but are harder to exit on thin-liquidity tokens.",
+  "The social feed and leaderboard format is built to prompt fast action, which isn't ideal if you're prone to impulsive trading — memecoin positions can go to zero.",
+  "Fee structure isn't obvious until you dig — see our fees page for the real numbers.",
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Review",
+  itemReviewed: {
+    "@type": "SoftwareApplication",
+    name: FOMO.displayName,
+    applicationCategory: "FinanceApplication",
+    url: FOMO.website,
+  },
+  author: { "@type": "Organization", name: SITE_NAME },
+  publisher: { "@type": "Organization", name: SITE_NAME },
+  reviewBody:
+    "Independent review of Fomo, a non-custodial crypto trading app. This is not an official Fomo page — TradePack is not affiliated with, endorsed by, or acting on behalf of Fomo.",
+  datePublished: "2026-09-11",
+};
+---
+
+<BaseLayout
+  locale={locale}
+  pageKey={pageKey}
+  title="Fomo App Review 2026: Fees, Safety, and What It's Actually Like to Use"
+  description="An independent review of Fomo — the non-custodial social trading app on Solana, Base, BNB Chain, and Monad. Fees, safety, funding, and honest pros/cons."
+  type="article"
+  jsonLd={jsonLd}
+>
+  <section class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+    <span class="text-xs font-semibold uppercase tracking-wide text-[var(--color-accent)]">Independent review</span>
+    <h1 class="text-balance mt-2 text-3xl font-extrabold sm:text-4xl">The {SITE_NAME} Review of Fomo</h1>
+    <p class="mt-4 max-w-2xl text-[var(--color-muted)]">
+      {SITE_NAME} is not affiliated with, endorsed by, or acting on behalf of Fomo. This review reflects our own
+      research and may earn us a commission through referral links.
+    </p>
+
+    <div class="mt-10 grid gap-10 lg:grid-cols-[240px_1fr]">
+      <aside class="hidden lg:block">
+        <nav class="sticky top-24 flex flex-col gap-1 border-l border-[var(--color-border)] pl-4" aria-label="Table of contents">
+          {
+            toc.map((item) => (
+              <a href={`#${item.id}`} class="py-1.5 text-sm text-[var(--color-muted)] hover:text-[var(--color-accent)]">
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+      </aside>
+
+      <div class="prose-content max-w-none">
+        <p>
+          Fomo is a "social-first" crypto trading app that lets you trade memecoins, altcoins, stablecoins, and
+          (outside the US) perpetual futures — all from a non-custodial wallet you control. It's backed by serious
+          money: a {FOMO.fundingRound} led by {FOMO.leadInvestor} at a {FOMO.valuation} valuation, with{" "}
+          {FOMO.otherInvestors.join(" and ")} also participating, bringing total disclosed funding to roughly{" "}
+          {FOMO.totalFundingDisclosed}. This review covers how it works, what it costs, and where it falls short.
+        </p>
+
+        <div class="not-prose my-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <StatBadge value={`${FOMO.spotFeePercent}%`} label="Spot fee" />
+          <StatBadge value={`${FOMO.feeDiscountPercent}%`} label="Referral discount" accent="violet" />
+          <StatBadge value={FOMO.chains.length.toString()} label="Chains supported" />
+          <StatBadge value={FOMO.valuation} label="Valuation" accent="violet" />
+        </div>
+
+        <div class="not-prose my-8 flex flex-wrap items-start gap-5">
+          <AppScreenshot
+            src={tradingChartScreenshot}
+            alt="Fomo's main trading screen showing a live price chart, Buy/Sell panel, and buy/sell volume stats"
+            caption="Fomo's main trading screen: live price chart, Buy/Sell panel, and feed-driven stats."
+            class="min-w-0 flex-1 basis-80"
+          />
+          <AppScreenshot
+            src={mobilePortfolioScreenshot}
+            alt="Fomo's mobile home screen showing a $0 portfolio balance, a Deposit button, Weekly Top Trades, and a token list including BTC, ETH, and XRP"
+            caption="The real mobile home screen — most traders never see the desktop view at all."
+            class="w-[220px] shrink-0"
+          />
+        </div>
+
+        <section id="what-is-fomo" class="scroll-mt-24">
+          <h2>What is Fomo?</h2>
+          <p>
+            Fomo positions itself as a social trading app rather than a traditional exchange interface — feeds,
+            leaderboards, and a fast "browse and trade" flow are central to the experience. Under the hood, it's
+            non-custodial: {FOMO.custodyMechanism} Your funds sit in a wallet only you control, not in a
+            company-held account.
+          </p>
+        </section>
+
+        <section id="what-can-you-trade" class="scroll-mt-24">
+          <h2>What can you trade?</h2>
+          <p>
+            Spot markets — memecoins, altcoins, and stablecoins — across Solana (the primary venue), Base, BNB
+            Chain, and Monad. Perpetual futures are available through an integration with {FOMO.perpsProvider}, but{" "}
+            <strong>not for US users</strong> — Fomo hasn't obtained the domestic registrations needed to offer
+            leveraged derivatives in the United States, even though its core spot trading is available nationwide.
+          </p>
+        </section>
+
+        <section id="fees" class="scroll-mt-24">
+          <h2>Fees</h2>
+          <p>
+            Spot trades cost roughly {FOMO.spotFeePercent}% per trade before any discount. Perpetuals carry a{" "}
+            {FOMO.perpsFeePerSidePercent}%-per-side Fomo fee on top of the underlying venue's own fees (e.g.,{" "}
+            {FOMO.perpsProvider}'s), which roughly doubles the direct cost of trading perps compared to spot. See our{" "}
+            <a href={resolveLocaleUrl(locale, PAGE_KEYS.fees)}>full fees breakdown</a> for a worked example, including
+            how a referral code changes the math.
+          </p>
+        </section>
+
+        <section id="is-fomo-safe" class="scroll-mt-24">
+          <h2>Is Fomo safe?</h2>
+          <p>
+            Two separate questions matter here. Technically: as a non-custodial app, Fomo can't unilaterally move or
+            freeze your funds, which removes one category of risk (an exchange collapsing with your deposits) but
+            adds another — there's no company safety net if you lose access to your wallet or get caught in a
+            memecoin that collapses to zero. Legally: in March 2026, the SEC and CFTC jointly clarified that
+            non-custodial wallet interfaces like Fomo's don't require broker-dealer registration, creating a specific
+            exemption category ("Covered User Interface Provider") that gave the model real regulatory footing in the
+            US.
+          </p>
+        </section>
+
+        <section id="what-we-liked" class="scroll-mt-24">
+          <h2>What we liked</h2>
+          <ul>
+            {pros.map((item) => <li>{item}</li>)}
+          </ul>
+        </section>
+
+        <section id="what-to-watch-out-for" class="scroll-mt-24">
+          <h2>What to watch out for</h2>
+          <ul>
+            {cons.map((item) => <li>{item}</li>)}
+          </ul>
+          <div class="not-prose mt-2 grid max-w-md grid-cols-2 gap-4">
+            <AppScreenshot
+              src={mobileFeedGlobalScreenshot}
+              alt="Fomo's Global feed showing other users' buy and sell orders posted seconds ago"
+              caption="The Global feed — other users' trades post in real time, seconds old."
+            />
+            <AppScreenshot
+              src={mobileFeedFriendsScreenshot}
+              alt="Fomo's Friends feed showing grouped buy and sell activity from followed traders on specific tokens"
+              caption="The Friends feed — grouped activity from traders you follow."
+            />
+          </div>
+        </section>
+
+        <section id="bottom-line" class="scroll-mt-24">
+          <h2>Bottom line</h2>
+          <p>
+            Fomo is a legitimate, well-funded app with a genuine non-custodial architecture and unusually clear
+            regulatory footing for its category — not the kind of thing you'd normally have to ask "is this a scam?"
+            about. The real risks are the ones inherent to memecoin and perp trading generally, not to Fomo
+            specifically. If you're going to use it either way, our referral code takes {FOMO.feeDiscountPercent}%
+            off your trading fees — see the <a href={resolveLocaleUrl(locale, PAGE_KEYS.referralCode)}>referral code page</a>.
+          </p>
+        </section>
+
+        <div class="not-prose mt-10">
+          <Card class="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p class="font-semibold">Ready to try Fomo with the discount applied?</p>
+              <p class="mt-1 text-sm text-[var(--color-muted)]">Use code {FOMO.referralCode} for {FOMO.feeDiscountPercent}% off.</p>
+            </div>
+            <Button href={resolveLocaleUrl(locale, PAGE_KEYS.referralCode)} showArrow class="w-full sm:w-auto">
+              Get the referral code
+            </Button>
+          </Card>
+        </div>
+
+        <div class="not-prose mt-8">
+          <RiskDisclaimer locale={locale} variant="page" />
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  .prose-content h2 {
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+  .prose-content p {
+    margin-bottom: 1.1rem;
+    line-height: 1.75;
+    color: var(--color-muted);
+  }
+  .prose-content ul {
+    margin: 0 0 1.1rem 1.25rem;
+    list-style: disc;
+    color: var(--color-muted);
+    line-height: 1.75;
+  }
+  .prose-content li {
+    margin-bottom: 0.5rem;
+  }
+  .prose-content a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+</style>

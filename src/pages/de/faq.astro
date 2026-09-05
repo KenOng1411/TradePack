@@ -1,0 +1,84 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import FAQAccordion from "../../components/FAQAccordion.astro";
+import RiskDisclaimer from "../../components/RiskDisclaimer.astro";
+import { PAGE_KEYS } from "../../i18n/routes";
+import { FOMO, SITE_NAME } from "../../lib/site";
+
+const locale = "de" as const;
+const pageKey = PAGE_KEYS.faq;
+
+const faqItems = [
+  {
+    question: "Ist Fomo sicher?",
+    answer:
+      "Die App ist non-custodial (Ihre Vermögenswerte bleiben in Ihrer Kontrolle, nicht bei Fomo) und verfügt über eine gewisse rechtliche Klarheit in den USA (SEC/CFTC-Leitlinie vom März 2026). Das beseitigt einige, aber nicht alle Risiken — Details im vollständigen Test.",
+  },
+  {
+    question: "Ist Fomo eine lizenzierte Börse?",
+    answer:
+      "Fomo agiert als Non-Custodial-Wallet-Interface — eine Kategorie, für die SEC/CFTC (USA) klargestellt haben, dass keine Broker-Registrierung erforderlich ist. In der EU verfügt Fomo derzeit über keine Lizenz als Kryptowerte-Dienstleister (CASP) gemäß MiCA.",
+  },
+  {
+    question: "Welche Chains unterstützt Fomo?",
+    answer: `${FOMO.chains[0]} (Hauptchain), ${FOMO.chains.slice(1).join(", ")}.`,
+  },
+  {
+    question: "Können US-Nutzer Perpetual Futures handeln?",
+    answer: `Nein — Perpetual Futures über ${FOMO.perpsProvider} sind derzeit nicht für US-Nutzer verfügbar. Spothandel steht in den gesamten USA zur Verfügung.`,
+  },
+  {
+    question: "Wie hoch sind die Fomo-Gebühren?",
+    answer: `Spothandel vor Rabatt rund ${FOMO.spotFeePercent}%; bei Perpetual Futures kommen zur Basisgebühr rund ${FOMO.perpsFeePerSidePercent}% pro Seite hinzu. Mit Empfehlungscode zusätzlich ${FOMO.feeDiscountPercent}% Rabatt.`,
+  },
+  {
+    question: "Wie funktioniert der Empfehlungscode?",
+    answer: `Bei der Registrierung eingeben — der ${FOMO.feeDiscountPercent}%-Gebührenrabatt gilt danach automatisch für alle zukünftigen Trades.`,
+  },
+  {
+    question: `Arbeitet ${SITE_NAME} mit Fomo zusammen?`,
+    answer: `Nein. ${SITE_NAME} ist eine unabhängige Testseite. Wenn Sie sich über einen Empfehlungslink registrieren und handeln, erhalten wir möglicherweise eine Provision — Details im Disclaimer.`,
+  },
+  {
+    question: "Ist Fomo in der EU legal nutzbar?",
+    answer:
+      "Fomo ist nicht als Kryptowerte-Dienstleister (CASP) gemäß der MiCA-Verordnung lizenziert. Ob und inwieweit die Nutzung eines nicht lizenzierten Anbieters in Ihrem EU-Land zulässig ist, kann je nach Land unterschiedlich geregelt sein — informieren Sie sich vor der Nutzung eigenständig.",
+  },
+  {
+    question: "Was passiert, wenn ich den Zugriff auf meine Wallet verliere?",
+    answer:
+      "Da Fomo non-custodial ist, kann das Unternehmen weder Vermögenswerte wiederherstellen noch den Zugriff zurücksetzen — sichern Sie Ihre Wiederherstellungsdaten sorgfältig, bevor Sie Guthaben einzahlen.",
+  },
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqItems.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: { "@type": "Answer", text: item.answer },
+  })),
+};
+---
+
+<BaseLayout
+  locale={locale}
+  pageKey={pageKey}
+  title="Häufige Fragen zu Fomo"
+  description="Antworten auf häufige Fragen zu Sicherheit, Gebühren, unterstützten Chains und dem Empfehlungscode von Fomo."
+  jsonLd={jsonLd}
+>
+  <section class="mx-auto max-w-3xl px-4 py-14 sm:px-6">
+    <h1 class="text-3xl font-extrabold sm:text-4xl">Häufige Fragen</h1>
+    <p class="mt-4 text-[var(--color-muted)]">Die häufigsten Fragen zu Fomo und dieser Seite.</p>
+
+    <div class="mt-10">
+      <FAQAccordion items={faqItems} />
+    </div>
+
+    <div class="mt-10">
+      <RiskDisclaimer locale={locale} variant="page" />
+    </div>
+  </section>
+</BaseLayout>

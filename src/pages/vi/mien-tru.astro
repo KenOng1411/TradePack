@@ -1,0 +1,78 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import RiskDisclaimer from "../../components/RiskDisclaimer.astro";
+import { PAGE_KEYS } from "../../i18n/routes";
+import { FOMO, SITE_NAME } from "../../lib/site";
+
+const locale = "vi" as const;
+const pageKey = PAGE_KEYS.disclaimer;
+---
+
+<BaseLayout
+  locale={locale}
+  pageKey={pageKey}
+  title="Miễn trừ trách nhiệm"
+  description={`Thông tin pháp lý và cảnh báo rủi ro của ${SITE_NAME}, trang đánh giá độc lập về Fomo và các sàn crypto khác.`}
+>
+  <section class="mx-auto max-w-3xl px-4 py-14 sm:px-6">
+    <h1 class="text-3xl font-extrabold sm:text-4xl">Miễn trừ trách nhiệm</h1>
+
+    <div class="mt-8">
+      <RiskDisclaimer locale={locale} variant="page" />
+    </div>
+
+    <div class="prose-content mt-10 max-w-none">
+      <p>
+        {SITE_NAME} là trang thông tin độc lập về ứng dụng trading {FOMO.displayName}. Chúng tôi không đại diện,
+        không được ủy quyền, không được tài trợ, và không hành động thay mặt {FOMO.displayName} (
+        {FOMO.website.replace("https://", "")}) dưới bất kỳ hình thức chính thức nào.
+      </p>
+
+      <h2>Công bố về hoa hồng</h2>
+      <p>
+        {SITE_NAME} tham gia chương trình giới thiệu của {FOMO.displayName}. Nếu bạn đăng ký qua link/mã giới thiệu
+        trên trang này và sau đó giao dịch, chúng tôi có thể nhận hoa hồng dựa trên phí giao dịch của bạn. Việc này
+        không phát sinh thêm chi phí cho bạn, và mức giảm giá bạn nhận được ({FOMO.feeDiscountPercent}% phí giao
+        dịch) là một phần của chương trình giới thiệu tiêu chuẩn từ {FOMO.displayName}, không phải ưu đãi riêng của{" "}
+        {SITE_NAME}.
+      </p>
+
+      <h2>Không phải lời khuyên tài chính</h2>
+      <p>
+        Không có nội dung nào trên trang này — bao gồm đánh giá, hướng dẫn, bảng phí, hay so sánh — cấu thành lời
+        khuyên tài chính, đầu tư, thuế hay pháp lý. Thị trường tiền mã hóa, đặc biệt là memecoin và perpetual futures
+        có đòn bẩy, biến động rất mạnh và tiềm ẩn rủi ro mất vốn cao, kể cả mất toàn bộ. Hãy tự nghiên cứu kỹ và cân
+        nhắc tham khảo ý kiến chuyên gia được cấp phép trước khi giao dịch.
+      </p>
+
+      <h2>Về độ chính xác</h2>
+      <p>
+        Chúng tôi cố gắng cập nhật thông tin phí, tính năng và quy định pháp lý, nhưng các sản phẩm crypto thay đổi
+        rất nhanh. Luôn xác minh điều khoản hiện hành trực tiếp trong app {FOMO.displayName} hoặc trên{" "}
+        {FOMO.website.replace("https://", "")} trước khi ra quyết định dựa trên nội dung đăng tại đây.
+      </p>
+
+      <h2>Về tính hợp pháp</h2>
+      <p>
+        Khả năng giao dịch tiền mã hóa, các tính năng sản phẩm (như perpetual futures), và yêu cầu pháp lý khác nhau
+        theo từng khu vực và có thể thay đổi theo thời gian. Bạn có trách nhiệm tự xác nhận việc sử dụng{" "}
+        {FOMO.displayName}, hoặc bất kỳ sản phẩm nào được đề cập trên trang này, là hợp pháp tại nơi bạn cư trú.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  .prose-content h2 {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+  .prose-content p {
+    margin-bottom: 1.1rem;
+    line-height: 1.75;
+    color: var(--color-muted);
+  }
+</style>

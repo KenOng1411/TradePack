@@ -1,0 +1,171 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/Button.astro";
+import Card from "../components/Card.astro";
+import TrustBar from "../components/TrustBar.astro";
+import Icon from "../components/Icon.astro";
+import AppScreenshot from "../components/AppScreenshot.astro";
+import leaderboardScreenshot from "../assets/screenshots/mobile-leaderboard-clans.jpg";
+import { PAGE_KEYS, resolveLocaleUrl } from "../i18n/routes";
+import { FOMO, SITE_NAME } from "../lib/site";
+import { getCollection } from "astro:content";
+
+const locale = "en" as const;
+const pageKey = PAGE_KEYS.home;
+
+const posts = (await getCollection("blog", (e) => e.data.locale === locale))
+  .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
+  .slice(0, 3);
+
+const howItWorks = [
+  { title: "Download Fomo", body: `Available on ${FOMO.platforms.join(", ")}.` },
+  { title: "Enter the referral code", body: "During signup." },
+  { title: "Trade as usual", body: "Your 10% fee discount applies automatically, every trade." },
+];
+---
+
+<BaseLayout
+  locale={locale}
+  pageKey={pageKey}
+  title={`${SITE_NAME} — Independent Fomo Reviews & Referral Guide`}
+  description="Independent research on Fomo, the non-custodial crypto trading app: fees, referral codes, safety, and step-by-step setup guides."
+>
+  <section class="mx-auto max-w-6xl px-4 pb-16 pt-14 sm:px-6 sm:pt-20">
+    <div class="grid items-center gap-10 lg:grid-cols-2">
+      <div>
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1 text-xs font-medium text-[var(--color-muted)]">
+          <Icon name="shield-check" class="size-3.5 text-[var(--color-accent)]" />
+          Independent review — not affiliated with Fomo
+        </span>
+        <h1 class="text-balance mt-5 text-4xl font-extrabold leading-tight sm:text-5xl">
+          Trade on Fomo. <span class="text-[var(--color-accent)]">Keep more</span> of every trade.
+        </h1>
+        <p class="mt-5 max-w-xl text-base leading-relaxed text-[var(--color-muted)] sm:text-lg">
+          An independent look at Fomo's social crypto trading app — plus a referral code that gets you 10% off
+          trading fees from day one.
+        </p>
+        <div class="mt-8 flex flex-wrap items-center gap-3">
+          <Button href={resolveLocaleUrl(locale, PAGE_KEYS.referralCode)} size="lg" showArrow>
+            Get 10% Off Trading Fees
+          </Button>
+          <Button href={resolveLocaleUrl(locale, PAGE_KEYS.review)} variant="secondary" size="lg">
+            Read the full review
+          </Button>
+        </div>
+        <p class="mt-4 text-xs text-[var(--color-muted)]">
+          No extra signup, no card required — just apply the code when you create your Fomo account. (TradePack is
+          an independent review site, not affiliated with Fomo.)
+        </p>
+      </div>
+
+      <Card class="relative overflow-hidden">
+        <div class="absolute -right-16 -top-16 size-48 rounded-full bg-[var(--color-violet)]/20 blur-3xl" aria-hidden="true"></div>
+        <p class="text-xs uppercase tracking-wide text-[var(--color-muted)]">Referral savings, illustrated</p>
+        <div class="mt-4 flex items-baseline gap-2">
+          <span class="text-4xl font-extrabold tabular-nums text-[var(--color-accent)]">{FOMO.feeDiscountPercent}%</span>
+          <span class="text-sm text-[var(--color-muted)]">off every trading fee</span>
+        </div>
+        <div class="mt-6 flex flex-col gap-3 text-sm">
+          <div class="flex items-center justify-between rounded-xl bg-[var(--color-bg)] px-4 py-3">
+            <span class="text-[var(--color-muted)]">Spot fee (standard)</span>
+            <span class="font-semibold tabular-nums">{FOMO.spotFeePercent}%</span>
+          </div>
+          <div class="flex items-center justify-between rounded-xl bg-[var(--color-accent-soft)] px-4 py-3">
+            <span class="text-[var(--color-muted)]">Spot fee (with code)</span>
+            <span class="font-semibold tabular-nums text-[var(--color-accent)]">
+              {(FOMO.spotFeePercent * (1 - FOMO.feeDiscountPercent / 100)).toFixed(3)}%
+            </span>
+          </div>
+        </div>
+        <Button href={resolveLocaleUrl(locale, PAGE_KEYS.fees)} variant="ghost" class="mt-6 w-full" showArrow>
+          Open the fee calculator
+        </Button>
+      </Card>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+    <TrustBar
+      items={[
+        { icon: "wallet", text: "$75M Series B led by Index Ventures (2026)" },
+        { icon: "spark", text: "Backed by Union Square Ventures, Benchmark" },
+        { icon: "shield-check", text: "Non-custodial — you hold your own keys" },
+        { icon: "chart", text: "SEC/CFTC guidance clarified in March 2026" },
+      ]}
+    />
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+    <h2 class="text-2xl font-bold sm:text-3xl">How it works</h2>
+    <div class="mt-6 grid gap-5 sm:grid-cols-3">
+      {
+        howItWorks.map((step, i) => (
+          <Card class="text-center">
+            <span class="mx-auto flex size-9 items-center justify-center rounded-full bg-[var(--color-accent)] text-sm font-bold text-[var(--color-bg)]">
+              {i + 1}
+            </span>
+            <h3 class="mt-4 text-base font-semibold">{step.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-[var(--color-muted)]">{step.body}</p>
+          </Card>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-4xl px-4 pb-16 sm:px-6">
+    <Card>
+      <h2 class="text-xl font-bold sm:text-2xl">Why we cover Fomo</h2>
+      <p class="mt-3 text-sm leading-relaxed text-[var(--color-muted)] sm:text-base">
+        Fomo is a non-custodial trading app — meaning your funds stay in a wallet only you control, not a
+        company-held account. It runs across {FOMO.chains.join(", ")}, and lets you trade spot markets (memecoins,
+        altcoins, stablecoins) plus perpetuals through {FOMO.perpsProvider} (outside the US). We built {SITE_NAME} to
+        explain how it actually works, what it costs, and where the rough edges are — not just to sell you on it.
+      </p>
+    </Card>
+  </section>
+
+  <section class="mx-auto max-w-xs px-4 pb-16 sm:px-6">
+    <AppScreenshot
+      src={leaderboardScreenshot}
+      alt="Fomo's Leaderboard and Clans tabs, showing top traders and clan rankings alongside the trading chart"
+      caption="Fomo's Leaderboard and Clans tabs — the social, competitive layer at the center of the app."
+    />
+  </section>
+
+  {
+    posts.length > 0 && (
+      <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+        <div class="flex items-center justify-between">
+          <h2 class="text-2xl font-bold sm:text-3xl">From the blog</h2>
+          <a href={resolveLocaleUrl(locale, PAGE_KEYS.blogIndex)} class="text-sm font-semibold text-[var(--color-accent)] hover:underline">
+            View all
+          </a>
+        </div>
+        <div class="mt-6 grid gap-5 sm:grid-cols-3">
+          {posts.map((post) => (
+            <a href={`/blog/${post.id.replace(/^en\//, "")}`} class="block">
+              <Card class="h-full transition-colors hover:border-[var(--color-accent)]/40">
+                <p class="text-xs text-[var(--color-muted)]">
+                  {post.data.publishDate.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+                </p>
+                <h3 class="mt-2 text-lg font-semibold leading-snug">{post.data.title}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-[var(--color-muted)] line-clamp-3">{post.data.description}</p>
+              </Card>
+            </a>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  <section class="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
+    <Card class="flex flex-col items-start gap-5 bg-gradient-to-br from-[var(--color-surface)] to-[var(--color-bg)] sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <h2 class="text-xl font-bold sm:text-2xl">Ready to try it? Use our code and start with 10% off.</h2>
+      </div>
+      <Button href={resolveLocaleUrl(locale, PAGE_KEYS.referralCode)} size="lg" showArrow class="w-full sm:w-auto">
+        Get the referral code
+      </Button>
+    </Card>
+  </section>
+</BaseLayout>

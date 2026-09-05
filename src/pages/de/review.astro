@@ -1,0 +1,246 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Button from "../../components/Button.astro";
+import Card from "../../components/Card.astro";
+import StatBadge from "../../components/StatBadge.astro";
+import RiskDisclaimer from "../../components/RiskDisclaimer.astro";
+import AppScreenshot from "../../components/AppScreenshot.astro";
+import { PAGE_KEYS, resolveLocaleUrl } from "../../i18n/routes";
+import { FOMO, SITE_NAME } from "../../lib/site";
+import tradingChartScreenshot from "../../assets/screenshots/trading-chart-feed.jpg";
+import mobilePortfolioScreenshot from "../../assets/screenshots/mobile-portfolio-home.jpg";
+import mobileFeedGlobalScreenshot from "../../assets/screenshots/mobile-feed-global.jpg";
+import mobileFeedFriendsScreenshot from "../../assets/screenshots/mobile-feed-friends.jpg";
+
+const locale = "de" as const;
+const pageKey = PAGE_KEYS.review;
+
+const toc = [
+  { id: "was-ist-fomo", label: "Was ist Fomo?" },
+  { id: "welche-assets", label: "Welche Assets kann man handeln?" },
+  { id: "gebuehren", label: "Gebühren" },
+  { id: "ist-fomo-sicher", label: "Ist Fomo sicher?" },
+  { id: "vorteile", label: "Vorteile" },
+  { id: "zu-beachten", label: "Zu beachten" },
+  { id: "fazit", label: "Fazit" },
+];
+
+const pros = [
+  "Sehr schneller Weg vom App-Start bis zum ersten Trade — kaum Reibung durch Onboarding-Prozesse, wie sie bei anderen Apps üblich sind.",
+  "Non-Custodial-Architektur mit echter rechtlicher Grundlage in den USA, nicht nur Marketingaussage.",
+  "Ein Interface für mehrere Chains (Solana, Base, BNB Chain, Monad).",
+];
+
+const cons = [
+  "Keine Einlagensicherung — Selbstverwahrung bedeutet: Verlieren Sie den Wallet-Zugriff, gibt es keine Wiederherstellung.",
+  "Manche Nutzer berichten, dass der Kauf illiquider Token einfacher ist als der spätere Verkauf.",
+  "Feed und Ranglisten sind darauf ausgelegt, schnelles Handeln zu fördern — wenn Sie zu impulsivem Trading neigen, ist hier besondere Vorsicht angebracht; Meme-Coin-Positionen können vollständig wertlos werden.",
+  "Die Gebührenstruktur ist nicht auf den ersten Blick ersichtlich — Details finden Sie auf der Gebührenseite.",
+  "In der EU derzeit nicht MiCA-lizenziert — vor einer Nutzung sollten Sie sich über die rechtlichen Rahmenbedingungen in Ihrem Land informieren.",
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Review",
+  itemReviewed: {
+    "@type": "SoftwareApplication",
+    name: FOMO.displayName,
+    applicationCategory: "FinanceApplication",
+    url: FOMO.website,
+  },
+  author: { "@type": "Organization", name: SITE_NAME },
+  publisher: { "@type": "Organization", name: SITE_NAME },
+  reviewBody:
+    "Unabhängiger Test von Fomo. Diese Seite ist keine offizielle Fomo-Seite — TradePack vertritt oder autorisiert Fomo nicht.",
+  datePublished: "2027-02-01",
+  inLanguage: "de",
+};
+---
+
+<BaseLayout
+  locale={locale}
+  pageKey={pageKey}
+  title="Fomo App Test 2026: Gebühren, Sicherheit und Erfahrungen im Detail"
+  description="Unabhängiger Test der Non-Custodial-Social-Trading-App Fomo (Solana, Base, BNB Chain, Monad). Gebühren, Sicherheit, Finanzierung und reale Vor- und Nachteile."
+  type="article"
+  jsonLd={jsonLd}
+>
+  <section class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+    <span class="text-xs font-semibold uppercase tracking-wide text-[var(--color-accent)]">Unabhängiger Test</span>
+    <h1 class="text-balance mt-2 text-3xl font-extrabold sm:text-4xl">Der {SITE_NAME}-Test zu Fomo</h1>
+    <p class="mt-4 max-w-2xl text-[var(--color-muted)]">
+      {SITE_NAME} vertritt oder autorisiert Fomo nicht. Dieser Test beruht auf eigener Recherche und kann uns über
+      Empfehlungslinks eine Provision einbringen.
+    </p>
+
+    <div class="mt-10 grid gap-10 lg:grid-cols-[240px_1fr]">
+      <aside class="hidden lg:block">
+        <nav class="sticky top-24 flex flex-col gap-1 border-l border-[var(--color-border)] pl-4" aria-label="Inhaltsverzeichnis">
+          {
+            toc.map((item) => (
+              <a href={`#${item.id}`} class="py-1.5 text-sm text-[var(--color-muted)] hover:text-[var(--color-accent)]">
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+      </aside>
+
+      <div class="prose-content max-w-none">
+        <p>
+          Fomo ist eine „Community-first"-Krypto-Trading-App für Meme-Coins, Altcoins, Stablecoins sowie — außerhalb
+          der USA — Perpetual Futures, alles über eine selbstverwahrte (non-custodial) Wallet. Finanziell steht die
+          App auf soliden Beinen: eine {FOMO.fundingRound}-Runde bei einer Bewertung von {FOMO.valuation}, angeführt
+          von {FOMO.leadInvestor}, mit Beteiligung von {FOMO.otherInvestors.join(" und ")} — insgesamt rund{" "}
+          {FOMO.totalFundingDisclosed} an öffentlich bekannter Finanzierung.
+        </p>
+
+        <div class="not-prose my-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <StatBadge value={`${FOMO.spotFeePercent}%`} label="Spot-Gebühr" />
+          <StatBadge value={`${FOMO.feeDiscountPercent}%`} label="Empfehlungsrabatt" accent="violet" />
+          <StatBadge value={FOMO.chains.length.toString()} label="Unterstützte Chains" />
+          <StatBadge value={FOMO.valuation} label="Bewertung" accent="violet" />
+        </div>
+
+        <div class="not-prose my-8 flex flex-wrap items-start gap-5">
+          <AppScreenshot
+            src={tradingChartScreenshot}
+            alt="Fomos Haupt-Trading-Bildschirm mit Live-Preischart, Buy/Sell-Panel und Kauf-/Verkaufsstatistiken"
+            caption="Fomos Haupt-Trading-Bildschirm: Live-Preischart, Buy/Sell-Panel und Feed-basierte Statistiken."
+            class="min-w-0 flex-1 basis-80"
+          />
+          <AppScreenshot
+            src={mobilePortfolioScreenshot}
+            alt="Fomos mobiler Startbildschirm mit $0 Portfoliostand, Deposit-Button, Weekly Top Trades und einer Token-Liste mit BTC, ETH und XRP"
+            caption="Der echte mobile Startbildschirm — die meisten Nutzer sehen die Desktop-Ansicht nie."
+            class="w-[220px] shrink-0"
+          />
+        </div>
+
+        <section id="was-ist-fomo" class="scroll-mt-24">
+          <h2>Was ist Fomo?</h2>
+          <p>
+            Fomo positioniert sich als Social-Trading-App statt als klassisches Börsen-Interface — ein Feed,
+            Ranglisten und ein schneller „Scrollen-und-Handeln"-Ablauf stehen im Mittelpunkt. Technisch ist die App
+            non-custodial: {FOMO.custodyMechanism} Ihre Vermögenswerte liegen in einer Wallet, auf die nur Sie Zugriff
+            haben.
+          </p>
+        </section>
+
+        <section id="welche-assets" class="scroll-mt-24">
+          <h2>Welche Assets kann man handeln?</h2>
+          <p>
+            Spotmärkte — Meme-Coins, Altcoins, Stablecoins — auf Solana (Hauptchain), Base, BNB Chain und Monad.
+            Perpetual Futures laufen über eine Integration mit {FOMO.perpsProvider}, sind aber{" "}
+            <strong>für US-Nutzer derzeit nicht verfügbar</strong> — Fomo verfügt noch nicht über die in den USA
+            erforderliche Registrierung für gehebelte Derivate.
+          </p>
+        </section>
+
+        <section id="gebuehren" class="scroll-mt-24">
+          <h2>Gebühren</h2>
+          <p>
+            Der Spothandel kostet vor Rabatt etwa {FOMO.spotFeePercent}% pro Trade. Bei Perpetual Futures kommen zur
+            Basisgebühr von {FOMO.perpsProvider} nochmals rund {FOMO.perpsFeePerSidePercent}% pro Seite hinzu.
+            Detaillierte Beispielrechnungen finden Sie auf der{" "}
+            <a href={resolveLocaleUrl(locale, PAGE_KEYS.fees)}>vollständigen Gebührenseite</a>.
+          </p>
+        </section>
+
+        <section id="ist-fomo-sicher" class="scroll-mt-24">
+          <h2>Ist Fomo sicher?</h2>
+          <p>
+            Technisch: Als Non-Custodial-App kann Fomo Ihre Vermögenswerte nicht einseitig bewegen oder einfrieren —
+            das eliminiert ein Risiko, bringt aber ein anderes mit sich: kein Sicherheitsnetz auf Unternehmensebene.
+            Rechtlich: Im März 2026 haben SEC und CFTC (USA) gemeinsam klargestellt, dass Non-Custodial-Wallet-Interfaces
+            wie Fomo sich nicht als Broker registrieren müssen. <strong>Wichtig für EU-Nutzer:</strong> Diese
+            Klarstellung gilt für die USA. In der EU ist Fomo nicht als Kryptowerte-Dienstleister (CASP) gemäß
+            MiCA-Verordnung lizenziert — ein relevanter Unterschied, den Sie vor einer Nutzung kennen sollten.
+          </p>
+        </section>
+
+        <section id="vorteile" class="scroll-mt-24">
+          <h2>Vorteile</h2>
+          <ul>
+            {pros.map((item) => <li>{item}</li>)}
+          </ul>
+        </section>
+
+        <section id="zu-beachten" class="scroll-mt-24">
+          <h2>Zu beachten</h2>
+          <ul>
+            {cons.map((item) => <li>{item}</li>)}
+          </ul>
+          <div class="not-prose mt-2 grid max-w-md grid-cols-2 gap-4">
+            <AppScreenshot
+              src={mobileFeedGlobalScreenshot}
+              alt="Fomos Global-Feed mit Kauf-/Verkaufsaufträgen anderer Nutzer, die vor wenigen Sekunden gepostet wurden"
+              caption="Der Global-Feed — Trades anderer Nutzer erscheinen in Echtzeit, nur Sekunden alt."
+            />
+            <AppScreenshot
+              src={mobileFeedFriendsScreenshot}
+              alt="Fomos Friends-Feed mit gruppierter Kauf-/Verkaufsaktivität von Tradern, denen der Nutzer folgt"
+              caption="Der Friends-Feed — gebündelte Aktivität der Trader, denen Sie folgen."
+            />
+          </div>
+        </section>
+
+        <section id="fazit" class="scroll-mt-24">
+          <h2>Fazit</h2>
+          <p>
+            Fomo ist eine App mit echtem Kapital und einer echten Non-Custodial-Architektur, deren rechtliche
+            Grundlage in den USA vergleichsweise klar ist. Für EU-Nutzer kommt der fehlende MiCA-Lizenzstatus als
+            zusätzlicher, eigenständiger Punkt hinzu, den Sie in Ihre Entscheidung einbeziehen sollten. Details zum
+            Gebührenrabatt finden Sie auf der{" "}
+            <a href={resolveLocaleUrl(locale, PAGE_KEYS.referralCode)}>Empfehlungscode-Seite</a>.
+          </p>
+        </section>
+
+        <div class="not-prose mt-10">
+          <Card class="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p class="font-semibold">Bereit, Fomo mit Rabatt auszuprobieren?</p>
+              <p class="mt-1 text-sm text-[var(--color-muted)]">Code {FOMO.referralCode} für {FOMO.feeDiscountPercent}% Rabatt.</p>
+            </div>
+            <Button href={resolveLocaleUrl(locale, PAGE_KEYS.referralCode)} showArrow class="w-full sm:w-auto">
+              Empfehlungscode ansehen
+            </Button>
+          </Card>
+        </div>
+
+        <div class="not-prose mt-8">
+          <RiskDisclaimer locale={locale} variant="page" />
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  .prose-content h2 {
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+  .prose-content p {
+    margin-bottom: 1.1rem;
+    line-height: 1.75;
+    color: var(--color-muted);
+  }
+  .prose-content ul {
+    margin: 0 0 1.1rem 1.25rem;
+    list-style: disc;
+    color: var(--color-muted);
+    line-height: 1.75;
+  }
+  .prose-content li {
+    margin-bottom: 0.5rem;
+  }
+  .prose-content a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+</style>

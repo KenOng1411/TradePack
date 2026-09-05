@@ -1,0 +1,57 @@
+---
+import Icon from "./Icon.astro";
+import { LOCALES, LOCALE_LABELS, resolveLocaleUrl } from "../i18n/routes";
+import { useTranslations } from "../i18n/ui";
+import type { Locale, PageId } from "../i18n/routes";
+
+interface Props {
+  currentLocale: Locale;
+  pageKey: PageId;
+}
+
+const { currentLocale, pageKey } = Astro.props;
+const t = useTranslations(currentLocale);
+---
+
+<details class="language-switcher group relative">
+  <summary
+    class="flex min-h-11 cursor-pointer list-none items-center gap-1.5 rounded-xl border border-[var(--color-border)] px-3 py-2 text-sm font-medium text-[var(--color-text)] hover:border-[var(--color-violet)] [&::-webkit-details-marker]:hidden"
+    aria-label={t.languageSwitcher.label}
+  >
+    <Icon name="globe" class="size-4 text-[var(--color-muted)]" />
+    <span>{LOCALE_LABELS[currentLocale]}</span>
+    <Icon name="chevron-down" class="size-3.5 text-[var(--color-muted)] transition-transform group-open:rotate-180" />
+  </summary>
+  <div
+    class="absolute right-0 z-50 mt-2 w-44 overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] py-1 shadow-xl"
+  >
+    {
+      LOCALES.map((locale) => {
+        const url = resolveLocaleUrl(locale, pageKey);
+        const isCurrent = locale === currentLocale;
+        return (
+          <a
+            href={url}
+            class:list={[
+              "flex items-center justify-between px-4 py-2.5 text-sm hover:bg-[var(--color-surface-hover)]",
+              isCurrent ? "text-[var(--color-accent)] font-semibold" : "text-[var(--color-text)]",
+            ]}
+            aria-current={isCurrent ? "true" : undefined}
+          >
+            {LOCALE_LABELS[locale]}
+          </a>
+        );
+      })
+    }
+  </div>
+</details>
+
+<script>
+  document.addEventListener("click", (e) => {
+    document.querySelectorAll("details.language-switcher[open]").forEach((el) => {
+      if (!(el as HTMLElement).contains(e.target as Node)) {
+        el.removeAttribute("open");
+      }
+    });
+  });
+</script>

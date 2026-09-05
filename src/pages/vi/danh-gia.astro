@@ -1,0 +1,250 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Button from "../../components/Button.astro";
+import Card from "../../components/Card.astro";
+import StatBadge from "../../components/StatBadge.astro";
+import RiskDisclaimer from "../../components/RiskDisclaimer.astro";
+import AppScreenshot from "../../components/AppScreenshot.astro";
+import { PAGE_KEYS, resolveLocaleUrl } from "../../i18n/routes";
+import { FOMO, SITE_NAME } from "../../lib/site";
+import tradingChartScreenshot from "../../assets/screenshots/trading-chart-feed.jpg";
+import mobilePortfolioScreenshot from "../../assets/screenshots/mobile-portfolio-home.jpg";
+import mobileFeedGlobalScreenshot from "../../assets/screenshots/mobile-feed-global.jpg";
+import mobileFeedFriendsScreenshot from "../../assets/screenshots/mobile-feed-friends.jpg";
+
+const locale = "vi" as const;
+const pageKey = PAGE_KEYS.review;
+
+const toc = [
+  { id: "fomo-la-gi", label: "Fomo là gì?" },
+  { id: "giao-dich-duoc-gi", label: "Giao dịch được gì?" },
+  { id: "phi-giao-dich", label: "Phí giao dịch" },
+  { id: "co-an-toan-khong", label: "Fomo có an toàn không?" },
+  { id: "diem-cong", label: "Điểm cộng" },
+  { id: "diem-can-luu-y", label: "Điểm cần lưu ý" },
+  { id: "ket-luan", label: "Kết luận" },
+];
+
+const pros = [
+  "Từ lúc mở app tới lúc vào lệnh rất nhanh — gần như không có rào cản onboarding như nhiều app khác.",
+  "Kiến trúc non-custodial có nền tảng pháp lý thật, không chỉ là lời quảng cáo.",
+  "Hỗ trợ đa chain (Solana, Base, BNB Chain, Monad) trong cùng một giao diện.",
+];
+
+const cons = [
+  "Không có cơ chế bảo vệ tiền gửi — tự quản lý ví nghĩa là không có cách khôi phục nếu bạn mất quyền truy cập.",
+  "Một số người dùng phản ánh việc mua vào dễ nhưng bán ra khó với các token thanh khoản mỏng.",
+  "Giao diện dạng bảng tin/bảng xếp hạng được thiết kế để thúc đẩy hành động nhanh — không lý tưởng nếu bạn dễ giao dịch theo cảm tính; vị thế memecoin có thể mất trắng.",
+  "Cấu trúc phí không hiển thị rõ ràng ngay từ đầu — xem trang phí để có số liệu thật.",
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Review",
+  itemReviewed: {
+    "@type": "SoftwareApplication",
+    name: FOMO.displayName,
+    applicationCategory: "FinanceApplication",
+    url: FOMO.website,
+  },
+  author: { "@type": "Organization", name: SITE_NAME },
+  publisher: { "@type": "Organization", name: SITE_NAME },
+  reviewBody:
+    "Đánh giá độc lập về Fomo, ứng dụng trading crypto non-custodial. Đây không phải trang chính thức của Fomo — TradePack không đại diện, không được ủy quyền hay bảo trợ bởi Fomo.",
+  datePublished: "2026-11-01",
+  inLanguage: "vi",
+};
+---
+
+<BaseLayout
+  locale={locale}
+  pageKey={pageKey}
+  title="Đánh giá Fomo 2026: Phí, độ an toàn và trải nghiệm thực tế"
+  description="Đánh giá độc lập về Fomo — ứng dụng trading non-custodial trên Solana, Base, BNB Chain và Monad. Phí, độ an toàn, nguồn vốn và ưu nhược điểm thực tế."
+  type="article"
+  jsonLd={jsonLd}
+>
+  <section class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+    <span class="text-xs font-semibold uppercase tracking-wide text-[var(--color-accent)]">Đánh giá độc lập</span>
+    <h1 class="text-balance mt-2 text-3xl font-extrabold sm:text-4xl">Đánh giá Fomo từ {SITE_NAME}</h1>
+    <p class="mt-4 max-w-2xl text-[var(--color-muted)]">
+      {SITE_NAME} không đại diện, không được ủy quyền hay bảo trợ bởi Fomo. Bài đánh giá này dựa trên nghiên cứu của
+      chúng tôi và có thể mang lại hoa hồng qua link giới thiệu.
+    </p>
+
+    <div class="mt-10 grid gap-10 lg:grid-cols-[240px_1fr]">
+      <aside class="hidden lg:block">
+        <nav class="sticky top-24 flex flex-col gap-1 border-l border-[var(--color-border)] pl-4" aria-label="Mục lục">
+          {
+            toc.map((item) => (
+              <a href={`#${item.id}`} class="py-1.5 text-sm text-[var(--color-muted)] hover:text-[var(--color-accent)]">
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+      </aside>
+
+      <div class="prose-content max-w-none">
+        <p>
+          Fomo là ứng dụng trading crypto theo hướng "social" — cho phép giao dịch memecoin, altcoin, stablecoin, và
+          (ngoài nước Mỹ) cả perpetual futures — toàn bộ từ một ví non-custodial do chính người dùng kiểm soát. Đứng
+          sau là nguồn vốn đáng kể: vòng {FOMO.fundingRound} do {FOMO.leadInvestor} dẫn đầu ở mức định giá{" "}
+          {FOMO.valuation}, có {FOMO.otherInvestors.join(" và ")} tham gia, nâng tổng vốn đã công bố lên khoảng{" "}
+          {FOMO.totalFundingDisclosed}. Bài đánh giá này nói về cách nó hoạt động, chi phí thực tế, và những điểm còn
+          hạn chế.
+        </p>
+
+        <div class="not-prose my-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <StatBadge value={`${FOMO.spotFeePercent}%`} label="Phí spot" />
+          <StatBadge value={`${FOMO.feeDiscountPercent}%`} label="Giảm giá referral" accent="violet" />
+          <StatBadge value={FOMO.chains.length.toString()} label="Chain hỗ trợ" />
+          <StatBadge value={FOMO.valuation} label="Định giá" accent="violet" />
+        </div>
+
+        <div class="not-prose my-8 flex flex-wrap items-start gap-5">
+          <AppScreenshot
+            src={tradingChartScreenshot}
+            alt="Giao diện giao dịch chính của Fomo với biểu đồ giá trực tiếp, bảng Mua/Bán và số liệu khối lượng mua/bán"
+            caption="Giao diện giao dịch chính của Fomo: biểu đồ giá trực tiếp, bảng Mua/Bán và số liệu theo bảng tin."
+            class="min-w-0 flex-1 basis-80"
+          />
+          <AppScreenshot
+            src={mobilePortfolioScreenshot}
+            alt="Màn hình chính trên di động của Fomo hiển thị số dư $0, nút Deposit, Weekly Top Trades và danh sách token gồm BTC, ETH, XRP"
+            caption="Màn hình chính thật trên di động — hầu hết người dùng chưa từng thấy giao diện desktop."
+            class="w-[220px] shrink-0"
+          />
+        </div>
+
+        <section id="fomo-la-gi" class="scroll-mt-24">
+          <h2>Fomo là gì?</h2>
+          <p>
+            Fomo định vị mình là app trading "social" thay vì giao diện sàn giao dịch truyền thống — bảng tin, bảng
+            xếp hạng, và luồng "xem rồi trade" nhanh gọn là trọng tâm trải nghiệm. Về bản chất kỹ thuật, đây là ứng
+            dụng non-custodial: Fomo dùng phương pháp Shamir's Secret Sharing để chia khóa riêng tư ra nhiều phần,
+            theo cách mà chính công ty mô tả là "Fomo không thể tự ý di chuyển tài sản của bạn". Tài sản nằm trong ví
+            chỉ bạn kiểm soát, không phải tài khoản công ty giữ hộ.
+          </p>
+        </section>
+
+        <section id="giao-dich-duoc-gi" class="scroll-mt-24">
+          <h2>Giao dịch được gì?</h2>
+          <p>
+            Thị trường spot — memecoin, altcoin, stablecoin — trên Solana (chain chính), Base, BNB Chain và Monad.
+            Perpetual futures khả dụng qua tích hợp với {FOMO.perpsProvider}, nhưng{" "}
+            <strong>không áp dụng cho người dùng tại Mỹ</strong> — Fomo chưa có các giấy phép nội địa cần thiết để
+            cung cấp sản phẩm phái sinh có đòn bẩy tại Mỹ, dù giao dịch spot vẫn hợp pháp trên toàn quốc.
+          </p>
+        </section>
+
+        <section id="phi-giao-dich" class="scroll-mt-24">
+          <h2>Phí giao dịch</h2>
+          <p>
+            Giao dịch spot tốn khoảng {FOMO.spotFeePercent}%/lệnh trước khi áp mã giảm giá. Perpetuals cộng thêm
+            khoảng {FOMO.perpsFeePerSidePercent}%/bên trên phí gốc của sàn bên dưới ({FOMO.perpsProvider}), khiến chi
+            phí trực tiếp cho perps gần như gấp đôi so với spot. Xem{" "}
+            <a href={resolveLocaleUrl(locale, PAGE_KEYS.fees)}>bảng phí chi tiết</a> kèm ví dụ tính toán, bao gồm cả
+            mức giảm khi dùng mã giới thiệu.
+          </p>
+        </section>
+
+        <section id="co-an-toan-khong" class="scroll-mt-24">
+          <h2>Fomo có an toàn không?</h2>
+          <p>
+            Có hai câu hỏi tách biệt ở đây. Về mặt kỹ thuật: là ứng dụng non-custodial, Fomo không thể tự ý di chuyển
+            hay đóng băng tài sản của bạn — loại bỏ một nhóm rủi ro (sàn sụp đổ kéo theo tiền gửi của người dùng)
+            nhưng lại thêm một rủi ro khác — không có mạng lưới an toàn nào từ phía công ty nếu bạn mất quyền truy
+            cập ví hoặc dính phải một memecoin sụp giá về 0. Về mặt pháp lý: tháng 3/2026, SEC và CFTC (Mỹ) đã cùng ra
+            hướng dẫn làm rõ rằng các giao diện ví non-custodial như Fomo không cần đăng ký broker-dealer, tạo ra một
+            nhóm miễn trừ riêng ("Covered User Interface Provider") giúp mô hình này có nền tảng pháp lý rõ ràng hơn
+            tại Mỹ.
+          </p>
+        </section>
+
+        <section id="diem-cong" class="scroll-mt-24">
+          <h2>Điểm cộng</h2>
+          <ul>
+            {pros.map((item) => <li>{item}</li>)}
+          </ul>
+        </section>
+
+        <section id="diem-can-luu-y" class="scroll-mt-24">
+          <h2>Điểm cần lưu ý</h2>
+          <ul>
+            {cons.map((item) => <li>{item}</li>)}
+          </ul>
+          <div class="not-prose mt-2 grid max-w-md grid-cols-2 gap-4">
+            <AppScreenshot
+              src={mobileFeedGlobalScreenshot}
+              alt="Bảng tin Global của Fomo hiển thị lệnh mua/bán của người dùng khác đăng cách đây vài giây"
+              caption="Bảng tin Global — lệnh giao dịch của người khác cập nhật theo thời gian thực, chỉ vài giây trước."
+            />
+            <AppScreenshot
+              src={mobileFeedFriendsScreenshot}
+              alt="Bảng tin Friends của Fomo hiển thị hoạt động mua/bán theo nhóm trader đang theo dõi"
+              caption="Bảng tin Friends — hoạt động tổng hợp từ các trader bạn theo dõi."
+            />
+          </div>
+        </section>
+
+        <section id="ket-luan" class="scroll-mt-24">
+          <h2>Kết luận</h2>
+          <p>
+            Fomo là một ứng dụng hợp pháp, có nguồn vốn nghiêm túc và kiến trúc non-custodial thật sự, với nền tảng
+            pháp lý khá rõ ràng cho loại hình này — không phải kiểu phải tự hỏi "có phải lừa đảo không". Rủi ro còn
+            lại chủ yếu đến từ bản chất giao dịch memecoin và perpetuals nói chung, không riêng gì Fomo. Nếu bạn vẫn
+            muốn tìm hiểu thêm, có thể xem{" "}
+            <a href={resolveLocaleUrl(locale, PAGE_KEYS.referralCode)}>trang mã giới thiệu</a> để biết chi tiết mức
+            giảm phí.
+          </p>
+        </section>
+
+        <div class="not-prose mt-10">
+          <Card class="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p class="font-semibold">Sẵn sàng dùng thử Fomo với mức giảm giá?</p>
+              <p class="mt-1 text-sm text-[var(--color-muted)]">Dùng mã {FOMO.referralCode} để giảm {FOMO.feeDiscountPercent}% phí.</p>
+            </div>
+            <Button href={resolveLocaleUrl(locale, PAGE_KEYS.referralCode)} showArrow class="w-full sm:w-auto">
+              Xem mã giới thiệu
+            </Button>
+          </Card>
+        </div>
+
+        <div class="not-prose mt-8">
+          <RiskDisclaimer locale={locale} variant="page" />
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  .prose-content h2 {
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+  .prose-content p {
+    margin-bottom: 1.1rem;
+    line-height: 1.75;
+    color: var(--color-muted);
+  }
+  .prose-content ul {
+    margin: 0 0 1.1rem 1.25rem;
+    list-style: disc;
+    color: var(--color-muted);
+    line-height: 1.75;
+  }
+  .prose-content li {
+    margin-bottom: 0.5rem;
+  }
+  .prose-content a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+</style>

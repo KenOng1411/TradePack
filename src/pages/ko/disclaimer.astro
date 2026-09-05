@@ -1,0 +1,76 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import RiskDisclaimer from "../../components/RiskDisclaimer.astro";
+import { PAGE_KEYS } from "../../i18n/routes";
+import { FOMO, SITE_NAME } from "../../lib/site";
+
+const locale = "ko" as const;
+const pageKey = PAGE_KEYS.disclaimer;
+---
+
+<BaseLayout
+  locale={locale}
+  pageKey={pageKey}
+  title="면책 조항"
+  description={`${SITE_NAME}의 법적 정보 및 위험 고지 — Fomo 및 기타 크립토 거래소를 다루는 독립 리뷰 사이트입니다.`}
+>
+  <section class="mx-auto max-w-3xl px-4 py-14 sm:px-6">
+    <h1 class="text-3xl font-extrabold sm:text-4xl">면책 조항</h1>
+
+    <div class="mt-8">
+      <RiskDisclaimer locale={locale} variant="page" />
+    </div>
+
+    <div class="prose-content mt-10 max-w-none">
+      <p>
+        {SITE_NAME}은 {FOMO.displayName} 트레이딩 앱에 대한 독립적인 정보 제공 사이트입니다. 저희는 어떠한 공식적인
+        자격으로도 {FOMO.displayName}({FOMO.website.replace("https://", "")})를 대리, 승인, 후원하거나 대신 행동하지
+        않습니다.
+      </p>
+
+      <h2>제휴 공시</h2>
+      <p>
+        {SITE_NAME}은 {FOMO.displayName}의 추천 프로그램에 참여하고 있습니다. 이 사이트의 추천 링크나 코드로 가입 후
+        거래하시면 거래 수수료를 기준으로 저희가 수수료를 받을 수 있습니다. 이는 사용자에게 추가 비용을 발생시키지
+        않으며, 사용자가 받는 할인(거래 수수료 {FOMO.feeDiscountPercent}%)은 {SITE_NAME}만의 특별 혜택이 아니라{" "}
+        {FOMO.displayName}의 표준 추천 프로그램의 일부입니다.
+      </p>
+
+      <h2>투자 자문이 아닙니다</h2>
+      <p>
+        이 사이트의 리뷰, 가이드, 수수료 정리, 비교 등 모든 콘텐츠는 금융, 투자, 세무, 법률 자문에 해당하지 않습니다.
+        암호화폐 시장, 특히 밈코인과 레버리지 무기한 선물은 변동성이 매우 크며 원금 전액 손실을 포함한 높은 손실
+        위험이 있습니다. 거래 전 충분히 조사하고 필요시 자격을 갖춘 전문가와 상담하시기 바랍니다.
+      </p>
+
+      <h2>정확성</h2>
+      <p>
+        저희는 수수료, 기능, 법적 정보를 최신 상태로 유지하려 노력하지만, 크립토 관련 제품은 빠르게 변화합니다. 이
+        사이트의 내용을 바탕으로 결정을 내리기 전, {FOMO.displayName} 앱 또는 {FOMO.website.replace("https://", "")}
+        에서 최신 약관을 직접 확인하세요.
+      </p>
+
+      <h2>이용 자격</h2>
+      <p>
+        암호화폐 거래 가능 여부, 무기한 선물 등 제품 기능, 법적 요건은 지역에 따라 다르며 시간에 따라 변경될 수
+        있습니다. 거주 지역에서 {FOMO.displayName} 또는 이 사이트에서 다루는 제품을 이용하는 것이 합법적인지 확인할
+        책임은 본인에게 있습니다.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  .prose-content h2 {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+  .prose-content p {
+    margin-bottom: 1.1rem;
+    line-height: 1.75;
+    color: var(--color-muted);
+  }
+</style>

@@ -1,0 +1,79 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import FAQAccordion from "../../components/FAQAccordion.astro";
+import RiskDisclaimer from "../../components/RiskDisclaimer.astro";
+import { PAGE_KEYS } from "../../i18n/routes";
+import { FOMO, SITE_NAME } from "../../lib/site";
+
+const locale = "vi" as const;
+const pageKey = PAGE_KEYS.faq;
+
+const faqItems = [
+  {
+    question: "Fomo có an toàn không?",
+    answer:
+      "Đây là ứng dụng non-custodial (bạn kiểm soát tài sản, không phải Fomo) và có nền tảng pháp lý khá rõ (hướng dẫn SEC/CFTC tháng 3/2026). Điều này giảm một số rủi ro nhưng không phải tất cả — xem đánh giá đầy đủ của chúng tôi.",
+  },
+  {
+    question: "Fomo có phải sàn giao dịch được cấp phép không?",
+    answer:
+      "Fomo hoạt động như một giao diện ví non-custodial — nhóm mà SEC/CFTC đã làm rõ là không cần đăng ký broker-dealer tại Mỹ. Đây không phải sàn giao dịch được cấp phép theo kiểu truyền thống như các sàn tập trung.",
+  },
+  {
+    question: "Chain nào được Fomo hỗ trợ?",
+    answer: `${FOMO.chains[0]} (chính), ${FOMO.chains.slice(1).join(", ")}.`,
+  },
+  {
+    question: "Người dùng tại Mỹ có giao dịch perpetuals trên Fomo được không?",
+    answer: `Không — perpetuals (qua ${FOMO.perpsProvider}) hiện chưa khả dụng cho người dùng tại Mỹ. Giao dịch spot vẫn khả dụng toàn quốc.`,
+  },
+  {
+    question: "Phí Fomo bao nhiêu?",
+    answer: `Khoảng ${FOMO.spotFeePercent}%/lệnh spot trước giảm giá; perpetuals cộng thêm khoảng ${FOMO.perpsFeePerSidePercent}%/bên trên phí sàn gốc. Mã giới thiệu giảm thêm ${FOMO.feeDiscountPercent}%.`,
+  },
+  {
+    question: "Mã giới thiệu hoạt động thế nào?",
+    answer: `Nhập khi đăng ký để được giảm ${FOMO.feeDiscountPercent}% phí giao dịch tự động cho mọi lệnh sau này.`,
+  },
+  {
+    question: `${SITE_NAME} có liên kết với Fomo không?`,
+    answer: `Không. ${SITE_NAME} là trang đánh giá độc lập. Chúng tôi có thể nhận hoa hồng nếu bạn đăng ký và giao dịch qua link giới thiệu — xem trang miễn trừ trách nhiệm.`,
+  },
+  {
+    question: "Nếu mất quyền truy cập ví thì sao?",
+    answer:
+      "Vì Fomo là non-custodial, họ không thể khôi phục tài sản hay reset quyền truy cập thay bạn — hãy sao lưu phương thức khôi phục cẩn thận trước khi nạp tiền.",
+  },
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqItems.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: { "@type": "Answer", text: item.answer },
+  })),
+};
+---
+
+<BaseLayout
+  locale={locale}
+  pageKey={pageKey}
+  title="Hỏi đáp về Fomo"
+  description="Các câu hỏi thường gặp về Fomo — độ an toàn, phí, chain hỗ trợ, mã giới thiệu và nhiều hơn nữa."
+  jsonLd={jsonLd}
+>
+  <section class="mx-auto max-w-3xl px-4 py-14 sm:px-6">
+    <h1 class="text-3xl font-extrabold sm:text-4xl">Câu hỏi thường gặp</h1>
+    <p class="mt-4 text-[var(--color-muted)]">Những câu hỏi phổ biến nhất về Fomo và trang này.</p>
+
+    <div class="mt-10">
+      <FAQAccordion items={faqItems} />
+    </div>
+
+    <div class="mt-10">
+      <RiskDisclaimer locale={locale} variant="page" />
+    </div>
+  </section>
+</BaseLayout>

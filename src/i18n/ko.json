@@ -1,0 +1,37 @@
+{
+  "nav": {
+    "home": "홈",
+    "review": "리뷰",
+    "referralCode": "추천 코드",
+    "fees": "수수료",
+    "howToStart": "시작하기",
+    "faq": "자주 묻는 질문",
+    "blog": "블로그"
+  },
+  "header": {
+    "ctaButton": "수수료 10% 할인 받기"
+  },
+  "footer": {
+    "tagline": "비수탁형 암호화폐 트레이딩 앱에 대한 독립적인 리서치.",
+    "resourcesHeading": "리소스",
+    "legalHeading": "법적 고지",
+    "disclaimerLink": "면책 조항",
+    "rights": "All rights reserved."
+  },
+  "common": {
+    "readMore": "더 읽기",
+    "getReferralCode": "추천 코드 받기",
+    "learnMore": "더 알아보기",
+    "backToHome": "홈으로 돌아가기",
+    "notAffiliated": "Fomo와 제휴 관계가 아닙니다 — 독립적인 리뷰 사이트입니다.",
+    "publishedOn": "게시일",
+    "updatedOn": "수정일"
+  },
+  "riskDisclaimer": {
+    "heading": "위험 고지",
+    "text": "본 사이트는 독립적이고 비공식적인 리뷰 자료입니다. 저희는 Fomo와 제휴 관계가 아니며, Fomo의 승인을 받거나 대리하지 않습니다. 저희 추천 링크를 통해 가입 및 거래 시 수수료의 일부를 커미션으로 받습니다. 암호화폐 거래는 상당한 손실 위험을 수반하며 모든 사람에게 적합한 것은 아닙니다. 본 사이트의 어떠한 내용도 금융 자문이 아닙니다. 반드시 스스로 조사하시기 바랍니다."
+  },
+  "languageSwitcher": {
+    "label": "언어"
+  }
+}

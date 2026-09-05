@@ -1,0 +1,95 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Button from "../../components/Button.astro";
+import Card from "../../components/Card.astro";
+import FeeCalculator from "../../components/FeeCalculator.astro";
+import RiskDisclaimer from "../../components/RiskDisclaimer.astro";
+import { PAGE_KEYS, resolveLocaleUrl } from "../../i18n/routes";
+import { FOMO } from "../../lib/site";
+
+const locale = "ko" as const;
+const pageKey = PAGE_KEYS.fees;
+
+const discountedFee = (FOMO.spotFeePercent * (1 - FOMO.feeDiscountPercent / 100)).toFixed(3);
+---
+
+<BaseLayout
+  locale={locale}
+  pageKey={pageKey}
+  title="Fomo 수수료 완전 정리 (2026): 스팟, 무기한 선물, 추천 코드 할인"
+  description="Fomo의 스팟 및 무기한 선물 거래 수수료와 추천 코드로 절약할 수 있는 금액을 명확하게 정리했습니다."
+>
+  <section class="mx-auto max-w-4xl px-4 py-14 sm:px-6">
+    <h1 class="text-3xl font-extrabold sm:text-4xl">Fomo 수수료 완전 정리 (2026)</h1>
+    <p class="mt-4 max-w-2xl text-[var(--color-muted)]">
+      Fomo의 수수료 구조는 한곳에 정리되어 있지 않으므로, 2026년 기준 전체 내용을 이 페이지에 정리했습니다.
+    </p>
+
+    <div class="prose-content mt-10 max-w-none">
+      <h2>스팟 거래 수수료</h2>
+      <p>
+        할인 전 기준 거래당 약 {FOMO.spotFeePercent}%입니다. 유효한 추천 코드를 적용하면{" "}
+        {FOMO.feeDiscountPercent}% 할인되어 실질 수수료는 약 {discountedFee}%가 됩니다. 소액 거래의 경우 거래당 최소
+        수수료가 있는 경우가 많아 체감 비용이 비율보다 높게 느껴질 수 있습니다.
+      </p>
+
+      <h2>무기한 선물 수수료 (미국 사용자 이용 불가)</h2>
+      <p>
+        무기한 선물은 {FOMO.perpsProvider}와의 연동을 통해 제공됩니다. Fomo는 {FOMO.perpsProvider} 기초 수수료 위에
+        사이드당 약 {FOMO.perpsFeePerSidePercent}%를 추가로 부과하며, 이는 스팟 거래 대비 직접 비용을 거의 두 배로
+        만듭니다.
+      </p>
+    </div>
+
+    <div class="mt-12">
+      <h2 class="text-xl font-bold sm:text-2xl">수수료 계산기</h2>
+      <p class="mt-2 text-sm text-[var(--color-muted)]">거래 금액을 입력해 기본 수수료와 할인된 수수료를 비교해보세요.</p>
+      <div class="mt-6">
+        <FeeCalculator
+          orderValueLabel="거래 금액 (USD)"
+          withoutCodeLabel={`기본 수수료 (${FOMO.spotFeePercent}%)`}
+          withCodeLabel={`코드 적용 수수료 (${FOMO.feeDiscountPercent}% 할인)`}
+          savingsLabel="절약 금액"
+          helpText="스팟 거래 수수료 기준입니다. 무기한 선물 수수료는 위 내용을 참고하세요."
+        />
+      </div>
+    </div>
+
+    <div class="prose-content mt-12 max-w-none">
+      <h2>알아야 할 기타 비용</h2>
+      <p>
+        논커스터디얼 앱 특성상 온체인 네트워크 수수료(가스비)는 Fomo 수수료와 별도로 부과되며 체인({FOMO.chains.join(", ")})과
+        네트워크 상황에 따라 달라집니다 — 이는 Fomo가 정하는 금액이 아니며 추천 코드 할인 대상도 아닙니다.
+      </p>
+    </div>
+
+    <Card class="mt-12 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <p class="font-semibold">자동으로 할인 적용받기</p>
+        <p class="mt-1 text-sm text-[var(--color-muted)]">가입 시 코드 {FOMO.referralCode}를 입력하세요.</p>
+      </div>
+      <Button href={resolveLocaleUrl(locale, PAGE_KEYS.referralCode)} showArrow class="w-full sm:w-auto">
+        추천 코드 보기
+      </Button>
+    </Card>
+
+    <div class="mt-10">
+      <RiskDisclaimer locale={locale} variant="page" />
+    </div>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  .prose-content h2 {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+  .prose-content p {
+    margin-bottom: 1.1rem;
+    line-height: 1.75;
+    color: var(--color-muted);
+  }
+</style>

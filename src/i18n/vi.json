@@ -1,0 +1,37 @@
+{
+  "nav": {
+    "home": "Trang chủ",
+    "review": "Đánh giá",
+    "referralCode": "Mã giới thiệu",
+    "fees": "Phí giao dịch",
+    "howToStart": "Bắt đầu",
+    "faq": "Câu hỏi thường gặp",
+    "blog": "Blog"
+  },
+  "header": {
+    "ctaButton": "Nhận ưu đãi giảm 10% phí"
+  },
+  "footer": {
+    "tagline": "Nghiên cứu độc lập về các ứng dụng giao dịch crypto non-custodial.",
+    "resourcesHeading": "Tài nguyên",
+    "legalHeading": "Pháp lý",
+    "disclaimerLink": "Miễn trừ trách nhiệm",
+    "rights": "Đã đăng ký bản quyền."
+  },
+  "common": {
+    "readMore": "Đọc thêm",
+    "getReferralCode": "Nhận mã giới thiệu",
+    "learnMore": "Tìm hiểu thêm",
+    "backToHome": "Về trang chủ",
+    "notAffiliated": "Không liên kết với Fomo — trang đánh giá độc lập.",
+    "publishedOn": "Đăng ngày",
+    "updatedOn": "Cập nhật"
+  },
+  "riskDisclaimer": {
+    "heading": "Cảnh báo rủi ro",
+    "text": "Trang web này là một nguồn đánh giá độc lập, không chính thức. Chúng tôi không liên kết, không được ủy quyền, và không đại diện cho Fomo. Chúng tôi nhận hoa hồng nếu bạn đăng ký và giao dịch thông qua link giới thiệu của chúng tôi. Giao dịch tiền mã hóa tiềm ẩn rủi ro thua lỗ đáng kể và không phù hợp với tất cả mọi người. Nội dung trên trang web này không phải là lời khuyên tài chính. Vui lòng tự nghiên cứu kỹ trước khi quyết định."
+  },
+  "languageSwitcher": {
+    "label": "Ngôn ngữ"
+  }
+}

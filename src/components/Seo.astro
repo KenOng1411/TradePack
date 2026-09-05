@@ -1,0 +1,72 @@
+---
+import { getAlternates, getOwnUrl, getXDefaultUrl, LOCALE_OG, PAGE_KEYS } from "../i18n/routes";
+import { SITE_NAME } from "../lib/site";
+import type { Locale, PageId } from "../i18n/routes";
+
+interface Props {
+  locale: Locale;
+  pageKey: PageId;
+  title: string;
+  description: string;
+  /** Absolute or site-root-relative path to the OG image. Defaults to the shared og-image. */
+  ogImage?: string;
+  type?: "website" | "article";
+  /** One or more JSON-LD objects to embed as <script type="application/ld+json">. */
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  noindex?: boolean;
+}
+
+const {
+  locale,
+  pageKey,
+  title,
+  description,
+  ogImage = "/images/og-image.png",
+  type = "website",
+  jsonLd,
+  noindex = false,
+} = Astro.props;
+
+// Home pages already compose their own full, localized title (including the site name); other
+// pages pass just their own title and get the "| SITE_NAME" suffix appended here.
+const fullTitle = pageKey === PAGE_KEYS.home ? title : `${title} | ${SITE_NAME}`;
+const canonicalPath = getOwnUrl(locale, pageKey, Astro.url.pathname);
+const canonicalUrl = new URL(canonicalPath, Astro.site).toString();
+const absoluteOgImage = new URL(ogImage, Astro.site).toString();
+
+const alternates = getAlternates(pageKey);
+const xDefaultUrl = new URL(getXDefaultUrl(pageKey), Astro.site).toString();
+
+const jsonLdEntries = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+---
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+<link rel="canonical" href={canonicalUrl} />
+{
+  alternates.map((alt) => (
+    <link rel="alternate" hreflang={alt.hreflang} href={new URL(alt.url, Astro.site).toString()} />
+  ))
+}
+<link rel="alternate" hreflang="x-default" href={xDefaultUrl} />
+
+<meta property="og:site_name" content={SITE_NAME} />
+<meta property="og:type" content={type} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content={absoluteOgImage} />
+<meta property="og:locale" content={LOCALE_OG[locale]} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={absoluteOgImage} />
+
+{
+  jsonLdEntries.map((entry) => (
+    <script type="application/ld+json" set:html={JSON.stringify(entry)} is:inline />
+  ))
+}

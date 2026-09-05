@@ -1,0 +1,37 @@
+{
+  "nav": {
+    "home": "Home",
+    "review": "Review",
+    "referralCode": "Referral Code",
+    "fees": "Fees",
+    "howToStart": "How to Start",
+    "faq": "FAQ",
+    "blog": "Blog"
+  },
+  "header": {
+    "ctaButton": "Get 10% Off Fees"
+  },
+  "footer": {
+    "tagline": "Independent research on non-custodial crypto trading apps.",
+    "resourcesHeading": "Resources",
+    "legalHeading": "Legal",
+    "disclaimerLink": "Disclaimer",
+    "rights": "All rights reserved."
+  },
+  "common": {
+    "readMore": "Read more",
+    "getReferralCode": "Get the referral code",
+    "learnMore": "Learn more",
+    "backToHome": "Back to home",
+    "notAffiliated": "Not affiliated with Fomo — independent review site.",
+    "publishedOn": "Published",
+    "updatedOn": "Updated"
+  },
+  "riskDisclaimer": {
+    "heading": "Risk disclosure",
+    "text": "This site is an independent, unofficial review resource. We are not affiliated with, endorsed by, or acting on behalf of Fomo. We earn a commission if you sign up and trade using our referral link. Cryptocurrency trading involves substantial risk of loss and is not suitable for everyone. Nothing on this site is financial advice. Please do your own research."
+  },
+  "languageSwitcher": {
+    "label": "Language"
+  }
+}

@@ -1,0 +1,147 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Button from "../../components/Button.astro";
+import Card from "../../components/Card.astro";
+import TrustBar from "../../components/TrustBar.astro";
+import FeeCalculator from "../../components/FeeCalculator.astro";
+import FAQAccordion from "../../components/FAQAccordion.astro";
+import RiskDisclaimer from "../../components/RiskDisclaimer.astro";
+import Icon from "../../components/Icon.astro";
+import AppScreenshot from "../../components/AppScreenshot.astro";
+import { PAGE_KEYS } from "../../i18n/routes";
+import { FOMO, SITE_NAME } from "../../lib/site";
+import referralEarningsScreenshot from "../../assets/screenshots/referral-earnings.jpg";
+import shareCardScreenshot from "../../assets/screenshots/share-card-portfolio.png";
+
+const locale = "ko" as const;
+const pageKey = PAGE_KEYS.referralCode;
+
+const steps = [
+  { title: "코드 입력", body: "위 버튼을 누르거나 Fomo 가입 시 코드를 직접 입력하세요." },
+  { title: "계정 인증", body: "코드 사용 여부와 관계없이 절차는 동일합니다." },
+  { title: "평소처럼 거래", body: "10% 수수료 할인이 이미 적용되어 있습니다." },
+];
+
+const faqItems = [
+  {
+    question: "이 코드는 Fomo 공식 코드인가요?",
+    answer:
+      "TradePack은 독립적인 리뷰 사이트입니다. 이 코드는 Fomo의 일반적인 추천 코드이며 TradePack만의 특별 혜택이 아니고, Fomo가 이 사이트를 공식 승인한 것도 아닙니다.",
+  },
+  {
+    question: "코드를 사용하는 데 비용이 드나요?",
+    answer:
+      "아니요. Fomo 추천 프로그램의 일반적인 작동 방식으로, 사용자는 10% 할인을 받고 TradePack은 거래 발생 시 수수료를 받을 수 있습니다.",
+  },
+  {
+    question: "이미 Fomo 계정이 있어도 사용할 수 있나요?",
+    answer:
+      "추천 코드는 보통 신규 가입 시에만 적용됩니다 — 이미 계정이 있다면 이후 코드 입력은 소급 적용되지 않을 가능성이 높습니다. 정확한 정책은 Fomo 앱에서 확인하세요.",
+  },
+];
+---
+
+<BaseLayout
+  locale={locale}
+  pageKey={pageKey}
+  title="Fomo 추천 코드 — 거래 수수료 10% 할인"
+  description="TradePack의 Fomo 추천 코드로 거래 수수료를 10% 할인받는 방법을 알아보세요."
+  ogImage="/images/og-referral.png"
+>
+  <section class="mx-auto max-w-4xl px-4 pb-14 pt-14 text-center sm:px-6 sm:pt-20">
+    <span class="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1 text-xs font-medium text-[var(--color-muted)]">
+      <Icon name="shield-check" class="size-3.5 text-[var(--color-accent)]" />
+      TradePack은 독립적인 리뷰 사이트이며 Fomo의 공식 파트너나 승인을 받은 사이트가 아닙니다
+    </span>
+    <h1 class="text-balance mt-5 text-4xl font-extrabold leading-tight sm:text-5xl">
+      Fomo 모든 거래에서 <span class="text-[var(--color-accent)]">{FOMO.feeDiscountPercent}%</span> 절약하기
+    </h1>
+    <p class="mx-auto mt-5 max-w-xl text-base leading-relaxed text-[var(--color-muted)] sm:text-lg">
+      가입 시 저희 추천 코드를 입력하세요 — 별도 절차 없이 거래 수수료에 자동으로 할인이 적용됩니다.
+    </p>
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+      <Button href={FOMO.referralUrl} external size="lg" showArrow>
+        {FOMO.feeDiscountPercent}% 할인으로 가입하기
+      </Button>
+    </div>
+  </section>
+
+  <section class="mx-auto flex max-w-2xl flex-wrap justify-center gap-5 px-4 pb-16 sm:px-6">
+    <AppScreenshot
+      src={referralEarningsScreenshot}
+      alt="'친구 수수료의 25%를 받으세요'와 추천 링크가 표시된 Fomo 앱의 Earnings 화면"
+      caption={`실제 Fomo 앱의 추천 수익 화면 — 추천인은 친구 거래 수수료의 ${FOMO.referrerEarningsPercent}%를 받습니다.`}
+      class="w-[280px]"
+    />
+    <AppScreenshot
+      src={shareCardScreenshot}
+      alt={`TradePack 계정용 Fomo 공식 공유 카드, "10% off fees with code TradePack" 문구 포함`}
+      caption="TradePack이 아닌 Fomo 앱이 직접 생성한 이미지입니다 — 추천 코드가 진짜라는 증거입니다."
+      class="w-[280px]"
+    />
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+    <TrustBar
+      items={[
+        { icon: "wallet", text: "시리즈 B $75M 투자 유치" },
+        { icon: "shield-check", text: "논커스터디얼" },
+        { icon: "spark", text: "SEC/CFTC 법적 지위 명확화" },
+        { icon: "chart", text: "Index Ventures, Union Square Ventures, Benchmark 투자" },
+      ]}
+    />
+  </section>
+
+  <section class="mx-auto max-w-4xl px-4 pb-16 sm:px-6">
+    <h2 class="text-center text-2xl font-bold sm:text-3xl">3단계</h2>
+    <div class="mt-8 grid gap-5 sm:grid-cols-3">
+      {
+        steps.map((step, i) => (
+          <Card class="text-center">
+            <span class="mx-auto flex size-9 items-center justify-center rounded-full bg-[var(--color-accent)] text-sm font-bold text-[var(--color-bg)]">
+              {i + 1}
+            </span>
+            <h3 class="mt-4 text-base font-semibold">{step.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-[var(--color-muted)]">{step.body}</p>
+          </Card>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 pb-16 sm:px-6">
+    <h2 class="text-center text-2xl font-bold sm:text-3xl">얼마나 절약되는지 확인해보세요</h2>
+    <div class="mt-8">
+      <FeeCalculator
+        orderValueLabel="거래 금액 (USD)"
+        withoutCodeLabel={`기본 수수료 (${FOMO.spotFeePercent}%)`}
+        withCodeLabel={`코드 적용 수수료 (${FOMO.feeDiscountPercent}% 할인)`}
+        savingsLabel="절약 금액"
+        helpText="스팟 거래 수수료 기준입니다. 무기한 선물 수수료는 다릅니다 — 수수료 페이지를 참고하세요."
+      />
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 pb-16 sm:px-6">
+    <h2 class="text-center text-2xl font-bold sm:text-3xl">자주 묻는 질문</h2>
+    <div class="mt-8">
+      <FAQAccordion items={faqItems} />
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 pb-16 sm:px-6">
+    <RiskDisclaimer locale={locale} variant="page" />
+  </section>
+
+  <section class="mx-auto max-w-4xl px-4 pb-20 text-center sm:px-6">
+    <Card class="flex flex-col items-center gap-4">
+      <h2 class="text-xl font-bold sm:text-2xl">준비되셨나요?</h2>
+      <p class="text-sm text-[var(--color-muted)]">
+        {SITE_NAME} — {FOMO.displayName}에 대한 독립적인 리뷰와 가이드.
+      </p>
+      <Button href={FOMO.referralUrl} external size="lg" showArrow>
+        {FOMO.feeDiscountPercent}% 할인으로 가입하기
+      </Button>
+    </Card>
+  </section>
+</BaseLayout>

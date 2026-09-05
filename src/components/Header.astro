@@ -1,0 +1,104 @@
+---
+import { Image } from "astro:assets";
+import Icon from "./Icon.astro";
+import Button from "./Button.astro";
+import LanguageSwitcher from "./LanguageSwitcher.astro";
+import { useTranslations } from "../i18n/ui";
+import { PAGE_KEYS, navTargetUrl, resolveLocaleUrl } from "../i18n/routes";
+import { SITE_NAME, FOMO } from "../lib/site";
+import logoIcon from "../assets/brand/logo-icon.png";
+import type { Locale, PageId } from "../i18n/routes";
+
+interface Props {
+  locale: Locale;
+  pageKey: PageId;
+}
+
+const { locale, pageKey } = Astro.props;
+const t = useTranslations(locale);
+
+const navItems: { key: PageId; label: string }[] = [
+  { key: PAGE_KEYS.review, label: t.nav.review },
+  { key: PAGE_KEYS.referralCode, label: t.nav.referralCode },
+  { key: PAGE_KEYS.fees, label: t.nav.fees },
+  { key: PAGE_KEYS.howToStart, label: t.nav.howToStart },
+  { key: PAGE_KEYS.blogIndex, label: t.nav.blog },
+  { key: PAGE_KEYS.faq, label: t.nav.faq },
+];
+
+const homeHref = resolveLocaleUrl(locale, PAGE_KEYS.home);
+---
+
+<header class="sticky top-0 z-40 border-b border-[var(--color-border)] bg-[var(--color-bg)]/85 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+    <a href={homeHref} class="flex items-center gap-2 text-lg font-bold text-[var(--color-text)]">
+      <Image src={logoIcon} alt="" width={32} height={32} class="size-8" />
+      {SITE_NAME}
+    </a>
+
+    <nav class="hidden items-center gap-6 lg:flex" aria-label="Primary">
+      {
+        navItems.map((item) => (
+          <a
+            href={navTargetUrl(locale, item.key)}
+            aria-current={pageKey === item.key ? "page" : undefined}
+            class:list={[
+              "text-sm font-medium transition-colors hover:text-[var(--color-accent)]",
+              pageKey === item.key ? "text-[var(--color-accent)]" : "text-[var(--color-muted)]",
+            ]}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <LanguageSwitcher currentLocale={locale} pageKey={pageKey} />
+      <span class="hidden sm:inline-flex">
+        <Button href={FOMO.referralUrl} external size="md">
+          {t.header.ctaButton}
+        </Button>
+      </span>
+
+      <details class="mobile-nav relative lg:hidden">
+        <summary
+          class="flex size-11 cursor-pointer list-none items-center justify-center rounded-xl border border-[var(--color-border)] [&::-webkit-details-marker]:hidden"
+          aria-label="Menu"
+        >
+          <Icon name="menu" class="size-5" />
+        </summary>
+        <div class="absolute right-0 z-50 mt-2 w-56 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-2 shadow-xl">
+          {
+            navItems.map((item) => (
+              <a
+                href={navTargetUrl(locale, item.key)}
+                class="block rounded-xl px-3 py-2.5 text-sm font-medium text-[var(--color-text)] hover:bg-[var(--color-surface-hover)]"
+              >
+                {item.label}
+              </a>
+            ))
+          }
+          <a
+            href={FOMO.referralUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mt-1 block rounded-xl bg-[var(--color-accent)] px-3 py-2.5 text-center text-sm font-semibold text-[var(--color-bg)]"
+          >
+            {t.header.ctaButton}
+          </a>
+        </div>
+      </details>
+    </div>
+  </div>
+</header>
+
+<script>
+  document.addEventListener("click", (e) => {
+    document.querySelectorAll("details.mobile-nav[open]").forEach((el) => {
+      if (!(el as HTMLElement).contains(e.target as Node)) {
+        el.removeAttribute("open");
+      }
+    });
+  });
+</script>

@@ -1,0 +1,148 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Button from "../../components/Button.astro";
+import Card from "../../components/Card.astro";
+import TrustBar from "../../components/TrustBar.astro";
+import FeeCalculator from "../../components/FeeCalculator.astro";
+import FAQAccordion from "../../components/FAQAccordion.astro";
+import RiskDisclaimer from "../../components/RiskDisclaimer.astro";
+import Icon from "../../components/Icon.astro";
+import AppScreenshot from "../../components/AppScreenshot.astro";
+import { PAGE_KEYS } from "../../i18n/routes";
+import { FOMO, SITE_NAME } from "../../lib/site";
+import referralEarningsScreenshot from "../../assets/screenshots/referral-earnings.jpg";
+import shareCardScreenshot from "../../assets/screenshots/share-card-portfolio.png";
+
+const locale = "de" as const;
+const pageKey = PAGE_KEYS.referralCode;
+
+const steps = [
+  { title: "Code eingeben", body: "Empfehlungscode bei der Fomo-Registrierung manuell eingeben." },
+  { title: "Konto verifizieren", body: "Der Ablauf ist identisch zur normalen Registrierung, der Code ändert daran nichts." },
+  { title: "Wie gewohnt handeln", body: "Der 10-%-Rabatt gilt automatisch." },
+];
+
+const faqItems = [
+  {
+    question: "Ist dieser Empfehlungscode offiziell?",
+    answer:
+      "Nein — TradePack ist eine unabhängige Testseite. Es handelt sich um den regulären Fomo-Empfehlungscode, kein exklusives TradePack-Angebot; Fomo unterstützt oder sponsert diese Website nicht.",
+  },
+  {
+    question: "Entstehen durch die Nutzung des Codes zusätzliche Kosten?",
+    answer:
+      "Nein. So funktioniert Fomos reguläres Empfehlungsprogramm — Sie erhalten 10% Rabatt, TradePack erhält möglicherweise eine Provision aus Ihren Handelsgebühren.",
+  },
+  {
+    question: "Kann ich den Code nutzen, wenn ich schon ein Fomo-Konto habe?",
+    answer:
+      "Empfehlungscodes gelten in der Regel nur bei der Registrierung — eine nachträgliche Eingabe wirkt meist nicht rückwirkend. Maßgeblich sind die aktuellen Regeln in der Fomo-App.",
+  },
+];
+---
+
+<BaseLayout
+  locale={locale}
+  pageKey={pageKey}
+  title="Fomo Empfehlungscode — 10% Rabatt auf Handelsgebühren"
+  description="So erhalten Sie mit dem Fomo-Empfehlungscode von TradePack 10% Rabatt auf Ihre Handelsgebühren."
+  ogImage="/images/og-referral.png"
+>
+  <section class="mx-auto max-w-4xl px-4 pb-14 pt-14 text-center sm:px-6 sm:pt-20">
+    <span class="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1 text-xs font-medium text-[var(--color-muted)]">
+      <Icon name="shield-check" class="size-3.5 text-[var(--color-accent)]" />
+      TradePack ist eine unabhängige Testseite und kein offizieller Partner von Fomo
+    </span>
+    <h1 class="text-balance mt-5 text-4xl font-extrabold leading-tight sm:text-5xl">
+      {FOMO.feeDiscountPercent}% sparen bei jedem <span class="text-[var(--color-accent)]">Fomo</span>-Trade
+    </h1>
+    <p class="mx-auto mt-5 max-w-xl text-base leading-relaxed text-[var(--color-muted)] sm:text-lg">
+      Empfehlungscode bei der Registrierung eingeben — der Rabatt wird automatisch auf Ihre Handelsgebühren
+      angewendet, ohne zusätzlichen Aufwand.
+    </p>
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+      <Button href={FOMO.referralUrl} external size="lg" showArrow>
+        So geben Sie den Code ein
+      </Button>
+    </div>
+  </section>
+
+  <section class="mx-auto flex max-w-2xl flex-wrap justify-center gap-5 px-4 pb-16 sm:px-6">
+    <AppScreenshot
+      src={referralEarningsScreenshot}
+      alt="Earnings-Bildschirm der Fomo-App mit 'Refer and earn 25% of your friends' fees' und Empfehlungslink"
+      caption={`Echter Empfehlungs-Verdienst-Bildschirm in der Fomo-App — Empfehler erhalten ${FOMO.referrerEarningsPercent}% der Handelsgebühren ihrer Freunde.`}
+      class="w-[280px]"
+    />
+    <AppScreenshot
+      src={shareCardScreenshot}
+      alt={`Fomos eigene Share-Karte für das TradePack-Konto mit dem Text "10% off fees with code TradePack"`}
+      caption="Von der Fomo-App selbst generiert, nicht von uns erstellt — der Beweis, dass der Code echt ist."
+      class="w-[280px]"
+    />
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+    <TrustBar
+      items={[
+        { icon: "wallet", text: "75-Mio.-USD-Series-B-Finanzierung" },
+        { icon: "shield-check", text: "Non-Custodial" },
+        { icon: "spark", text: "Rechtliche Klarheit durch SEC/CFTC (USA)" },
+        { icon: "chart", text: "Index Ventures, Union Square Ventures, Benchmark" },
+      ]}
+    />
+  </section>
+
+  <section class="mx-auto max-w-4xl px-4 pb-16 sm:px-6">
+    <h2 class="text-center text-2xl font-bold sm:text-3xl">Drei Schritte</h2>
+    <div class="mt-8 grid gap-5 sm:grid-cols-3">
+      {
+        steps.map((step, i) => (
+          <Card class="text-center">
+            <span class="mx-auto flex size-9 items-center justify-center rounded-full bg-[var(--color-accent)] text-sm font-bold text-[var(--color-bg)]">
+              {i + 1}
+            </span>
+            <h3 class="mt-4 text-base font-semibold">{step.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-[var(--color-muted)]">{step.body}</p>
+          </Card>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 pb-16 sm:px-6">
+    <h2 class="text-center text-2xl font-bold sm:text-3xl">Sehen Sie genau, wie viel Sie sparen</h2>
+    <div class="mt-8">
+      <FeeCalculator
+        orderValueLabel="Handelsvolumen (USD)"
+        withoutCodeLabel={`Standardgebühr (${FOMO.spotFeePercent}%)`}
+        withCodeLabel={`Gebühr mit Empfehlungscode (${FOMO.feeDiscountPercent}% Rabatt)`}
+        savingsLabel="Ersparnis"
+        helpText="Basierend auf Spothandelsgebühren. Für Perpetual Futures gelten andere Gebühren — siehe vollständige Gebührenübersicht."
+      />
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 pb-16 sm:px-6">
+    <h2 class="text-center text-2xl font-bold sm:text-3xl">Häufige Fragen</h2>
+    <div class="mt-8">
+      <FAQAccordion items={faqItems} />
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 pb-16 sm:px-6">
+    <RiskDisclaimer locale={locale} variant="page" />
+  </section>
+
+  <section class="mx-auto max-w-4xl px-4 pb-20 text-center sm:px-6">
+    <Card class="flex flex-col items-center gap-4">
+      <h2 class="text-xl font-bold sm:text-2xl">Bereit?</h2>
+      <p class="text-sm text-[var(--color-muted)]">
+        {SITE_NAME} — unabhängige Tests und Anleitungen zu {FOMO.displayName}.
+      </p>
+      <Button href={FOMO.referralUrl} external size="lg" showArrow>
+        So geben Sie den Code ein
+      </Button>
+    </Card>
+  </section>
+</BaseLayout>

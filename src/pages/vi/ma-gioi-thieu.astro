@@ -1,0 +1,147 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Button from "../../components/Button.astro";
+import Card from "../../components/Card.astro";
+import TrustBar from "../../components/TrustBar.astro";
+import FeeCalculator from "../../components/FeeCalculator.astro";
+import FAQAccordion from "../../components/FAQAccordion.astro";
+import RiskDisclaimer from "../../components/RiskDisclaimer.astro";
+import Icon from "../../components/Icon.astro";
+import AppScreenshot from "../../components/AppScreenshot.astro";
+import { PAGE_KEYS } from "../../i18n/routes";
+import { FOMO, SITE_NAME } from "../../lib/site";
+import referralEarningsScreenshot from "../../assets/screenshots/referral-earnings.jpg";
+import shareCardScreenshot from "../../assets/screenshots/share-card-portfolio.png";
+
+const locale = "vi" as const;
+const pageKey = PAGE_KEYS.referralCode;
+
+const steps = [
+  { title: "Nhập mã", body: "Nhập mã thủ công trong bước đăng ký Fomo." },
+  { title: "Xác minh tài khoản", body: "Quy trình như bình thường, mã không thay đổi bước onboarding." },
+  { title: "Giao dịch bình thường", body: "Mức giảm 10% đã được áp dụng sẵn." },
+];
+
+const faqItems = [
+  {
+    question: "Mã này có phải chính thức từ Fomo không?",
+    answer:
+      "TradePack là trang đánh giá độc lập. Đây là mã giới thiệu tiêu chuẩn của Fomo, không phải ưu đãi riêng của TradePack, và Fomo không xác nhận/bảo trợ trang này.",
+  },
+  {
+    question: "Dùng mã có mất phí gì không?",
+    answer:
+      "Không. Đây là cách chương trình giới thiệu tiêu chuẩn của Fomo hoạt động — bạn được giảm 10%, TradePack có thể nhận hoa hồng khi bạn giao dịch.",
+  },
+  {
+    question: "Đã có tài khoản Fomo rồi thì áp mã được không?",
+    answer:
+      "Mã giới thiệu thường chỉ áp dụng lúc đăng ký mới — nếu đã có tài khoản, nhập mã sau đó thường không có tác dụng hồi tố. Kiểm tra lại trong app Fomo để chắc chắn.",
+  },
+];
+---
+
+<BaseLayout
+  locale={locale}
+  pageKey={pageKey}
+  title="Mã giới thiệu Fomo — Giảm 10% phí giao dịch"
+  description="Tìm hiểu cách mã giới thiệu của TradePack giúp giảm 10% phí giao dịch trên Fomo."
+  ogImage="/images/og-referral.png"
+>
+  <section class="mx-auto max-w-4xl px-4 pb-14 pt-14 text-center sm:px-6 sm:pt-20">
+    <span class="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1 text-xs font-medium text-[var(--color-muted)]">
+      <Icon name="shield-check" class="size-3.5 text-[var(--color-accent)]" />
+      TradePack là trang đánh giá độc lập — không đại diện hay được Fomo xác nhận
+    </span>
+    <h1 class="text-balance mt-5 text-4xl font-extrabold leading-tight sm:text-5xl">
+      Giảm <span class="text-[var(--color-accent)]">{FOMO.feeDiscountPercent}%</span> phí trên mỗi giao dịch Fomo
+    </h1>
+    <p class="mx-auto mt-5 max-w-xl text-base leading-relaxed text-[var(--color-muted)] sm:text-lg">
+      Nhập mã khi đăng ký — mức giảm áp dụng tự động cho phí giao dịch, không cần thêm bước nào khác.
+    </p>
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+      <Button href={FOMO.referralUrl} external size="lg" showArrow>
+        Xem cách nhập mã
+      </Button>
+    </div>
+  </section>
+
+  <section class="mx-auto flex max-w-2xl flex-wrap justify-center gap-5 px-4 pb-16 sm:px-6">
+    <AppScreenshot
+      src={referralEarningsScreenshot}
+      alt="Màn hình Earnings của app Fomo hiển thị 'Refer and earn 25% of your friends' fees' và link giới thiệu"
+      caption={`Màn hình thu nhập giới thiệu thật trong app Fomo — người giới thiệu nhận ${FOMO.referrerEarningsPercent}% phí giao dịch của bạn bè.`}
+      class="w-[280px]"
+    />
+    <AppScreenshot
+      src={shareCardScreenshot}
+      alt={`Thẻ chia sẻ của Fomo cho tài khoản TradePack, ghi "10% off fees with code TradePack"`}
+      caption="Do chính app Fomo tạo ra, không phải TradePack tự vẽ — bằng chứng mã giới thiệu là thật."
+      class="w-[280px]"
+    />
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+    <TrustBar
+      items={[
+        { icon: "wallet", text: "Series B $75 triệu do Index Ventures dẫn đầu" },
+        { icon: "shield-check", text: "Non-custodial" },
+        { icon: "spark", text: "Đã được SEC/CFTC làm rõ khung pháp lý" },
+        { icon: "chart", text: "Có Index Ventures, Union Square Ventures, Benchmark" },
+      ]}
+    />
+  </section>
+
+  <section class="mx-auto max-w-4xl px-4 pb-16 sm:px-6">
+    <h2 class="text-center text-2xl font-bold sm:text-3xl">3 bước</h2>
+    <div class="mt-8 grid gap-5 sm:grid-cols-3">
+      {
+        steps.map((step, i) => (
+          <Card class="text-center">
+            <span class="mx-auto flex size-9 items-center justify-center rounded-full bg-[var(--color-accent)] text-sm font-bold text-[var(--color-bg)]">
+              {i + 1}
+            </span>
+            <h3 class="mt-4 text-base font-semibold">{step.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-[var(--color-muted)]">{step.body}</p>
+          </Card>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 pb-16 sm:px-6">
+    <h2 class="text-center text-2xl font-bold sm:text-3xl">Xem chính xác số tiền bạn tiết kiệm được</h2>
+    <div class="mt-8">
+      <FeeCalculator
+        orderValueLabel="Giá trị lệnh (USD)"
+        withoutCodeLabel={`Phí tiêu chuẩn (${FOMO.spotFeePercent}%)`}
+        withCodeLabel={`Phí khi dùng mã (giảm ${FOMO.feeDiscountPercent}%)`}
+        savingsLabel="Số tiền tiết kiệm được"
+        helpText="Áp dụng cho giao dịch spot. Phí perpetuals khác — xem trang phí giao dịch."
+      />
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 pb-16 sm:px-6">
+    <h2 class="text-center text-2xl font-bold sm:text-3xl">Hỏi đáp ngắn</h2>
+    <div class="mt-8">
+      <FAQAccordion items={faqItems} />
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 pb-16 sm:px-6">
+    <RiskDisclaimer locale={locale} variant="page" />
+  </section>
+
+  <section class="mx-auto max-w-4xl px-4 pb-20 text-center sm:px-6">
+    <Card class="flex flex-col items-center gap-4">
+      <h2 class="text-xl font-bold sm:text-2xl">Sẵn sàng chưa?</h2>
+      <p class="text-sm text-[var(--color-muted)]">
+        {SITE_NAME} — đánh giá và hướng dẫn độc lập về {FOMO.displayName}.
+      </p>
+      <Button href={FOMO.referralUrl} external size="lg" showArrow>
+        Xem cách nhập mã
+      </Button>
+    </Card>
+  </section>
+</BaseLayout>

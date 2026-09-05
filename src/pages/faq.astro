@@ -1,0 +1,76 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import FAQAccordion from "../components/FAQAccordion.astro";
+import RiskDisclaimer from "../components/RiskDisclaimer.astro";
+import { PAGE_KEYS } from "../i18n/routes";
+import { FOMO, SITE_NAME } from "../lib/site";
+
+const locale = "en" as const;
+const pageKey = PAGE_KEYS.faq;
+
+const faqItems = [
+  {
+    question: "Is Fomo safe to use?",
+    answer: `It's non-custodial (you control your funds, not Fomo) and has real regulatory clarity behind its model (SEC/CFTC guidance, March 2026). That removes some risks but not others — see our full review for the honest breakdown.`,
+  },
+  {
+    question: "Is Fomo a licensed exchange?",
+    answer: "Fomo operates as a non-custodial wallet interface, a category the SEC/CFTC clarified doesn't require broker-dealer registration in the US. It is not a traditional licensed exchange in the way centralized platforms are.",
+  },
+  {
+    question: "What chains does Fomo support?",
+    answer: `${FOMO.chains[0]} (primary), ${FOMO.chains.slice(1).join(", ")}.`,
+  },
+  {
+    question: "Can US users trade perpetuals on Fomo?",
+    answer: `No — perpetuals (via ${FOMO.perpsProvider}) aren't currently available to US-based users. Spot trading is available nationwide.`,
+  },
+  {
+    question: "How much are Fomo's fees?",
+    answer: `Roughly ${FOMO.spotFeePercent}% per spot trade before discount; perpetuals add about ${FOMO.perpsFeePerSidePercent}% per side on top of the underlying venue's fees. A referral code takes ${FOMO.feeDiscountPercent}% off.`,
+  },
+  {
+    question: "How does the referral code work?",
+    answer: `Enter it during signup to get ${FOMO.feeDiscountPercent}% off your trading fees automatically, on every trade going forward.`,
+  },
+  {
+    question: `Is ${SITE_NAME} affiliated with Fomo?`,
+    answer: `No. ${SITE_NAME} is an independent review site. We may earn a commission if you sign up and trade using our referral link — see our disclaimer.`,
+  },
+  {
+    question: "What happens if I lose access to my wallet?",
+    answer: "Because Fomo is non-custodial, it cannot recover funds or reset access on your behalf — back up your recovery method carefully before depositing.",
+  },
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqItems.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: { "@type": "Answer", text: item.answer },
+  })),
+};
+---
+
+<BaseLayout
+  locale={locale}
+  pageKey={pageKey}
+  title="Fomo App FAQ"
+  description="Common questions about Fomo — safety, fees, supported chains, referral codes, and more."
+  jsonLd={jsonLd}
+>
+  <section class="mx-auto max-w-3xl px-4 py-14 sm:px-6">
+    <h1 class="text-3xl font-extrabold sm:text-4xl">Frequently asked questions</h1>
+    <p class="mt-4 text-[var(--color-muted)]">Everything traders ask us most often about Fomo and this site.</p>
+
+    <div class="mt-10">
+      <FAQAccordion items={faqItems} />
+    </div>
+
+    <div class="mt-10">
+      <RiskDisclaimer locale={locale} variant="page" />
+    </div>
+  </section>
+</BaseLayout>

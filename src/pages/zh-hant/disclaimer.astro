@@ -1,0 +1,72 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import RiskDisclaimer from "../../components/RiskDisclaimer.astro";
+import { PAGE_KEYS } from "../../i18n/routes";
+import { FOMO, SITE_NAME } from "../../lib/site";
+
+const locale = "zh-hant" as const;
+const pageKey = PAGE_KEYS.disclaimer;
+---
+
+<BaseLayout
+  locale={locale}
+  pageKey={pageKey}
+  title="免責聲明"
+  description={`${SITE_NAME} 的法律資訊與風險提示 —— 針對 Fomo 及其他加密貨幣交易所的獨立評測網站。`}
+>
+  <section class="mx-auto max-w-3xl px-4 py-14 sm:px-6">
+    <h1 class="text-3xl font-extrabold sm:text-4xl">免責聲明</h1>
+
+    <div class="mt-8">
+      <RiskDisclaimer locale={locale} variant="page" />
+    </div>
+
+    <div class="prose-content mt-10 max-w-none">
+      <p>
+        {SITE_NAME} 是關於 {FOMO.displayName} 交易應用程式的獨立資訊網站。我們並未以任何官方身分代表、獲授權、受
+        贊助,或代表 {FOMO.displayName}({FOMO.website.replace("https://", "")})行事。
+      </p>
+
+      <h2>聯盟行銷揭露</h2>
+      <p>
+        {SITE_NAME} 參與 {FOMO.displayName} 的推薦計畫。若您透過本站的推薦連結或推薦碼註冊並進行交易,我們可能依您
+        的交易手續費獲得佣金。這不會為您增加任何額外費用,而您獲得的折扣({FOMO.feeDiscountPercent}%
+        手續費折扣)屬於 {FOMO.displayName} 標準推薦計畫的一部分,並非 {SITE_NAME} 專屬優惠。
+      </p>
+
+      <h2>非財務建議</h2>
+      <p>
+        本網站的評測、教學、手續費說明或比較內容,均不構成財務、投資、稅務或法律建議。加密貨幣市場,尤其是迷因幣
+        與槓桿永續合約,波動性極高,存在重大虧損風險,甚至可能損失全部本金。請於交易前自行充分研究,並考慮諮詢合格
+        專業人士。
+      </p>
+
+      <h2>準確性</h2>
+      <p>
+        我們致力於維持手續費、功能與法規資訊的即時性,但加密貨幣產品變化迅速。在依本站內容做出決策前,請務必於{" "}
+        {FOMO.displayName} 應用程式或 {FOMO.website.replace("https://", "")} 官網確認最新條款。
+      </p>
+
+      <h2>適用資格</h2>
+      <p>
+        加密貨幣交易的可行性、產品功能(如永續合約)及法律要求因地區而異,並可能隨時間變動。確認在您所在地區使用{" "}
+        {FOMO.displayName} 或本站所提及任何產品是否合法,為您自身的責任。
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  .prose-content h2 {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+  .prose-content p {
+    margin-bottom: 1.1rem;
+    line-height: 1.75;
+    color: var(--color-muted);
+  }
+</style>

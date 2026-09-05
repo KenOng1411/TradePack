@@ -1,0 +1,26 @@
+---
+import Icon from "./Icon.astro";
+import { useTranslations } from "../i18n/ui";
+import type { Locale } from "../i18n/routes";
+
+interface Props {
+  locale: Locale;
+  variant?: "footer" | "page";
+}
+
+const { locale, variant = "footer" } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<div
+  class:list={[
+    "flex gap-3 rounded-2xl border border-[var(--color-warning-soft)] bg-[var(--color-warning-soft)]",
+    variant === "footer" ? "p-4 sm:p-5" : "p-5 sm:p-6",
+  ]}
+>
+  <Icon name="shield-check" class="mt-0.5 size-5 shrink-0 text-[var(--color-warning)]" />
+  <div>
+    <p class="text-sm font-semibold text-[var(--color-warning)]">{t.riskDisclaimer.heading}</p>
+    <p class="mt-1 text-sm leading-relaxed text-[var(--color-muted)]">{t.riskDisclaimer.text}</p>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+---
+import type { GetStaticPaths } from "astro";
+import BlogPostView from "../../../components/BlogPostView.astro";
+import { getCollection } from "astro:content";
+
+export const getStaticPaths = (async () => {
+  const posts = await getCollection("blog", (e) => e.data.locale === "ko");
+  return posts.map((post) => ({
+    params: { slug: post.id.replace(/^ko\//, "") },
+    props: { post },
+  }));
+}) satisfies GetStaticPaths;
+
+const { post } = Astro.props;
+---
+
+<BlogPostView locale="ko" post={post}>
+  <Fragment slot="back-label">전체 글 보기</Fragment>
+</BlogPostView>

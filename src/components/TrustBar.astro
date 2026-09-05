@@ -1,0 +1,27 @@
+---
+import Icon from "./Icon.astro";
+
+export interface TrustBarItem {
+  icon: "wallet" | "spark" | "shield-check" | "chart";
+  text: string;
+}
+
+interface Props {
+  items: TrustBarItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+  {
+    items.map((item) => (
+      <div class="flex items-center gap-3 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
+        <span class="shrink-0 rounded-xl bg-[var(--color-accent-soft)] p-2 text-[var(--color-accent)]">
+          <Icon name={item.icon} class="size-4" />
+        </span>
+        <p class="text-sm font-semibold leading-snug text-[var(--color-text)]">{item.text}</p>
+      </div>
+    ))
+  }
+</div>

@@ -1,0 +1,134 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Button from "../../components/Button.astro";
+import Card from "../../components/Card.astro";
+import TrustBar from "../../components/TrustBar.astro";
+import Icon from "../../components/Icon.astro";
+import AppScreenshot from "../../components/AppScreenshot.astro";
+import leaderboardScreenshot from "../../assets/screenshots/mobile-leaderboard-clans.jpg";
+import { PAGE_KEYS, resolveLocaleUrl } from "../../i18n/routes";
+import { FOMO, SITE_NAME } from "../../lib/site";
+import { getCollection } from "astro:content";
+
+const locale = "de" as const;
+const pageKey = PAGE_KEYS.home;
+
+const posts = (await getCollection("blog", (e) => e.data.locale === locale))
+  .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
+  .slice(0, 3);
+
+const howItWorks = [
+  { title: "Fomo-App herunterladen", body: `Verfügbar für ${FOMO.platforms.join(", ")}.` },
+  { title: "Empfehlungscode eingeben", body: "Bei der Registrierung (optional)." },
+  { title: "Wie gewohnt handeln", body: `Der ${FOMO.feeDiscountPercent}%-Gebührenrabatt wird automatisch auf jede Transaktion angewendet.` },
+];
+---
+
+<BaseLayout
+  locale={locale}
+  pageKey={pageKey}
+  title={`${SITE_NAME} — Unabhängige Fomo-Reviews & Empfehlungscode-Guide`}
+  description="Ein unabhängiger Test der Social-Trading-App Fomo — inklusive Empfehlungscode für 10 % Gebührenrabatt, falls Sie sich zum Ausprobieren entscheiden."
+>
+  <section class="mx-auto max-w-6xl px-4 pb-16 pt-14 sm:px-6 sm:pt-20">
+    <span class="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1 text-xs font-medium text-[var(--color-muted)]">
+      <Icon name="shield-check" class="size-3.5 text-[var(--color-accent)]" />
+      TradePack ist eine unabhängige Testseite und nicht die offizielle Website von Fomo
+    </span>
+    <h1 class="text-balance mt-5 max-w-2xl text-4xl font-extrabold leading-tight sm:text-5xl">
+      Bevor Sie handeln: <span class="text-[var(--color-accent)]">Fomo</span> im unabhängigen Test
+    </h1>
+    <p class="mt-5 max-w-xl text-base leading-relaxed text-[var(--color-muted)] sm:text-lg">
+      Ein unabhängiger Test der Social-Trading-App Fomo — inklusive Empfehlungscode für{" "}
+      {FOMO.feeDiscountPercent}% Gebührenrabatt, falls Sie sich zum Ausprobieren entscheiden.
+    </p>
+    <div class="mt-8 flex flex-wrap items-center gap-3">
+      <Button href={resolveLocaleUrl(locale, PAGE_KEYS.referralCode)} size="lg" showArrow>
+        Empfehlungscode ansehen
+      </Button>
+    </div>
+    <p class="mt-4 text-xs text-[var(--color-muted)]">
+      TradePack ist eine unabhängige Testseite und nicht die offizielle Website von Fomo.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+    <TrustBar
+      items={[
+        { icon: "wallet", text: "75-Mio.-USD-Series-B-Finanzierung 2026, angeführt von Index Ventures" },
+        { icon: "spark", text: "Beteiligung von Union Square Ventures und Benchmark" },
+        { icon: "shield-check", text: "Non-Custodial — Ihre Vermögenswerte bleiben in Ihrer eigenen Kontrolle" },
+        { icon: "chart", text: "SEC/CFTC (USA) schuf im März 2026 Klarheit zum rechtlichen Status" },
+      ]}
+    />
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+    <h2 class="text-2xl font-bold sm:text-3xl">So funktioniert's</h2>
+    <div class="mt-6 grid gap-5 sm:grid-cols-3">
+      {
+        howItWorks.map((step, i) => (
+          <Card class="text-center">
+            <span class="mx-auto flex size-9 items-center justify-center rounded-full bg-[var(--color-accent)] text-sm font-bold text-[var(--color-bg)]">
+              {i + 1}
+            </span>
+            <h3 class="mt-4 text-base font-semibold">{step.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-[var(--color-muted)]">{step.body}</p>
+          </Card>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-4xl px-4 pb-16 sm:px-6">
+    <Card>
+      <h2 class="text-xl font-bold sm:text-2xl">Warum diese Seite existiert</h2>
+      <p class="mt-3 text-sm leading-relaxed text-[var(--color-muted)] sm:text-base">
+        Fomo ist eine Non-Custodial-Trading-App — das bedeutet, Ihre Vermögenswerte liegen in einer Wallet, die nur
+        Sie kontrollieren, nicht auf einem von Fomo verwalteten Konto. Unterstützt werden mehrere Chains ({FOMO.chains.join(", ")})
+        für den Spothandel mit Meme-Coins, Altcoins und Stablecoins sowie — außerhalb der USA — Perpetual-Futures-Handel
+        über {FOMO.perpsProvider}. TradePack wurde gegründet, um klar zu erklären, wie die App tatsächlich funktioniert,
+        was sie wirklich kostet und wo ihre Schwächen liegen — nicht nur, um sie zu bewerben.
+      </p>
+      <p class="mt-4 text-xs italic text-[var(--color-muted)]">
+        Hinweis: Diese Seite dient ausschließlich Informations- und Testzwecken und stellt kein Angebot zur
+        Kapitalanlage oder eine Finanzberatung dar. Fomo ist nicht als Krypto-Dienstleister nach der EU-MiCA-Verordnung
+        lizenziert.
+      </p>
+    </Card>
+  </section>
+
+  <section class="mx-auto max-w-xs px-4 pb-16 sm:px-6">
+    <AppScreenshot
+      src={leaderboardScreenshot}
+      alt="Fomos Leaderboard- und Clans-Tabs mit Top-Tradern und Clan-Rangliste neben dem Trading-Chart"
+      caption="Fomos Leaderboard- und Clans-Tabs — die soziale, wettbewerbsorientierte Ebene im Zentrum der App."
+    />
+  </section>
+
+  {
+    posts.length > 0 && (
+      <section class="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
+        <div class="flex items-center justify-between">
+          <h2 class="text-2xl font-bold sm:text-3xl">Blog</h2>
+          <a href={resolveLocaleUrl(locale, PAGE_KEYS.blogIndex)} class="text-sm font-semibold text-[var(--color-accent)] hover:underline">
+            Alle ansehen
+          </a>
+        </div>
+        <div class="mt-6 grid gap-5 sm:grid-cols-3">
+          {posts.map((post) => (
+            <a href={`/de/blog/${post.id.replace(/^de\//, "")}`} class="block">
+              <Card class="h-full transition-colors hover:border-[var(--color-accent)]/40">
+                <p class="text-xs text-[var(--color-muted)]">
+                  {post.data.publishDate.toLocaleDateString("de-DE", { year: "numeric", month: "long", day: "numeric" })}
+                </p>
+                <h3 class="mt-2 text-lg font-semibold leading-snug">{post.data.title}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-[var(--color-muted)] line-clamp-3">{post.data.description}</p>
+              </Card>
+            </a>
+          ))}
+        </div>
+      </section>
+    )
+  }
+</BaseLayout>

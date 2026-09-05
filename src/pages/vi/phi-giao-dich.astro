@@ -1,0 +1,98 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Button from "../../components/Button.astro";
+import Card from "../../components/Card.astro";
+import FeeCalculator from "../../components/FeeCalculator.astro";
+import RiskDisclaimer from "../../components/RiskDisclaimer.astro";
+import { PAGE_KEYS, resolveLocaleUrl } from "../../i18n/routes";
+import { FOMO } from "../../lib/site";
+
+const locale = "vi" as const;
+const pageKey = PAGE_KEYS.fees;
+
+const discountedFee = (FOMO.spotFeePercent * (1 - FOMO.feeDiscountPercent / 100)).toFixed(3);
+---
+
+<BaseLayout
+  locale={locale}
+  pageKey={pageKey}
+  title="Phí giao dịch Fomo 2026: Spot, Perpetuals & mức giảm với mã giới thiệu"
+  description="Bảng phân tích rõ ràng về phí giao dịch trên Fomo — spot, perpetuals, và mã giới thiệu giúp tiết kiệm bao nhiêu."
+>
+  <section class="mx-auto max-w-4xl px-4 py-14 sm:px-6">
+    <h1 class="text-3xl font-extrabold sm:text-4xl">Phí giao dịch Fomo 2026</h1>
+    <p class="mt-4 max-w-2xl text-[var(--color-muted)]">
+      Cấu trúc phí của Fomo không hiển thị ở một chỗ cố định, nên đây là bảng phân tích đầy đủ, cập nhật theo thông
+      tin 2026.
+    </p>
+
+    <div class="prose-content mt-10 max-w-none">
+      <h2>Phí giao dịch spot</h2>
+      <p>
+        Khoảng {FOMO.spotFeePercent}%/lệnh. Áp mã giới thiệu hợp lệ giúp giảm {FOMO.feeDiscountPercent}% mức phí đó —
+        tức từ {FOMO.spotFeePercent}% xuống còn khoảng {discountedFee}%. Với lệnh giá trị nhỏ, phí tuyệt đối có thể
+        cảm giác cao hơn tỷ lệ phần trăm vì thường có mức phí tối thiểu cho mỗi lệnh — đáng lưu ý nếu bạn giao dịch
+        nhiều lệnh nhỏ.
+      </p>
+
+      <h2>Phí perpetuals (không áp dụng cho người dùng tại Mỹ)</h2>
+      <p>
+        Perpetuals chạy qua tích hợp với {FOMO.perpsProvider}. Fomo cộng thêm khoảng {FOMO.perpsFeePerSidePercent}%/bên
+        trên phí gốc của {FOMO.perpsProvider} — trên thực tế khiến chi phí trực tiếp cho một lệnh perp gần như gấp
+        đôi so với spot.
+      </p>
+    </div>
+
+    <div class="mt-12">
+      <h2 class="text-xl font-bold sm:text-2xl">Máy tính phí</h2>
+      <p class="mt-2 text-sm text-[var(--color-muted)]">Nhập giá trị lệnh để so sánh phí tiêu chuẩn và phí đã giảm.</p>
+      <div class="mt-6">
+        <FeeCalculator
+          orderValueLabel="Giá trị lệnh (USD)"
+          withoutCodeLabel={`Phí tiêu chuẩn (${FOMO.spotFeePercent}%)`}
+          withCodeLabel={`Phí khi dùng mã (giảm ${FOMO.feeDiscountPercent}%)`}
+          savingsLabel="Số tiền tiết kiệm được"
+          helpText="Áp dụng cho giao dịch spot. Phí perpetuals khác — xem phần trên."
+        />
+      </div>
+    </div>
+
+    <div class="prose-content mt-12 max-w-none">
+      <h2>Chi phí khác cần biết</h2>
+      <p>
+        Vì là ứng dụng non-custodial, phí mạng blockchain (gas) áp dụng riêng, tách biệt với phí giao dịch của Fomo,
+        và thay đổi theo từng chain ({FOMO.chains.join(", ")}) cũng như tình trạng mạng lúc giao dịch — khoản này
+        không do Fomo quy định và không được giảm bởi mã giới thiệu.
+      </p>
+    </div>
+
+    <Card class="mt-12 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <p class="font-semibold">Áp dụng mức giảm tự động</p>
+        <p class="mt-1 text-sm text-[var(--color-muted)]">Dùng mã {FOMO.referralCode} khi đăng ký.</p>
+      </div>
+      <Button href={resolveLocaleUrl(locale, PAGE_KEYS.referralCode)} showArrow class="w-full sm:w-auto">
+        Xem mã giới thiệu
+      </Button>
+    </Card>
+
+    <div class="mt-10">
+      <RiskDisclaimer locale={locale} variant="page" />
+    </div>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  .prose-content h2 {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+  .prose-content p {
+    margin-bottom: 1.1rem;
+    line-height: 1.75;
+    color: var(--color-muted);
+  }
+</style>

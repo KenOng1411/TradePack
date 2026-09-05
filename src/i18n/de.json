@@ -1,0 +1,37 @@
+{
+  "nav": {
+    "home": "Start",
+    "review": "Testbericht",
+    "referralCode": "Empfehlungscode",
+    "fees": "Gebühren",
+    "howToStart": "Erste Schritte",
+    "faq": "FAQ",
+    "blog": "Blog"
+  },
+  "header": {
+    "ctaButton": "10% Rabatt auf Gebühren"
+  },
+  "footer": {
+    "tagline": "Unabhängige Recherche zu non-custodial Krypto-Trading-Apps.",
+    "resourcesHeading": "Ressourcen",
+    "legalHeading": "Rechtliches",
+    "disclaimerLink": "Haftungsausschluss",
+    "rights": "Alle Rechte vorbehalten."
+  },
+  "common": {
+    "readMore": "Weiterlesen",
+    "getReferralCode": "Empfehlungscode erhalten",
+    "learnMore": "Mehr erfahren",
+    "backToHome": "Zurück zur Startseite",
+    "notAffiliated": "Nicht mit Fomo verbunden — unabhängige Review-Seite.",
+    "publishedOn": "Veröffentlicht",
+    "updatedOn": "Aktualisiert"
+  },
+  "riskDisclaimer": {
+    "heading": "Risikohinweis",
+    "text": "Diese Website ist eine unabhängige, inoffizielle Informationsquelle. Wir sind nicht mit Fomo verbunden, weder befürwortet noch in deren Auftrag tätig. Wir erhalten eine Provision, wenn Sie sich über unseren Empfehlungslink anmelden und handeln. Der Handel mit Kryptowährungen birgt ein erhebliches Verlustrisiko und ist nicht für jeden geeignet. Nichts auf dieser Website stellt eine Finanzberatung dar. Bitte informieren Sie sich eigenständig. Fomo ist derzeit nicht als CASP (Crypto-Asset Service Provider) gemäß MiCA-Verordnung lizenziert."
+  },
+  "languageSwitcher": {
+    "label": "Sprache"
+  }
+}

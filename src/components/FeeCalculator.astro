@@ -1,0 +1,100 @@
+---
+import { FOMO } from "../lib/site";
+
+interface Props {
+  orderValueLabel: string;
+  withoutCodeLabel: string;
+  withCodeLabel: string;
+  savingsLabel: string;
+  helpText?: string;
+  class?: string;
+}
+
+const {
+  orderValueLabel,
+  withoutCodeLabel,
+  withCodeLabel,
+  savingsLabel,
+  helpText,
+  class: className = "",
+} = Astro.props;
+
+const spotFee = FOMO.spotFeePercent;
+const discount = FOMO.feeDiscountPercent;
+---
+
+<div
+  class={`fee-calculator rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 sm:p-8 ${className}`}
+  data-spot-fee={spotFee}
+  data-discount={discount}
+>
+  <label for="fee-order-value" class="block text-sm font-medium text-[var(--color-text)]">
+    {orderValueLabel}
+  </label>
+  <div class="mt-2 flex items-center gap-2 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-3 focus-within:border-[var(--color-accent)]">
+    <span class="text-[var(--color-muted)]">$</span>
+    <input
+      id="fee-order-value"
+      name="orderValue"
+      type="number"
+      inputmode="decimal"
+      min="0"
+      step="1"
+      value="1000"
+      class="w-full min-h-11 bg-transparent text-lg font-semibold tabular-nums text-[var(--color-text)] outline-none"
+      aria-describedby={helpText ? "fee-calculator-help" : undefined}
+    />
+  </div>
+  {helpText && (
+    <p id="fee-calculator-help" class="mt-2 text-xs text-[var(--color-muted)]">
+      {helpText}
+    </p>
+  )}
+
+  <div class="mt-6 grid gap-3 sm:grid-cols-3">
+    <div class="rounded-2xl bg-[var(--color-bg)] p-4">
+      <p class="text-xs uppercase tracking-wide text-[var(--color-muted)]">{withoutCodeLabel}</p>
+      <p class="mt-1 text-xl font-bold tabular-nums text-[var(--color-text)]" data-output="without-code">$5.00</p>
+    </div>
+    <div class="rounded-2xl bg-[var(--color-accent-soft)] p-4">
+      <p class="text-xs uppercase tracking-wide text-[var(--color-muted)]">{withCodeLabel}</p>
+      <p class="mt-1 text-xl font-bold tabular-nums text-[var(--color-accent)]" data-output="with-code">$4.50</p>
+    </div>
+    <div class="rounded-2xl bg-[var(--color-violet-soft)] p-4">
+      <p class="text-xs uppercase tracking-wide text-[var(--color-muted)]">{savingsLabel}</p>
+      <p class="mt-1 text-xl font-bold tabular-nums text-[var(--color-violet)]" data-output="savings">$0.50</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  function initFeeCalculators() {
+    document.querySelectorAll<HTMLElement>(".fee-calculator").forEach((calc) => {
+      const spotFee = Number(calc.dataset.spotFee ?? "0.5");
+      const discount = Number(calc.dataset.discount ?? "10");
+      const input = calc.querySelector<HTMLInputElement>("#fee-order-value");
+      const withoutEl = calc.querySelector<HTMLElement>('[data-output="without-code"]');
+      const withEl = calc.querySelector<HTMLElement>('[data-output="with-code"]');
+      const savingsEl = calc.querySelector<HTMLElement>('[data-output="savings"]');
+      if (!input || !withoutEl || !withEl || !savingsEl) return;
+
+      const formatUsd = (n: number) =>
+        n.toLocaleString(undefined, { style: "currency", currency: "USD", minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+      const update = () => {
+        const orderValue = Math.max(0, Number(input.value) || 0);
+        const feeWithout = orderValue * (spotFee / 100);
+        const feeWith = feeWithout * (1 - discount / 100);
+        withoutEl.textContent = formatUsd(feeWithout);
+        withEl.textContent = formatUsd(feeWith);
+        savingsEl.textContent = formatUsd(feeWithout - feeWith);
+      };
+
+      input.addEventListener("input", update);
+      update();
+    });
+  }
+
+  initFeeCalculators();
+  document.addEventListener("astro:after-swap", initFeeCalculators);
+</script>

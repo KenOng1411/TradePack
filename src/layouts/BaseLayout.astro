@@ -1,0 +1,55 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Seo from "../components/Seo.astro";
+import type { Locale, PageId } from "../i18n/routes";
+
+interface Props {
+  locale: Locale;
+  pageKey: PageId;
+  title: string;
+  description: string;
+  ogImage?: string;
+  type?: "website" | "article";
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const { locale, pageKey, title, description, ogImage, type, jsonLd } = Astro.props;
+
+/** Extra Google Fonts stylesheet for scripts Inter doesn't cover well. */
+const localeFontHref: Partial<Record<Locale, string>> = {
+  ko: "https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap",
+  "zh-hant": "https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&display=swap",
+};
+const extraFontHref = localeFontHref[locale];
+---
+
+<!doctype html>
+<html lang={locale} class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#0b0f1a" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    {extraFontHref && <link rel="stylesheet" href={extraFontHref} />}
+    <Seo locale={locale} pageKey={pageKey} title={title} description={description} ogImage={ogImage} type={type} jsonLd={jsonLd} />
+  </head>
+  <body class="min-h-dvh bg-[var(--color-bg)] text-[var(--color-text)]">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-xl focus:bg-[var(--color-accent)] focus:px-4 focus:py-2 focus:text-[var(--color-bg)] focus:font-semibold"
+    >
+      Skip to main content
+    </a>
+    <Header locale={locale} pageKey={pageKey} />
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer locale={locale} />
+  </body>
+</html>

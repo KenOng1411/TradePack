@@ -1,0 +1,77 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import RiskDisclaimer from "../components/RiskDisclaimer.astro";
+import { PAGE_KEYS } from "../i18n/routes";
+import { FOMO, SITE_NAME } from "../lib/site";
+
+const locale = "en" as const;
+const pageKey = PAGE_KEYS.disclaimer;
+---
+
+<BaseLayout
+  locale={locale}
+  pageKey={pageKey}
+  title="Disclaimer"
+  description={`Legal and risk disclaimer for ${SITE_NAME}, an independent review site covering Fomo and other crypto exchanges.`}
+>
+  <section class="mx-auto max-w-3xl px-4 py-14 sm:px-6">
+    <h1 class="text-3xl font-extrabold sm:text-4xl">Disclaimer</h1>
+
+    <div class="mt-8">
+      <RiskDisclaimer locale={locale} variant="page" />
+    </div>
+
+    <div class="prose-content mt-10 max-w-none">
+      <p>
+        {SITE_NAME} is an independent, unofficial resource covering the {FOMO.displayName} trading app. We are not
+        affiliated with, endorsed by, sponsored by, or acting on behalf of {FOMO.displayName} ({FOMO.website.replace("https://", "")})
+        in any official capacity.
+      </p>
+
+      <h2>Affiliate disclosure</h2>
+      <p>
+        {SITE_NAME} participates in {FOMO.displayName}'s referral program. If you sign up using a referral link or
+        code found on this site and go on to trade, we may earn a commission based on your trading fees. This does
+        not cost you anything extra, and the referral discount you receive ({FOMO.feeDiscountPercent}% off trading
+        fees) is part of {FOMO.displayName}'s standard referral program, not a special {SITE_NAME} offer.
+      </p>
+
+      <h2>Not financial advice</h2>
+      <p>
+        Nothing on this site — including reviews, guides, fee breakdowns, or comparisons — constitutes financial,
+        investment, tax, or legal advice. Cryptocurrency markets, and particularly memecoins and leveraged perpetual
+        futures, are highly volatile and carry a substantial risk of loss, including total loss of principal. Do
+        your own research and consider consulting a licensed professional before trading.
+      </p>
+
+      <h2>Accuracy</h2>
+      <p>
+        We aim to keep fees, features, and regulatory information current, but crypto products change quickly.
+        Always verify current terms directly in the {FOMO.displayName} app or on {FOMO.website.replace("https://", "")}
+        before making decisions based on anything published here.
+      </p>
+
+      <h2>Eligibility</h2>
+      <p>
+        Cryptocurrency trading availability, product features (such as perpetual futures), and legal requirements
+        vary by jurisdiction and change over time. It is your responsibility to confirm that using{" "}
+        {FOMO.displayName}, or any product discussed on this site, is lawful where you live.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  .prose-content h2 {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+  .prose-content p {
+    margin-bottom: 1.1rem;
+    line-height: 1.75;
+    color: var(--color-muted);
+  }
+</style>

@@ -1,0 +1,94 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Button from "../../components/Button.astro";
+import Card from "../../components/Card.astro";
+import FeeCalculator from "../../components/FeeCalculator.astro";
+import RiskDisclaimer from "../../components/RiskDisclaimer.astro";
+import { PAGE_KEYS, resolveLocaleUrl } from "../../i18n/routes";
+import { FOMO } from "../../lib/site";
+
+const locale = "zh-hant" as const;
+const pageKey = PAGE_KEYS.fees;
+
+const discountedFee = (FOMO.spotFeePercent * (1 - FOMO.feeDiscountPercent / 100)).toFixed(3);
+---
+
+<BaseLayout
+  locale={locale}
+  pageKey={pageKey}
+  title="Fomo 手續費完整說明(2026):現貨、永續合約與推薦碼折扣"
+  description="清楚說明 Fomo 現貨與永續合約的實際手續費,以及推薦碼實際能省下多少。"
+>
+  <section class="mx-auto max-w-4xl px-4 py-14 sm:px-6">
+    <h1 class="text-3xl font-extrabold sm:text-4xl">Fomo 手續費完整說明(2026)</h1>
+    <p class="mt-4 max-w-2xl text-[var(--color-muted)]">
+      Fomo 的手續費結構並非集中列於單一頁面,以下是 2026 年最新的完整整理。
+    </p>
+
+    <div class="prose-content mt-10 max-w-none">
+      <h2>現貨交易手續費</h2>
+      <p>
+        折扣前約為每筆 {FOMO.spotFeePercent}%。註冊時套用有效推薦碼可再折扣 {FOMO.feeDiscountPercent}%,實質費率降至約{" "}
+        {discountedFee}%。小額交易時,由於通常存在每筆交易的最低手續費,實際感受到的成本可能高於比例數字 ——
+        若您經常進行小額多次交易,值得留意。
+      </p>
+
+      <h2>永續合約手續費(美國使用者暫不適用)</h2>
+      <p>
+        永續合約透過與 {FOMO.perpsProvider} 的整合提供。Fomo 在 {FOMO.perpsProvider} 本身手續費之外,每邊再加收約{" "}
+        {FOMO.perpsFeePerSidePercent}%,實質上使永續合約的直接成本幾乎是現貨交易的兩倍。
+      </p>
+    </div>
+
+    <div class="mt-12">
+      <h2 class="text-xl font-bold sm:text-2xl">手續費計算機</h2>
+      <p class="mt-2 text-sm text-[var(--color-muted)]">輸入交易金額,比較標準手續費與折扣後手續費。</p>
+      <div class="mt-6">
+        <FeeCalculator
+          orderValueLabel="交易金額(美元)"
+          withoutCodeLabel={`標準手續費(${FOMO.spotFeePercent}%)`}
+          withCodeLabel={`使用推薦碼手續費(折扣 ${FOMO.feeDiscountPercent}%)`}
+          savingsLabel="省下金額"
+          helpText="以現貨交易手續費為準。永續合約手續費請參閱上方說明。"
+        />
+      </div>
+    </div>
+
+    <div class="prose-content mt-12 max-w-none">
+      <h2>其他需留意的成本</h2>
+      <p>
+        由於是非託管應用程式,鏈上網路手續費(gas fee)與 Fomo 本身的交易手續費分開計算,並依鏈別({FOMO.chains.join("、")})
+        及網路狀況而異 —— 此費用非 Fomo 訂定,也不在推薦碼折扣範圍內。
+      </p>
+    </div>
+
+    <Card class="mt-12 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <p class="font-semibold">自動套用折扣</p>
+        <p class="mt-1 text-sm text-[var(--color-muted)]">註冊時輸入代碼 {FOMO.referralCode}。</p>
+      </div>
+      <Button href={resolveLocaleUrl(locale, PAGE_KEYS.referralCode)} showArrow class="w-full sm:w-auto">
+        查看推薦碼
+      </Button>
+    </Card>
+
+    <div class="mt-10">
+      <RiskDisclaimer locale={locale} variant="page" />
+    </div>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  .prose-content h2 {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+  .prose-content p {
+    margin-bottom: 1.1rem;
+    line-height: 1.75;
+    color: var(--color-muted);
+  }
+</style>

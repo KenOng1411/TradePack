@@ -1,0 +1,144 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Button from "../../components/Button.astro";
+import Card from "../../components/Card.astro";
+import TrustBar from "../../components/TrustBar.astro";
+import FeeCalculator from "../../components/FeeCalculator.astro";
+import FAQAccordion from "../../components/FAQAccordion.astro";
+import RiskDisclaimer from "../../components/RiskDisclaimer.astro";
+import Icon from "../../components/Icon.astro";
+import AppScreenshot from "../../components/AppScreenshot.astro";
+import { PAGE_KEYS } from "../../i18n/routes";
+import { FOMO, SITE_NAME } from "../../lib/site";
+import referralEarningsScreenshot from "../../assets/screenshots/referral-earnings.jpg";
+import shareCardScreenshot from "../../assets/screenshots/share-card-portfolio.png";
+
+const locale = "zh-hant" as const;
+const pageKey = PAGE_KEYS.referralCode;
+
+const steps = [
+  { title: "輸入推薦碼", body: "於 Fomo 註冊時手動輸入推薦碼。" },
+  { title: "完成帳戶驗證", body: "流程與一般註冊相同,推薦碼不會改變流程。" },
+  { title: "正常交易", body: "10% 折扣已自動套用。" },
+];
+
+const faqItems = [
+  {
+    question: "這組推薦碼是官方提供的嗎?",
+    answer: "不是 —— TradePack 為獨立評測網站。此為 Fomo 標準推薦碼,並非 TradePack 專屬優惠,Fomo 也未認可或贊助本網站。",
+  },
+  {
+    question: "使用推薦碼需要額外付費嗎?",
+    answer: "不需要。這是 Fomo 推薦計畫的標準運作方式 —— 您可享 10% 折扣,TradePack 可能在您交易時獲得佣金。",
+  },
+  {
+    question: "已有 Fomo 帳戶還能使用嗎?",
+    answer: "推薦碼通常僅於註冊時生效 —— 若已有帳戶,事後輸入通常不會回溯套用。請以 Fomo 應用程式內最新規則為準。",
+  },
+];
+---
+
+<BaseLayout
+  locale={locale}
+  pageKey={pageKey}
+  title="Fomo 推薦碼 —— 手續費折扣 10%"
+  description="了解如何透過 TradePack 的 Fomo 推薦碼,享有 10% 交易手續費折扣。"
+  ogImage="/images/og-referral.png"
+>
+  <section class="mx-auto max-w-4xl px-4 pb-14 pt-14 text-center sm:px-6 sm:pt-20">
+    <span class="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1 text-xs font-medium text-[var(--color-muted)]">
+      <Icon name="shield-check" class="size-3.5 text-[var(--color-accent)]" />
+      TradePack 為獨立評測網站,並非 Fomo 官方合作夥伴或經其認可
+    </span>
+    <h1 class="text-balance mt-5 text-4xl font-extrabold leading-tight sm:text-5xl">
+      每筆 Fomo 交易省下 <span class="text-[var(--color-accent)]">{FOMO.feeDiscountPercent}%</span>
+    </h1>
+    <p class="mx-auto mt-5 max-w-xl text-base leading-relaxed text-[var(--color-muted)] sm:text-lg">
+      註冊時輸入推薦碼 —— 折扣將自動套用於交易手續費,無需額外步驟。
+    </p>
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+      <Button href={FOMO.referralUrl} external size="lg" showArrow>
+        查看如何輸入推薦碼
+      </Button>
+    </div>
+  </section>
+
+  <section class="mx-auto flex max-w-2xl flex-wrap justify-center gap-5 px-4 pb-16 sm:px-6">
+    <AppScreenshot
+      src={referralEarningsScreenshot}
+      alt="Fomo 應用程式的 Earnings 畫面,顯示「Refer and earn 25% of your friends' fees」與推薦連結"
+      caption={`Fomo 真實應用程式中的推薦收益畫面 —— 推薦人可獲得好友交易手續費的 ${FOMO.referrerEarningsPercent}%。`}
+      class="w-[280px]"
+    />
+    <AppScreenshot
+      src={shareCardScreenshot}
+      alt={`Fomo 為 TradePack 帳號生成的官方分享卡片,寫著「10% off fees with code TradePack」`}
+      caption="由 Fomo 應用程式本身自動生成,並非 TradePack 自製 —— 證明推薦碼真實有效。"
+      class="w-[280px]"
+    />
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+    <TrustBar
+      items={[
+        { icon: "wallet", text: "7,500 萬美元 B 輪融資" },
+        { icon: "shield-check", text: "非託管" },
+        { icon: "spark", text: "SEC/CFTC 已明確法律地位" },
+        { icon: "chart", text: "Index Ventures、Union Square Ventures、Benchmark 投資" },
+      ]}
+    />
+  </section>
+
+  <section class="mx-auto max-w-4xl px-4 pb-16 sm:px-6">
+    <h2 class="text-center text-2xl font-bold sm:text-3xl">三步驟</h2>
+    <div class="mt-8 grid gap-5 sm:grid-cols-3">
+      {
+        steps.map((step, i) => (
+          <Card class="text-center">
+            <span class="mx-auto flex size-9 items-center justify-center rounded-full bg-[var(--color-accent)] text-sm font-bold text-[var(--color-bg)]">
+              {i + 1}
+            </span>
+            <h3 class="mt-4 text-base font-semibold">{step.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-[var(--color-muted)]">{step.body}</p>
+          </Card>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 pb-16 sm:px-6">
+    <h2 class="text-center text-2xl font-bold sm:text-3xl">看看您能省下多少</h2>
+    <div class="mt-8">
+      <FeeCalculator
+        orderValueLabel="交易金額(美元)"
+        withoutCodeLabel={`標準手續費(${FOMO.spotFeePercent}%)`}
+        withCodeLabel={`使用推薦碼手續費(折扣 ${FOMO.feeDiscountPercent}%)`}
+        savingsLabel="省下金額"
+        helpText="以現貨交易手續費為準。永續合約手續費不同 —— 請參閱完整手續費說明。"
+      />
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 pb-16 sm:px-6">
+    <h2 class="text-center text-2xl font-bold sm:text-3xl">常見問題</h2>
+    <div class="mt-8">
+      <FAQAccordion items={faqItems} />
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 pb-16 sm:px-6">
+    <RiskDisclaimer locale={locale} variant="page" />
+  </section>
+
+  <section class="mx-auto max-w-4xl px-4 pb-20 text-center sm:px-6">
+    <Card class="flex flex-col items-center gap-4">
+      <h2 class="text-xl font-bold sm:text-2xl">準備好了嗎?</h2>
+      <p class="text-sm text-[var(--color-muted)]">
+        {SITE_NAME} —— 針對 {FOMO.displayName} 的獨立評測與教學。
+      </p>
+      <Button href={FOMO.referralUrl} external size="lg" showArrow>
+        查看如何輸入推薦碼
+      </Button>
+    </Card>
+  </section>
+</BaseLayout>

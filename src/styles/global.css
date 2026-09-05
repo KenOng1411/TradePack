@@ -1,0 +1,75 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "Noto Sans KR", "Noto Sans TC", ui-sans-serif, system-ui, sans-serif;
+
+  /* Brand palette — intentionally distinct from fomo.family to avoid brand confusion. */
+  --color-bg: #0b0f1a;
+  --color-surface: #141b2d;
+  --color-surface-hover: #1b2438;
+  --color-accent: #00e28a;
+  --color-accent-hover: #05f79a;
+  --color-accent-soft: #00e28a1a;
+  --color-violet: #7c5cfc;
+  --color-violet-soft: #7c5cfc26;
+  --color-text: #f5f7fa;
+  --color-muted: #9aa5b8;
+  --color-warning: #ffb020;
+  --color-warning-soft: #ffb02026;
+  --color-border: #232c42;
+
+  --radius-2xl: 1.25rem;
+  --radius-3xl: 1.75rem;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "sharedNegativePrompt": "text, watermark, signature, blurry, low quality, photorealistic, 3d render, the word Fomo, any exchange logo, any wallet app logo, any real brand marks, official badge, verified checkmark",
+  "assets": [
+    {
+      "id": "hero-illustration",
+      "outputFile": "hero-illustration.png",
+      "aspectRatio": "4:3",
+      "prompt": "An abstract flat-vector illustration representing crypto trading and referral networks: interconnected nodes and lines suggesting a referral network, combined with subtle upward-trending chart lines and floating geometric coin-like shapes (plain circles, no logos or symbols on them). Color palette: dark navy background (#0B0F1A), blue (#3B82F6) as the primary accent, violet/indigo (#7C5CFC) as a secondary accent — matching the real TradePack logo gradient. Flat, modern, minimal fintech illustration style, generous negative space, no text, no real brand logos, no photorealism, no people."
+    }
+  ]
+}
