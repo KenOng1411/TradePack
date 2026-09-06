@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Button from "../components/Button.astro";
 import Card from "../components/Card.astro";
@@ -15,6 +16,12 @@ import mobileFeedFriendsScreenshot from "../assets/screenshots/mobile-feed-frien
 import leaderboardScreenshot from "../assets/screenshots/leaderboard.png";
 import tokenHoldersScreenshot from "../assets/screenshots/token-holders-avgentry.jpg";
 import traderTokenDetailScreenshot from "../assets/screenshots/trader-token-detail-thesis.jpg";
+import indexVenturesLogo from "../assets/investors/index-ventures.svg";
+import usvLogo from "../assets/investors/union-square-ventures.jpg";
+import solanaLogo from "../assets/chains/solana.svg";
+import baseLogo from "../assets/chains/base.svg";
+import bnbChainLogo from "../assets/chains/bnb-chain.svg";
+import monadLogo from "../assets/chains/monad.png";
 
 const locale = "en" as const;
 const pageKey = PAGE_KEYS.review;
@@ -29,17 +36,29 @@ const statsUpdatedLabel = new Date(FOMO_STATS.fetchedAt).toLocaleDateString("en-
 // (its first git commit) and this freshness line should be bumped any time
 // the page content materially changes.
 const reviewDatePublished = "2026-09-05";
-const reviewDateModified = "2026-09-06";
+const reviewDateModified = "2026-09-07";
 const reviewUpdatedLabel = new Date(reviewDateModified).toLocaleDateString("en-US", {
   month: "long",
   day: "numeric",
   year: "numeric",
 });
 
+// Logos are the real marks pulled from each firm's own site (Index Ventures'
+// header icon, USV's logo image). Benchmark has no downloadable brand asset
+// or logo image file anywhere on its site — its homepage "logo" is a plain
+// text wordmark rendered in a licensed webfont — so it stays text-only
+// rather than fabricating an image for it.
 const backedByInvestors = [
-  { name: "Index Ventures", role: "Lead" },
-  { name: "Union Square Ventures" },
+  { name: "Index Ventures", role: "Lead", logo: indexVenturesLogo },
+  { name: "Union Square Ventures", logo: usvLogo },
   { name: "Benchmark" },
+];
+
+const supportedChains = [
+  { name: "Solana", logo: solanaLogo },
+  { name: "Base", logo: baseLogo },
+  { name: "BNB Chain", logo: bnbChainLogo },
+  { name: "Monad", logo: monadLogo },
 ];
 
 const toc = [
@@ -175,7 +194,10 @@ const jsonLd = {
           <ul class="investor-list mt-3 flex flex-wrap gap-2">
             {
               backedByInvestors.map((investor) => (
-                <li class="flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-bg)] px-3.5 py-1.5 text-sm font-medium text-[var(--color-text)]">
+                <li class="flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-bg)] py-1.5 pl-2 pr-3.5 text-sm font-medium text-[var(--color-text)]">
+                  {investor.logo && (
+                    <Image src={investor.logo} alt="" width={20} height={20} class="size-5 rounded-sm object-contain" />
+                  )}
                   {investor.name}
                   {investor.role && <span class="text-xs font-normal text-[var(--color-accent)]">· {investor.role}</span>}
                 </li>
@@ -213,6 +235,16 @@ const jsonLd = {
             <strong>not for US users</strong> — Fomo hasn't obtained the domestic registrations needed to offer
             leveraged derivatives in the United States, even though its core spot trading is available nationwide.
           </p>
+          <ul class="not-prose mt-4 flex flex-wrap items-center gap-4">
+            {
+              supportedChains.map((chain) => (
+                <li class="flex items-center gap-2 text-sm text-[var(--color-muted)]">
+                  <Image src={chain.logo} alt="" width={20} height={20} class="size-5 object-contain" />
+                  {chain.name}
+                </li>
+              ))
+            }
+          </ul>
         </section>
 
         <section id="leaderboard-copy-trading" class="scroll-mt-24">
