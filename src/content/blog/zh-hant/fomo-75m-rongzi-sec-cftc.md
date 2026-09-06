@@ -2,7 +2,7 @@
 title: "Fomo 完成 7,500 萬美元 B 輪融資:法律明確性背後的故事"
 description: "Index Ventures 以 5.5 億美元估值領投 Fomo 7,500 萬美元融資,時間點就緊接在美國監管機構釐清非託管交易應用程式法律地位之後。這兩件事實際上發生了什麼、又為何重要。"
 locale: "zh-hant"
-publishDate: 2027-01-23
+publishDate: 2026-09-05
 tags: ["新聞", "募資", "監管"]
 author: "TradePack Team"
 ---

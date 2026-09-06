@@ -2,7 +2,7 @@
 title: "Fomo-Gebühren im Detail: Spot vs. Perpetuals — und wie viel der Empfehlungscode wirklich spart"
 description: "Eine klare, aktuelle Aufschlüsselung der tatsächlichen Fomo-Gebühren für Spot- und Perpetual-Handel, mit konkreten Rechenbeispielen für die Ersparnis durch den Empfehlungscode."
 locale: "de"
-publishDate: 2027-02-17
+publishDate: 2026-09-05
 tags: ["Gebühren", "Anleitung"]
 author: "TradePack Team"
 ---

@@ -2,7 +2,7 @@
 title: "Fomo's $75M Series B: What the SEC/CFTC Non-Custodial Ruling Means for Traders"
 description: "Index Ventures led a $75M round into Fomo at a $550M valuation right after US regulators clarified non-custodial apps' legal status. What happened, and why it matters."
 locale: "en"
-publishDate: 2026-09-25
+publishDate: 2026-09-05
 tags: ["news", "funding", "regulation"]
 author: "TradePack Team"
 ---

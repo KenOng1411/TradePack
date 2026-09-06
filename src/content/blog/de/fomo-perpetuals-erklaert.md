@@ -2,7 +2,7 @@
 title: "Perpetual Futures auf Fomo erklärt: Wie sie funktionieren und was sie wirklich kosten"
 description: "Fomo bietet Perpetual Futures über eine Integration mit Hyperliquid an. Eine klare Erklärung, wie diese Produkte funktionieren, welche Risiken sie mitbringen und wer sie aktuell nutzen kann."
 locale: "de"
-publishDate: 2027-02-06
+publishDate: 2026-09-05
 tags: ["Perpetuals", "Anleitung"]
 author: "TradePack Team"
 ---

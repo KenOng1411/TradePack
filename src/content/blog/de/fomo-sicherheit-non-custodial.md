@@ -2,7 +2,7 @@
 title: "Ist Fomo sicher? Non-Custodial-Architektur, rechtlicher Status und EU-Besonderheiten erklärt"
 description: "Was 'non-custodial' bei Fomo konkret bedeutet, welche Risiken dadurch entfallen und welche neu entstehen — plus ein klarer Blick auf den rechtlichen Status in den USA und in der EU."
 locale: "de"
-publishDate: 2027-02-10
+publishDate: 2026-09-05
 tags: ["Sicherheit", "Regulierung"]
 author: "TradePack Team"
 ---

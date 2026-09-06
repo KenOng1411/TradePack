@@ -2,7 +2,7 @@
 title: "Fomo 新手交易完整教學"
 description: "從安裝 Fomo、輸入推薦碼到完成第一筆交易的完整步驟教學,適合從未使用過非託管交易應用程式的使用者。"
 locale: "zh-hant"
-publishDate: 2027-01-12
+publishDate: 2026-09-05
 tags: ["教學", "新手", "how-to"]
 author: "TradePack Team"
 ---

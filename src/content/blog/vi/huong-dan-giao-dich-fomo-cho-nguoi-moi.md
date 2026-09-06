@@ -2,7 +2,7 @@
 title: "Cách giao dịch trên Fomo: Hướng dẫn từng bước cho người mới"
 description: "Hướng dẫn đầy đủ từ cài đặt Fomo, áp mã giới thiệu, đến thực hiện lệnh giao dịch đầu tiên — dành cho người chưa từng dùng app trading non-custodial."
 locale: "vi"
-publishDate: 2026-11-01
+publishDate: 2026-09-05
 tags: ["hướng-dẫn", "người-mới", "how-to"]
 author: "TradePack Team"
 ---

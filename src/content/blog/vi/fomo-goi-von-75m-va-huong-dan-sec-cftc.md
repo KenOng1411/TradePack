@@ -2,7 +2,7 @@
 title: "Fomo gọi vốn $75 triệu: Điều gì đứng sau sự rõ ràng pháp lý này"
 description: "Index Ventures dẫn đầu vòng $75 triệu vào Fomo, định giá $550 triệu, ngay sau khi Mỹ làm rõ tình trạng pháp lý của app trading non-custodial. Chuyện gì đã xảy ra và vì sao quan trọng."
 locale: "vi"
-publishDate: 2026-11-12
+publishDate: 2026-09-05
 tags: ["tin-tức", "gọi-vốn", "pháp-lý"]
 author: "TradePack Team"
 ---

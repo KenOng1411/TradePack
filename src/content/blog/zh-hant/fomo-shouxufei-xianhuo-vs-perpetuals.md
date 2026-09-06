@@ -2,7 +2,7 @@
 title: "Fomo 手續費完整解析:現貨 vs 永續合約,以及推薦碼能省多少"
 description: "清楚、最新的 Fomo 現貨與永續合約實際手續費說明,並附上推薦碼實際折扣試算。"
 locale: "zh-hant"
-publishDate: 2027-01-27
+publishDate: 2026-09-05
 tags: ["手續費", "教學"]
 author: "TradePack Team"
 ---

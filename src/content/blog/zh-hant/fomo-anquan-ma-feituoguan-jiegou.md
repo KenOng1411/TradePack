@@ -2,7 +2,7 @@
 title: "Fomo 安全嗎?深入了解其非託管錢包架構"
 description: "「非託管」對 Fomo 使用者實際代表什麼 —— 它保護您免於哪些風險、又無法保護您免於哪些風險,以及 2026 年 3 月 SEC/CFTC 指引如何釐清其法律地位。"
 locale: "zh-hant"
-publishDate: 2027-01-19
+publishDate: 2026-09-05
 tags: ["安全性", "非託管", "資安"]
 author: "TradePack Team"
 ---

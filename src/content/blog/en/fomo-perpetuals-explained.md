@@ -2,7 +2,7 @@
 title: "Fomo Perpetuals Explained: Fees, Access & How They Actually Work"
 description: "How perpetual futures trading on Fomo works through its Hyperliquid integration, what it costs, and why US-based users can't access it yet."
 locale: "en"
-publishDate: 2026-09-20
+publishDate: 2026-09-05
 tags: ["perpetuals", "fees", "features"]
 author: "TradePack Team"
 ---

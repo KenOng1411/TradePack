@@ -2,7 +2,7 @@
 title: "Fomo 무기한 선물이란? 수수료와 이용 조건"
 description: "Hyperliquid 연동을 통한 Fomo의 무기한 선물 거래 작동 방식과 실제 비용, 그리고 미국 사용자가 아직 이용할 수 없는 이유."
 locale: "ko"
-publishDate: 2026-12-11
+publishDate: 2026-09-05
 tags: ["무기한선물", "수수료", "기능"]
 author: "TradePack Team"
 ---

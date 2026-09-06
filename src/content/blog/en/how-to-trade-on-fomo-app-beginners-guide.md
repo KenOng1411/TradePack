@@ -2,7 +2,7 @@
 title: "How to Trade on Fomo App: A Complete Beginner's Guide"
 description: "A step-by-step walkthrough for setting up Fomo, applying a referral code, and making your first trade — for people who've never used a non-custodial trading app before."
 locale: "en"
-publishDate: 2026-09-18
+publishDate: 2026-09-05
 tags: ["guide", "beginners", "how-to"]
 author: "TradePack Team"
 ---

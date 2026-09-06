@@ -2,7 +2,7 @@
 title: "Phí giao dịch Fomo: Spot vs Perpetuals, và cách tiết kiệm với mã giới thiệu"
 description: "Bảng phân tích rõ ràng, cập nhật về phí giao dịch thực tế trên Fomo cho spot và perpetuals, kèm ví dụ tính toán mức tiết kiệm khi dùng mã giới thiệu."
 locale: "vi"
-publishDate: 2026-11-15
+publishDate: 2026-09-05
 tags: ["phí", "hướng-dẫn"]
 author: "TradePack Team"
 ---

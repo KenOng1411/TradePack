@@ -2,7 +2,7 @@
 title: "Fomo의 $7,500만 투자 유치: 법적 명확성 뒤에 있는 이야기"
 description: "Index Ventures가 주도한 $7,500만 투자가 $5억 5천만 밸류에이션으로 유치된 배경에는 미국 규제 당국의 논커스터디얼 트레이딩 앱에 대한 법적 명확화가 있었습니다."
 locale: "ko"
-publishDate: 2026-12-18
+publishDate: 2026-09-05
 tags: ["뉴스", "투자유치", "규제"]
 author: "TradePack Team"
 ---

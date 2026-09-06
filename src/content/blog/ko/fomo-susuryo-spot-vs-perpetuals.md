@@ -2,7 +2,7 @@
 title: "Fomo 수수료 정리: 스팟 vs 무기한 선물, 추천 코드 할인까지"
 description: "Fomo의 스팟 및 무기한 선물 실제 수수료를 명확히 정리하고, 추천 코드로 얼마나 절약할 수 있는지 계산해봅니다."
 locale: "ko"
-publishDate: 2026-12-22
+publishDate: 2026-09-05
 tags: ["수수료", "가이드"]
 author: "TradePack Team"
 ---

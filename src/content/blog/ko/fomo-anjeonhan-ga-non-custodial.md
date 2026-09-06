@@ -2,7 +2,7 @@
 title: "Fomo는 안전한가? 논커스터디얼 구조 이해하기"
 description: "'논커스터디얼'이 Fomo 사용자에게 실제로 무엇을 의미하는지 — 무엇으로부터 보호받고 무엇으로부터는 보호받지 못하는지, 그리고 2026년 3월 SEC/CFTC 가이드라인이 바꾼 법적 지위."
 locale: "ko"
-publishDate: 2026-12-15
+publishDate: 2026-09-05
 tags: ["안전성", "논커스터디얼", "보안"]
 author: "TradePack Team"
 ---

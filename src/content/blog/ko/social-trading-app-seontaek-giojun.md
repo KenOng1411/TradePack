@@ -2,7 +2,7 @@
 title: "소셜 크립토 트레이딩 앱, 무엇을 기준으로 골라야 할까? (Fomo는 어디에 위치하나)"
 description: "피드, 리더보드, 원터치 거래는 이제 어디에나 있습니다. 잘 만들어진 소셜 트레이딩 앱과 리스크가 큰 앱을 구분하는 기준, 그리고 Fomo의 위치."
 locale: "ko"
-publishDate: 2026-12-26
+publishDate: 2026-09-05
 tags: ["비교", "가이드"]
 author: "TradePack Team"
 ---

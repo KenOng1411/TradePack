@@ -2,7 +2,7 @@
 title: "Fomo Trading Fees Explained: Spot vs. Perpetuals, With Referral Code Savings"
 description: "A clear, current breakdown of what Fomo actually charges for spot trades and perpetuals, plus how much a referral code saves you in real terms."
 locale: "en"
-publishDate: 2026-09-29
+publishDate: 2026-09-05
 tags: ["fees", "guide"]
 author: "TradePack Team"
 ---

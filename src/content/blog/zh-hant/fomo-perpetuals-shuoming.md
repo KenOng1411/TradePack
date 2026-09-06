@@ -2,7 +2,7 @@
 title: "Fomo 永續合約解析:手續費與使用條件"
 description: "Fomo 透過 Hyperliquid 整合提供的永續合約如何運作、實際成本多少,以及美國使用者為何暫時無法使用。"
 locale: "zh-hant"
-publishDate: 2027-01-15
+publishDate: 2026-09-05
 tags: ["永續合約", "手續費", "功能"]
 author: "TradePack Team"
 ---

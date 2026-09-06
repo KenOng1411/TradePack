@@ -2,7 +2,7 @@
 title: "Fomo Perpetuals là gì? Phí và điều kiện sử dụng"
 description: "Cách giao dịch perpetual futures trên Fomo hoạt động qua tích hợp Hyperliquid, chi phí thực tế, và vì sao người dùng tại Mỹ chưa dùng được."
 locale: "vi"
-publishDate: 2026-11-05
+publishDate: 2026-09-05
 tags: ["perpetuals", "phí", "tính-năng"]
 author: "TradePack Team"
 ---

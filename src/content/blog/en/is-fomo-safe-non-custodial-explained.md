@@ -2,7 +2,7 @@
 title: "Is Fomo Safe? Inside Its Non-Custodial Wallet Architecture"
 description: "What 'non-custodial' really means for Fomo users, what it protects you from, what it doesn't, and the March 2026 SEC/CFTC guidance that clarified its legal status."
 locale: "en"
-publishDate: 2026-09-23
+publishDate: 2026-09-05
 tags: ["safety", "non-custodial", "security"]
 author: "TradePack Team"
 ---

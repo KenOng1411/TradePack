@@ -2,7 +2,7 @@
 title: "Fomo sichert sich 75 Millionen USD Series-B-Finanzierung: Die Geschichte hinter der rechtlichen Klarstellung"
 description: "Index Ventures führte eine 75-Mio.-USD-Runde bei Fomo an, kurz nach der SEC/CFTC-Klarstellung zu Non-Custodial-Apps. Was passiert ist — und warum es auch für EU-Nutzer zählt."
 locale: "de"
-publishDate: 2027-02-13
+publishDate: 2026-09-05
 tags: ["News", "Finanzierung", "Regulierung"]
 author: "TradePack Team"
 ---

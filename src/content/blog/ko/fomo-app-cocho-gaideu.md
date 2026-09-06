@@ -2,7 +2,7 @@
 title: "Fomo 앱 거래 시작하기: 초보자를 위한 완전 가이드"
 description: "Fomo 설치부터 추천 코드 입력, 첫 거래까지 — 논커스터디얼 트레이딩 앱을 처음 사용하는 사람을 위한 단계별 안내."
 locale: "ko"
-publishDate: 2026-12-08
+publishDate: 2026-09-05
 tags: ["가이드", "초보자", "how-to"]
 author: "TradePack Team"
 ---

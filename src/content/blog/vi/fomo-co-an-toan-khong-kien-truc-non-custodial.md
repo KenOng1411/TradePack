@@ -2,7 +2,7 @@
 title: "Fomo có an toàn không? Giải thích kiến trúc non-custodial"
 description: "Non-custodial thực sự có ý nghĩa gì với người dùng Fomo — nó bảo vệ bạn khỏi điều gì, không bảo vệ khỏi điều gì, và hướng dẫn SEC/CFTC tháng 3/2026 đã thay đổi gì về mặt pháp lý."
 locale: "vi"
-publishDate: 2026-11-08
+publishDate: 2026-09-05
 tags: ["an-toàn", "non-custodial", "bảo-mật"]
 author: "TradePack Team"
 ---

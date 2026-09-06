@@ -2,7 +2,7 @@
 title: "Fomo vs. Traditional Exchanges: Is a Non-Custodial App Right for You?"
 description: "How Fomo's non-custodial model compares to a typical custodial exchange — control, chain coverage, fees, and who each approach actually suits."
 locale: "en"
-publishDate: 2026-10-06
+publishDate: 2026-09-05
 tags: ["comparison", "guide"]
 author: "TradePack Team"
 ---
