@@ -5,7 +5,14 @@ import Card from "../components/Card.astro";
 import TrustBar from "../components/TrustBar.astro";
 import Icon from "../components/Icon.astro";
 import AppScreenshot from "../components/AppScreenshot.astro";
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import leaderboardScreenshot from "../assets/screenshots/mobile-leaderboard-clans.jpg";
+import tradingChartHeroScreenshot from "../assets/screenshots/trading-chart-feed.jpg";
+import mobileLoginScreenshot from "../assets/screenshots/mobile-login.jpg";
+import mobilePortfolioScreenshot from "../assets/screenshots/mobile-portfolio-home.jpg";
+import leaderboardFeatureScreenshot from "../assets/screenshots/leaderboard.png";
+import tokenHoldersScreenshot from "../assets/screenshots/token-holders-avgentry.jpg";
 import { PAGE_KEYS, resolveLocaleUrl } from "../i18n/routes";
 import { FOMO, SITE_NAME } from "../lib/site";
 import { getCollection } from "astro:content";
@@ -16,6 +23,18 @@ const pageKey = PAGE_KEYS.home;
 const posts = (await getCollection("blog", (e) => e.data.locale === locale))
   .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
   .slice(0, 3);
+
+// Real app screenshots, matched to each post's topic rather than one generic
+// decorative image — falls back to the trading screen for posts without a
+// closer topical match (funding/regulation news, the memecoin-snapshot series).
+const blogThumbnails: Record<string, ImageMetadata> = {
+  "how-to-trade-on-fomo-app-beginners-guide": mobileLoginScreenshot,
+  "is-fomo-safe-non-custodial-explained": mobileLoginScreenshot,
+  "fomo-vs-traditional-exchanges": mobilePortfolioScreenshot,
+  "what-to-look-for-in-a-social-trading-app": leaderboardFeatureScreenshot,
+  "fomo-leaderboard-copy-trading-explained": tokenHoldersScreenshot,
+};
+const defaultBlogThumbnail = tradingChartHeroScreenshot;
 
 const howItWorks = [
   { title: "Download Fomo", body: `Available on ${FOMO.platforms.join(", ")}.` },
@@ -58,7 +77,14 @@ const howItWorks = [
         </p>
       </div>
 
-      <Card class="relative overflow-hidden">
+      <div class="flex flex-col gap-6">
+        <AppScreenshot
+          src={tradingChartHeroScreenshot}
+          alt="Fomo's main trading screen showing a live price chart, Buy/Sell panel, and buy/sell volume stats"
+          class="hidden sm:block"
+        />
+
+        <Card class="relative overflow-hidden">
         <div class="absolute -right-16 -top-16 size-48 rounded-full bg-[var(--color-violet)]/20 blur-3xl" aria-hidden="true"></div>
         <p class="text-xs uppercase tracking-wide text-[var(--color-muted)]">Referral savings, illustrated</p>
         <div class="mt-4 flex items-baseline gap-2">
@@ -80,7 +106,8 @@ const howItWorks = [
         <Button href={resolveLocaleUrl(locale, PAGE_KEYS.fees)} variant="ghost" class="mt-6 w-full" showArrow>
           Open the fee calculator
         </Button>
-      </Card>
+        </Card>
+      </div>
     </div>
   </section>
 
@@ -142,17 +169,31 @@ const howItWorks = [
           </a>
         </div>
         <div class="mt-6 grid gap-5 sm:grid-cols-3">
-          {posts.map((post) => (
-            <a href={`/blog/${post.id.replace(/^en\//, "")}`} class="block">
-              <Card class="h-full transition-colors hover:border-[var(--color-accent)]/40">
-                <p class="text-xs text-[var(--color-muted)]">
-                  {post.data.publishDate.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
-                </p>
-                <h3 class="mt-2 text-lg font-semibold leading-snug">{post.data.title}</h3>
-                <p class="mt-2 text-sm leading-relaxed text-[var(--color-muted)] line-clamp-3">{post.data.description}</p>
-              </Card>
-            </a>
-          ))}
+          {posts.map((post) => {
+            const slug = post.id.replace(/^en\//, "");
+            const thumbnail = blogThumbnails[slug] ?? defaultBlogThumbnail;
+            return (
+              <a href={`/blog/${slug}`} class="block">
+                <Card padding="md" class="!p-0 h-full overflow-hidden transition-colors hover:border-[var(--color-accent)]/40">
+                  <Image
+                    src={thumbnail}
+                    alt=""
+                    widths={[400, 600]}
+                    sizes="(min-width: 1024px) 360px, 100vw"
+                    loading="lazy"
+                    class="h-40 w-full object-cover"
+                  />
+                  <div class="p-5">
+                    <p class="text-xs text-[var(--color-muted)]">
+                      {post.data.publishDate.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+                    </p>
+                    <h3 class="mt-2 text-lg font-semibold leading-snug">{post.data.title}</h3>
+                    <p class="mt-2 text-sm leading-relaxed text-[var(--color-muted)] line-clamp-3">{post.data.description}</p>
+                  </div>
+                </Card>
+              </a>
+            );
+          })}
         </div>
       </section>
     )

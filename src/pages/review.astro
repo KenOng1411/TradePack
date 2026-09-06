@@ -12,6 +12,9 @@ import tradingChartScreenshot from "../assets/screenshots/trading-chart-feed.jpg
 import mobilePortfolioScreenshot from "../assets/screenshots/mobile-portfolio-home.jpg";
 import mobileFeedGlobalScreenshot from "../assets/screenshots/mobile-feed-global.jpg";
 import mobileFeedFriendsScreenshot from "../assets/screenshots/mobile-feed-friends.jpg";
+import leaderboardScreenshot from "../assets/screenshots/leaderboard.png";
+import tokenHoldersScreenshot from "../assets/screenshots/token-holders-avgentry.jpg";
+import traderTokenDetailScreenshot from "../assets/screenshots/trader-token-detail-thesis.jpg";
 
 const locale = "en" as const;
 const pageKey = PAGE_KEYS.review;
@@ -42,6 +45,7 @@ const backedByInvestors = [
 const toc = [
   { id: "what-is-fomo", label: "What is Fomo?" },
   { id: "what-can-you-trade", label: "What can you trade?" },
+  { id: "leaderboard-copy-trading", label: "Leaderboard & Copy-Trading" },
   { id: "fees", label: "Fees" },
   { id: "is-fomo-safe", label: "Is Fomo safe?" },
   { id: "what-we-liked", label: "What we liked" },
@@ -208,6 +212,52 @@ const jsonLd = {
             Chain, and Monad. Perpetual futures are available through an integration with {FOMO.perpsProvider}, but{" "}
             <strong>not for US users</strong> — Fomo hasn't obtained the domestic registrations needed to offer
             leveraged derivatives in the United States, even though its core spot trading is available nationwide.
+          </p>
+        </section>
+
+        <section id="leaderboard-copy-trading" class="scroll-mt-24">
+          <h2>Leaderboard & Copy-Trading</h2>
+          <p>
+            Fomo ranks traders by realized PnL (24H/7D/30D/all-time), and it's more transparent than most "social
+            trading" features usually are: tap into any token's page and there's a Holders/Swaps table showing every
+            trader with a position — their size, PnL, and <strong>average entry price</strong>, shown as the market
+            cap at the time they bought in.
+          </p>
+          <div class="not-prose my-6 grid gap-4 sm:grid-cols-3">
+            <AppScreenshot
+              src={leaderboardScreenshot}
+              alt="Fomo's trader leaderboard, ranked by PnL"
+              caption="The leaderboard — ranked by realized PnL."
+            />
+            <AppScreenshot
+              src={tokenHoldersScreenshot}
+              alt="A token's Holders table, showing each trader's average entry"
+              caption="Per-token holders, with each trader's average entry."
+            />
+            <AppScreenshot
+              src={traderTokenDetailScreenshot}
+              alt="A trader's full position detail on one token — entry point, transaction history, and their stated reasoning"
+              caption="A trader's full position: entry point, history, and their stated thesis."
+            />
+          </div>
+          <p>
+            Go one step further and tap a specific trader's position on a specific token, and you get their exact
+            entry point plotted on the price chart, a full transaction log, and any "Thesis" notes they posted
+            explaining the trade. You can also follow individual traders to filter the feed and holder tables down to
+            just the people you're paying attention to.
+          </p>
+          <p>
+            This is genuinely useful for judging whether a trader's track record is real before following their
+            calls — but the leaderboard only shows winners, and past performance doesn't carry over to your own entry
+            price.
+          </p>
+          <p class="not-prose">
+            <a
+              href={resolveLocaleUrl(locale, "blog:leaderboard-copy-trading")}
+              class="text-sm font-semibold text-[var(--color-accent)] underline underline-offset-2"
+            >
+              Read the full breakdown →
+            </a>
           </p>
         </section>
 
