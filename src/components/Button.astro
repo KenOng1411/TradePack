@@ -22,14 +22,21 @@ const {
 } = Astro.props;
 
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-2xl font-semibold transition-all duration-200 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] disabled:opacity-50 disabled:cursor-not-allowed";
+  "inline-flex items-center justify-center gap-2 rounded-2xl font-semibold !no-underline transition-all duration-200 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] disabled:opacity-50 disabled:cursor-not-allowed";
 
+// !text-* (Tailwind's important modifier) is required here, not just style
+// preference: a Button is sometimes nested inside a page's `.prose-content`
+// wrapper (e.g. the CTA card on /review), whose global `.prose-content a`
+// rule has higher CSS specificity than a plain `text-[...]` utility class
+// and was silently overriding it — making primary buttons render mint-green
+// text on a mint-green background (invisible label, bug reported on /review
+// and /referral-code CTAs).
 const variants: Record<string, string> = {
   primary:
-    "bg-[var(--color-accent)] text-[var(--color-bg)] hover:bg-[var(--color-accent-hover)] shadow-[0_0_0_1px_rgba(0,226,138,0.15)] hover:shadow-[0_0_24px_rgba(0,226,138,0.25)]",
+    "bg-[var(--color-accent)] !text-[var(--color-bg)] hover:bg-[var(--color-accent-hover)] shadow-[0_0_0_1px_rgba(0,226,138,0.15)] hover:shadow-[0_0_24px_rgba(0,226,138,0.25)]",
   secondary:
-    "bg-[var(--color-surface)] text-[var(--color-text)] border border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] hover:border-[var(--color-violet)]",
-  ghost: "bg-transparent text-[var(--color-text)] hover:bg-[var(--color-surface)]",
+    "bg-[var(--color-surface)] !text-[var(--color-text)] border border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] hover:border-[var(--color-violet)]",
+  ghost: "bg-transparent !text-[var(--color-text)] hover:bg-[var(--color-surface)]",
 };
 
 const sizes: Record<string, string> = {
