@@ -69,8 +69,6 @@ const LOCALE_PATHS: Record<Locale, Partial<Record<PageId, string>>> = {
     faq: "/faq",
     disclaimer: "/disclaimer",
     blogIndex: "/blog",
-    "blog:how-to-use-fomo-app": "/blog/how-to-use-fomo-app",
-    "blog:referral-code-guide": "/blog/fomo-referral-code-guide",
     "blog:vs-traditional-exchanges": "/blog/fomo-vs-traditional-exchanges",
     "blog:how-to-trade": "/blog/how-to-trade-on-fomo-app-beginners-guide",
     "blog:is-fomo-safe": "/blog/is-fomo-safe-non-custodial-explained",
@@ -90,7 +88,6 @@ const LOCALE_PATHS: Record<Locale, Partial<Record<PageId, string>>> = {
     faq: "/ko/faq",
     disclaimer: "/ko/disclaimer",
     blogIndex: "/ko/blog",
-    "blog:how-to-use-fomo-app": "/ko/blog/how-to-use-fomo-app",
     "blog:how-to-trade": "/ko/blog/fomo-app-cocho-gaideu",
     "blog:is-fomo-safe": "/ko/blog/fomo-anjeonhan-ga-non-custodial",
     "blog:social-trading-app": "/ko/blog/social-trading-app-seontaek-giojun",
@@ -111,7 +108,6 @@ const LOCALE_PATHS: Record<Locale, Partial<Record<PageId, string>>> = {
     faq: "/de/faq",
     disclaimer: "/de/disclaimer",
     blogIndex: "/de/blog",
-    "blog:how-to-use-fomo-app": "/de/blog/how-to-use-fomo-app",
     "blog:how-to-trade": "/de/blog/fomo-anfaenger-leitfaden",
     "blog:is-fomo-safe": "/de/blog/fomo-sicherheit-non-custodial",
     "blog:social-trading-app": "/de/blog/social-trading-app-auswahlkriterien",
@@ -128,7 +124,6 @@ const LOCALE_PATHS: Record<Locale, Partial<Record<PageId, string>>> = {
     faq: "/vi/hoi-dap",
     disclaimer: "/vi/mien-tru",
     blogIndex: "/vi/blog",
-    "blog:how-to-use-fomo-app": "/vi/blog/how-to-use-fomo-app",
     "blog:how-to-trade": "/vi/blog/huong-dan-giao-dich-fomo-cho-nguoi-moi",
     "blog:is-fomo-safe": "/vi/blog/fomo-co-an-toan-khong-kien-truc-non-custodial",
     "blog:social-trading-app": "/vi/blog/tieu-chi-chon-app-trading-social",
@@ -146,7 +141,6 @@ const LOCALE_PATHS: Record<Locale, Partial<Record<PageId, string>>> = {
     faq: "/zh-hant/faq",
     disclaimer: "/zh-hant/disclaimer",
     blogIndex: "/zh-hant/blog",
-    "blog:how-to-use-fomo-app": "/zh-hant/blog/how-to-use-fomo-app",
     "blog:how-to-trade": "/zh-hant/blog/fomo-xinshou-jiaoxue",
     "blog:is-fomo-safe": "/zh-hant/blog/fomo-anquan-ma-feituoguan-jiegou",
     "blog:social-trading-app": "/zh-hant/blog/xuanze-social-trading-app-biaozhun",
@@ -211,13 +205,6 @@ export function getOwnUrl(locale: Locale, pageId: PageId, fallbackPathname: stri
  * combination with no entry means that post hasn't been translated yet.
  */
 const BLOG_GROUPS: Record<string, Partial<Record<Locale, string>>> = {
-  "how-to-use-fomo-app": {
-    en: "how-to-use-fomo-app",
-    ko: "how-to-use-fomo-app",
-    de: "how-to-use-fomo-app",
-    vi: "how-to-use-fomo-app",
-    "zh-hant": "how-to-use-fomo-app",
-  },
   "how-to-trade": {
     en: "how-to-trade-on-fomo-app-beginners-guide",
     vi: "huong-dan-giao-dich-fomo-cho-nguoi-moi",
@@ -259,6 +246,12 @@ const BLOG_GROUPS: Record<string, Partial<Record<Locale, string>>> = {
     ko: "fomo-perpetuals-seolmyeong",
     "zh-hant": "fomo-perpetuals-shuoming",
     de: "fomo-perpetuals-erklaert",
+  },
+  // English-only for now — no translation yet, but still needs a BLOG_GROUPS
+  // entry (not just a LOCALE_PATHS one) so getBlogPageId() finds it and
+  // hreflang/canonical for "en" resolve to the post itself, not the homepage.
+  "vs-traditional-exchanges": {
+    en: "fomo-vs-traditional-exchanges",
   },
 };
 
