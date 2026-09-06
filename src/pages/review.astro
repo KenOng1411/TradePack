@@ -6,7 +6,7 @@ import StatBadge from "../components/StatBadge.astro";
 import RiskDisclaimer from "../components/RiskDisclaimer.astro";
 import AppScreenshot from "../components/AppScreenshot.astro";
 import { PAGE_KEYS, resolveLocaleUrl } from "../i18n/routes";
-import { FOMO, SITE_NAME } from "../lib/site";
+import { FOMO, SITE_NAME, SITE_URL } from "../lib/site";
 import { FOMO_STATS } from "../lib/fomoStats";
 import tradingChartScreenshot from "../assets/screenshots/trading-chart-feed.jpg";
 import mobilePortfolioScreenshot from "../assets/screenshots/mobile-portfolio-home.jpg";
@@ -21,6 +21,23 @@ const statsUpdatedLabel = new Date(FOMO_STATS.fetchedAt).toLocaleDateString("en-
   day: "numeric",
   year: "numeric",
 });
+
+// Real dates, not placeholders: this review was first published 2026-09-05
+// (its first git commit) and this freshness line should be bumped any time
+// the page content materially changes.
+const reviewDatePublished = "2026-09-05";
+const reviewDateModified = "2026-09-06";
+const reviewUpdatedLabel = new Date(reviewDateModified).toLocaleDateString("en-US", {
+  month: "long",
+  day: "numeric",
+  year: "numeric",
+});
+
+const backedByInvestors = [
+  { name: "Index Ventures", role: "Lead" },
+  { name: "Union Square Ventures" },
+  { name: "Benchmark" },
+];
 
 const toc = [
   { id: "what-is-fomo", label: "What is Fomo?" },
@@ -52,13 +69,15 @@ const jsonLd = {
     "@type": "SoftwareApplication",
     name: FOMO.displayName,
     applicationCategory: "FinanceApplication",
+    operatingSystem: "iOS, Android",
     url: FOMO.website,
   },
-  author: { "@type": "Organization", name: SITE_NAME },
-  publisher: { "@type": "Organization", name: SITE_NAME },
+  author: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+  publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
   reviewBody:
     "Independent review of Fomo, a non-custodial crypto trading app. This is not an official Fomo page — TradePack is not affiliated with, endorsed by, or acting on behalf of Fomo.",
-  datePublished: "2026-09-11",
+  datePublished: reviewDatePublished,
+  dateModified: reviewDateModified,
 };
 ---
 
@@ -73,6 +92,9 @@ const jsonLd = {
   <section class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
     <span class="text-xs font-semibold uppercase tracking-wide text-[var(--color-accent)]">Independent review</span>
     <h1 class="text-balance mt-2 text-3xl font-extrabold sm:text-4xl">The {SITE_NAME} Review of Fomo</h1>
+    <p class="mt-2 text-xs text-[var(--color-muted)]">
+      Last updated: {reviewUpdatedLabel} · Reviewed by the TradePack Research Team
+    </p>
     <p class="mt-4 max-w-2xl text-[var(--color-muted)]">
       {SITE_NAME} is not affiliated with, endorsed by, or acting on behalf of Fomo. This review reflects our own
       research and may earn us a commission through referral links.
@@ -139,6 +161,33 @@ const jsonLd = {
             <a href="https://defillama.com/protocol/fomo" target="_blank" rel="noopener" class="text-[var(--color-accent)] underline underline-offset-2">
               DeFiLlama
             </a>, updated {statsUpdatedLabel}.
+          </p>
+        </section>
+
+        <section class="backed-by-strip not-prose my-8 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 sm:p-6">
+          <p class="backed-by-label text-sm text-[var(--color-muted)]">
+            Fomo's {FOMO.fundingRound} ({FOMO.valuation} valuation) was led by:
+          </p>
+          <ul class="investor-list mt-3 flex flex-wrap gap-2">
+            {
+              backedByInvestors.map((investor) => (
+                <li class="flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-bg)] px-3.5 py-1.5 text-sm font-medium text-[var(--color-text)]">
+                  {investor.name}
+                  {investor.role && <span class="text-xs font-normal text-[var(--color-accent)]">· {investor.role}</span>}
+                </li>
+              ))
+            }
+          </ul>
+          <p class="backed-by-source mt-3 text-xs text-[var(--color-muted)]">
+            Source:{" "}
+            <a
+              href="https://cointelegraph.com/news/fomo-raise-series-b-trading-app-550m-valuation"
+              target="_blank"
+              rel="noopener"
+              class="text-[var(--color-accent)] underline underline-offset-2"
+            >
+              Cointelegraph, June 22, 2026
+            </a>
           </p>
         </section>
 

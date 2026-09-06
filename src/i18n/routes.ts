@@ -76,6 +76,8 @@ const LOCALE_PATHS: Record<Locale, Partial<Record<PageId, string>>> = {
     "blog:trading-fees": "/blog/fomo-trading-fees-spot-vs-perpetuals",
     "blog:series-b-sec": "/blog/fomo-75m-series-b-sec-ruling-explained",
     "blog:perpetuals-explained": "/blog/fomo-perpetuals-explained",
+    "blog:leaderboard-copy-trading": "/blog/fomo-leaderboard-copy-trading-explained",
+    "blog:trending-stonk-sep-2026": "/blog/trending-on-fomo-stonk-sep-6-2026",
   },
   ko: {
     // Korean uses the same literal (English-word) path segments as English,
@@ -252,6 +254,12 @@ const BLOG_GROUPS: Record<string, Partial<Record<Locale, string>>> = {
   // hreflang/canonical for "en" resolve to the post itself, not the homepage.
   "vs-traditional-exchanges": {
     en: "fomo-vs-traditional-exchanges",
+  },
+  "leaderboard-copy-trading": {
+    en: "fomo-leaderboard-copy-trading-explained",
+  },
+  "trending-stonk-sep-2026": {
+    en: "trending-on-fomo-stonk-sep-6-2026",
   },
 };
 
