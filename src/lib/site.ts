@@ -2,10 +2,11 @@ export const SITE_NAME = "TradePack";
 export const SITE_TAGLINE = "Independent crypto exchange reviews & referral guides";
 
 /**
- * TODO(owner): replace with the real production domain once purchased/confirmed.
- * Used only as a local fallback; astro.config.mjs reads PUBLIC_SITE_URL first.
+ * Falls back to the real production domain if PUBLIC_SITE_URL isn't set in the
+ * environment (e.g. local dev without a .env). Override via PUBLIC_SITE_URL
+ * for staging/preview deployments.
  */
-export const SITE_URL = import.meta.env.PUBLIC_SITE_URL || "https://tradepack.local";
+export const SITE_URL = import.meta.env.PUBLIC_SITE_URL || "https://tradepack.online";
 
 /**
  * Exchanges reviewed on the site. Fomo is the only entry today, but the shape

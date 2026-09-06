@@ -1,5 +1,4 @@
-# TODO(owner): update the Sitemap URL below once the real production domain is live.
 User-agent: *
 Allow: /
 
-Sitemap: https://tradepack.local/sitemap-index.xml
+Sitemap: https://tradepack.online/sitemap-index.xml

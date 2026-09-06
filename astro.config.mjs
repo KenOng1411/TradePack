@@ -3,8 +3,8 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 
-// TODO: replace with the real production domain once purchased/confirmed.
-const SITE_URL = process.env.PUBLIC_SITE_URL || 'https://tradepack.local';
+// Falls back to the real domain; override via PUBLIC_SITE_URL for staging/preview builds.
+const SITE_URL = process.env.PUBLIC_SITE_URL || 'https://tradepack.online';
 
 // https://astro.build/config
 export default defineConfig({

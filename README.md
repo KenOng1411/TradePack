@@ -132,23 +132,25 @@ automatically — review the image, then import it where you want it.
 
 ## Environment variables
 
-See `.env.example`. Two values are placeholders you need to fill in yourself before going to production:
+See `.env.example`.
 
-- `PUBLIC_SITE_URL` — the real production domain (currently `https://tradepack.local`). Used for canonical URLs,
-  hreflang, the sitemap, and Open Graph tags.
+- `PUBLIC_SITE_URL` — the production domain, `https://tradepack.online` (owned as of 2026-09-06). Used for canonical
+  URLs, hreflang, the sitemap, and Open Graph tags. `robots.txt` hard-codes the same domain in its `Sitemap:` line
+  since it's a static file that can't read env vars at build time — update both together if the domain ever changes.
 - `GEMINI_API_KEY` — only needed to run `npm run gen:brand`.
-
-`robots.txt` also hard-codes a `Sitemap:` URL (it's a static file, so it can't read env vars at build time) — update
-it once you have the real domain.
 
 ## Deploy
 
 This is a static Astro site (`output: 'static'`) — it can deploy to any static host (Netlify, Vercel, Cloudflare
-Pages, etc.). Steps intentionally left blank for the project owner to fill in:
+Pages, etc.). The domain (`tradepack.online`) is purchased; steps intentionally left blank for the project owner to
+finish (Claude Code doesn't have hosting-account or registrar access):
 
-- [ ] Purchase/confirm the production domain and set `PUBLIC_SITE_URL`
-- [ ] Connect the repo to a hosting provider and set the build command (`npm run build`) / output dir (`dist`)
-- [ ] Set `PUBLIC_SITE_URL` (and any other secrets) in the host's environment variable settings
+- [x] Purchase/confirm the production domain and set `PUBLIC_SITE_URL` — done, `tradepack.online`
+- [ ] Connect the repo (`github.com/KenOng1411/TradePack`) to a hosting provider — build command `npm run build`,
+      output dir `dist` (usually auto-detected for Astro)
+- [ ] Set `PUBLIC_SITE_URL=https://tradepack.online` in the host's environment variable settings
+- [ ] Add `tradepack.online` as a custom domain on the host, then update the DNS records at the registrar to match
+      what the host provides (this replaces the registrar's default parking nameservers)
 - [ ] Register the real domain in Google Search Console and add verification (see the TODO in
       `src/components/Seo.astro` / `.env.example`)
 - [ ] Set up Google Ads conversion tracking on `/referral-code` once the campaign is ready
