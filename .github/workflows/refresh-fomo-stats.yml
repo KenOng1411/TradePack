@@ -1,0 +1,36 @@
+name: Refresh Fomo stats
+
+on:
+  schedule:
+    - cron: "0 6 * * 1" # every Monday 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Fetch latest stats
+        run: node scripts/fetch-fomo-stats.js
+
+      - name: Commit updated stats if changed
+        run: |
+          if git diff --quiet -- scripts/fomo-stats.json; then
+            echo "No change in fomo-stats.json — skipping commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add scripts/fomo-stats.json
+          git commit -m "chore: refresh Fomo stats from DeFiLlama"
+          git push

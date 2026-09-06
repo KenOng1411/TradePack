@@ -7,6 +7,7 @@ import RiskDisclaimer from "../components/RiskDisclaimer.astro";
 import AppScreenshot from "../components/AppScreenshot.astro";
 import { PAGE_KEYS, resolveLocaleUrl } from "../i18n/routes";
 import { FOMO, SITE_NAME } from "../lib/site";
+import { FOMO_STATS } from "../lib/fomoStats";
 import tradingChartScreenshot from "../assets/screenshots/trading-chart-feed.jpg";
 import mobilePortfolioScreenshot from "../assets/screenshots/mobile-portfolio-home.jpg";
 import mobileFeedGlobalScreenshot from "../assets/screenshots/mobile-feed-global.jpg";
@@ -14,6 +15,12 @@ import mobileFeedFriendsScreenshot from "../assets/screenshots/mobile-feed-frien
 
 const locale = "en" as const;
 const pageKey = PAGE_KEYS.review;
+
+const statsUpdatedLabel = new Date(FOMO_STATS.fetchedAt).toLocaleDateString("en-US", {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+});
 
 const toc = [
   { id: "what-is-fomo", label: "What is Fomo?" },
@@ -114,6 +121,26 @@ const jsonLd = {
             class="w-[220px] shrink-0"
           />
         </div>
+
+        <section class="fomo-stats-strip not-prose my-8 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 sm:p-6">
+          <h3 class="text-sm font-semibold uppercase tracking-wide text-[var(--color-muted)]">Fomo, by the Numbers</h3>
+          <div class="mt-4 grid grid-cols-2 gap-4 sm:gap-6">
+            <div class="stat">
+              <span class="stat-value block text-2xl font-extrabold sm:text-3xl">{FOMO_STATS.fees30d.formatted}</span>
+              <span class="stat-label mt-1 block text-sm text-[var(--color-muted)]">Fees paid by users (30d)</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value block text-2xl font-extrabold text-[var(--color-violet)] sm:text-3xl">{FOMO_STATS.dexVolume30d.formatted}</span>
+              <span class="stat-label mt-1 block text-sm text-[var(--color-muted)]">DEX trading volume (30d)</span>
+            </div>
+          </div>
+          <p class="stat-source mt-4 text-xs text-[var(--color-muted)]">
+            Data via{" "}
+            <a href="https://defillama.com/protocol/fomo" target="_blank" rel="noopener" class="text-[var(--color-accent)] underline underline-offset-2">
+              DeFiLlama
+            </a>, updated {statsUpdatedLabel}.
+          </p>
+        </section>
 
         <section id="what-is-fomo" class="scroll-mt-24">
           <h2>What is Fomo?</h2>
