@@ -1,13 +1,13 @@
 {
   "source": "DeFiLlama",
   "sourceUrl": "https://defillama.com/protocol/fomo",
-  "fetchedAt": "2026-10-19T12:19:11.060Z",
+  "fetchedAt": "2026-10-26T12:21:48.962Z",
   "fees30d": {
-    "raw": 20985316.05,
-    "formatted": "$20.99M"
+    "raw": 17207821.08,
+    "formatted": "$17.21M"
   },
   "dexVolume30d": {
-    "raw": 3455822643,
-    "formatted": "$3.46B"
+    "raw": 2815963739,
+    "formatted": "$2.82B"
   }
 }
